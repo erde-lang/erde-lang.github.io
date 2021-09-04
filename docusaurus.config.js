@@ -35,9 +35,9 @@ module.exports = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'syntax',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Syntax',
           },
           {
             href: 'https://github.com/erde-lang/erde',
@@ -53,8 +53,8 @@ module.exports = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Syntax',
+                to: '/docs/syntax',
               },
             ],
           },
