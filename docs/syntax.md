@@ -4,6 +4,30 @@ sidebar_position: 1
 
 # Erde Syntax
 
+## Comments
+
+Erde uses the same comment syntax as lua:
+
+```erde
+-- this is a comment
+--[[
+  this is a
+  multiline comment
+]]--
+```
+
+## Variables
+
+Variables use the same syntax as lua. However, variables are no longer global
+by default. Instead, erde requires global variables to be declared using the
+`global` keyword and will warn you when you are using an undefined variable.
+
+```erde
+local a = 1
+global b = 2
+c = 3 -- error! c is undeclared
+```
+
 ## Strings
 
 Single/double quote strings are unchanged from lua:
