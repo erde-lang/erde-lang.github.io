@@ -289,3 +289,38 @@ destructuring:
 local echo = name -> print(name)
 local greet = { :name } -> print('hello {name}!')
 ```
+
+## Operators
+
+### Arithmetic Operators
+
+Arithmetics operators are unchanged from lua. These include:
+
+- Addition `1 + 2`
+- Subtraction `1 - 2`
+- Multiplication `1 * 2`
+- Division `1 / 2`
+- Modulo `5 % 2`
+- Unary sign flip `-4`
+
+### Ternary / Null Coalescing Operators
+
+Both ternary and null coalescence operators are supported. They share common
+syntax w/ languages such as javascript and C#:
+
+```erde
+local x = n > 0 ? 1 : -1
+local name = getname() ?? 'world'
+```
+
+### Assignment Operators
+
+All _binary_ operators (excluding null coalescence) support assignment operator
+shorthands:
+
+```erde
+local x = 4
+x += 6
+x /= 2
+print(x) -- 5
+```
