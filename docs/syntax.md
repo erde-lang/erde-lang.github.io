@@ -104,6 +104,23 @@ repeat {
 } until (n < 0)
 ```
 
+### do
+
+`do` blocks in erde may optionally return values:
+
+```erde
+do {
+  local msg = 'hello world'
+  print(msg)
+}
+
+local msg = do {
+  -- do something
+  return 'hello world'
+}
+print(msg)
+```
+
 ## Tables
 
 ### Declaration
@@ -294,24 +311,73 @@ local greet = { :name } -> print('hello {name}!')
 
 ### Arithmetic Operators
 
-Arithmetics operators are unchanged from lua. These include:
+<center>
 
-- Addition `1 + 2`
-- Subtraction `1 - 2`
-- Multiplication `1 * 2`
-- Division `1 / 2`
-- Modulo `5 % 2`
-- Unary sign flip `-4`
+| Syntax | Operator       | Example      |
+| :----- | :------------- | :----------- |
+| +      | addition       | 1 + 2 == 3   |
+| -      | subtraction    | 1 - 2 == -1  |
+| -      | unary minus    | -4           |
+| \*     | multiplication | 2 \* 4 == 8  |
+| /      | division       | 10 / 2 == 5  |
+| //     | floor division | 10 // 4 == 2 |
+| ^      | exponentiation | 2 ^ 6 == 64  |
+| %      | modulo         | 6 % 2 == 0   |
+
+</center>
+
+### Bitwise Operators
+
+Erde supports bitwise operators, but unlike most languages repurposes the
+syntax. **_Traditional bitwise operators must be prefixed with `.`._**
+
+The reason for this is that the bitwise operators are far too seldom used to
+consume some of the most important operator characters available. The
+traditional bitwise operators have been assigned different functions in order to
+reduce noise. See [Logical Operators](#logical-operators) and [Pipes](#pipes).
+
+<center>
+
+| Syntax | Operator    | Example                  |
+| :----- | :---------- | :----------------------- |
+| .\|    | or          | 0b100 .\| 0b010 == 0b110 |
+| .&     | and         | 0b110 .& 0b101 == 0b100  |
+| .~     | xor         | 0b110 .~ 0b101 == 0b011  |
+| .~     | unary NOT   | .~0b100 == 0b011         |
+| .>>    | right shift | 0b010 .>> 1 == 0b001     |
+| .<<    | left shift  | 0b010 .<< 1 == 0b100     |
+
+</center>
+
+### Relational Operators
+
+<center>
+
+| Syntax | Operator         | Example           |
+| :----- | :--------------- | :---------------- |
+| ==     | equality         | 1 + 1 == 2        |
+| ~=     | inequality       | 1 + 1 ~= 3        |
+| <      | less than        | 3 < 5             |
+| >      | greater than     | 9 > 7             |
+| <=     | less or equal    | 9 >= 8, 9 >=9     |
+| >=     | greater or equal | 9 <= 11, 11 <= 11 |
+
+</center>
+
+### Logical Operators
+
+TODO
 
 ### Ternary / Null Coalescing Operators
 
-Both ternary and null coalescence operators are supported. They share common
-syntax w/ languages such as javascript and C#:
+<center>
 
-```erde
-local x = n > 0 ? 1 : -1
-local name = getname() ?? 'world'
-```
+| Syntax    | Operator        | Lua Equivalent                                                                   |
+| :-------- | :-------------- | :------------------------------------------------------------------------------- |
+| a ? b : c | ternary         | <pre lang='lua'>(function() if a then return b else return c end)()</pre>        |
+| a ?? b    | null coalescing | <pre lang='lua'>(function() if a ~= nil then return a else return b end)()</pre> |
+
+</center>
 
 ### Assignment Operators
 
@@ -324,3 +390,7 @@ x += 6
 x /= 2
 print(x) -- 5
 ```
+
+## Pipes
+
+TODO
