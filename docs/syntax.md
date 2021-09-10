@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # Erde Syntax
 
+TODO: "Inspired by XXX" footnotes
+
 ## Comments
 
 Erde uses the same comment syntax as lua:
@@ -199,4 +201,91 @@ will simply be `nil`:
 local parent = {}
 local { :children? { child1 } } = parent
 print(child1) -- nil
+```
+
+## Functions
+
+### Declaration
+
+All functions in erde are arrow functions:
+
+```erde
+local greet = (name) -> {
+  print(`hello {name}!`)
+}
+```
+
+There is no shorthand such as `function greet() { ... }`. This makes the scope
+of the function much clearer, as opposed to lua's `local function() ... end`
+syntax, where the `local` identifier is often forgotten.
+
+### Parameters
+
+Erde has support for optional parameters are varargs. Optional parameters are
+assigned a default value when nil and must come after non-optional parameters
+in the arguments list. Varargs must appear as the last parameter and may by
+optionally named:
+
+```erde
+local greet = (prefix, suffix = '!', ...names) -> {
+  print(prefix)
+  for _, name in ipairs(name) {
+    print(name)
+  }
+  print(suffix)
+}
+
+greet('hello') -- hello!
+greet('hello', nil, 'world') -- hello world!
+greet('hello', '...', 'a', 'b') -- hello a b ...
+```
+
+Table parameters may also be [destructured](#destructuring):
+
+```erde
+local greetperson = ({ :name }) -> {
+  print('hello {name}!')
+}
+
+greetperson({ name = 'world' })
+```
+
+### Fat vs Skinny Arrows
+
+Like lua, erde provides a shorthand for declaring functions that take self as
+the first parameter. In this case, the skinny arrow (`->`) is replaced with a
+fat one (`=>`):
+
+```erde
+local Person = { name = 'bsuth' }
+
+Person.introduce = () => {
+  print(`Hi, my name is {self.name}`)
+}
+```
+
+### Implicit Return
+
+Functions may specify an expression instead of a function body. In this case,
+the expression becomes the return value:
+
+```erde
+// these are equivalent
+
+local add = (x, y) -> x + y
+
+local add = (x, y) -> {
+  return x + y
+}
+```
+
+### Optional Parentheses
+
+If there is only one argument, then you may omit the parentheses. Note that this
+does _not_ work for optional parameters or varargs, but does work for
+destructuring:
+
+```erde
+local echo = name -> print(name)
+local greet = { :name } -> print('hello {name}!')
 ```
