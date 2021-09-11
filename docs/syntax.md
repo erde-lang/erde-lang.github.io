@@ -359,25 +359,82 @@ reduce noise. See [Logical Operators](#logical-operators) and [Pipes](#pipes).
 | ~=     | inequality       | 1 + 1 ~= 3        |
 | <      | less than        | 3 < 5             |
 | >      | greater than     | 9 > 7             |
-| <=     | less or equal    | 9 >= 8, 9 >=9     |
+| <=     | less or equal    | 9 >= 8, 9 >= 9    |
 | >=     | greater or equal | 9 <= 11, 11 <= 11 |
 
 </center>
 
 ### Logical Operators
 
-TODO
-
-### Ternary / Null Coalescing Operators
+As mentioned in the [Bitwise Operators](#bitwise-operators) section, the
+traditional bitwise operator syntax is available for use, and this is one such
+where we employ it. Instead of the awkward doubling of operators (such as `&&`
+and `||`), we simply use the traditional bitwise counterparts.
 
 <center>
 
-| Syntax    | Operator        | Lua Equivalent                                                                   |
-| :-------- | :-------------- | :------------------------------------------------------------------------------- |
-| a ? b : c | ternary         | <pre lang='lua'>(function() if a then return b else return c end)()</pre>        |
-| a ?? b    | null coalescing | <pre lang='lua'>(function() if a ~= nil then return a else return b end)()</pre> |
+| Syntax | Operator  | Example               |
+| :----- | :-------- | :-------------------- |
+| \|     | or        | true \| false == true |
+| &      | and       | true & false == false |
+| ~      | unary NOT | ~false == true        |
 
 </center>
+
+The unary logical NOT operator uses the `~` syntax in order to maintain
+consistency with inequality (`~=`). Many will have mixed feelings about this,
+but I felt reluctant to change the `~=` syntax. I wanted erde to feel very
+natural specifically for _lua_ developers in particular, and having used lua for
+awhile now I have grow very accustomed (and even now enjoy) the syntax. After
+the decision to keep `~=` was made, I subsequently chose to adopt `~` as the
+unary NOT operator in order to maintain consistency.
+
+I intentionally did not add `!` and `!=` as aliases, as I feel the preference
+would cause divides the community and it leaves the `!` syntax open for future
+operations.
+
+### Misc Operators
+
+#### Concatenation/Length Operators
+
+Unchanged from lua.
+
+```erde
+print("hello" .. "world") -- helloworld
+print(#"hello") -- 5
+```
+
+#### Ternary Operator
+
+```erde title="erde"
+a ? b : c
+```
+
+```lua title="lua"
+(function()
+  if a then
+    return b
+  else
+    return c
+  end
+)()
+```
+
+#### Null Coalascing Operator
+
+```erde title="erde"
+a ?? b
+```
+
+```lua title="lua"
+(function()
+  if a ~= nil  then
+    return a
+  else
+    return b
+  end
+)()
+```
 
 ### Assignment Operators
 
