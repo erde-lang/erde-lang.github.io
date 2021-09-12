@@ -438,8 +438,7 @@ a ?? b
 
 ### Assignment Operators
 
-All _binary_ operators (excluding null coalescence) support assignment operator
-shorthands:
+All binary operators support assignment operator shorthands:
 
 ```erde
 local x = 4
