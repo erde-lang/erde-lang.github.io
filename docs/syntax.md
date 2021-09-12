@@ -450,4 +450,46 @@ print(x) -- 5
 
 ## Pipes
 
-TODO
+Pipes are a new feature that forward an expression result into the arguments of
+a function call:
+
+```erde
+local getmessage = () -> {
+  return 'hello world'
+}
+
+'hello world' >> print()
+```
+
+They are particularly useful for chaining function calls:
+
+```erde
+{ 1, 2, 3}
+  >> map(n -> 2 * n)
+  >> reduce((sum, n) -> sum + n)
+  >> print() -- 11
+```
+
+Because this behavior conflicts with that of method calls
+(`mytable:somemethod()`), erde provides a syntax to pipe into methods, which
+places `self` as the first parameter and the expression result as the second:
+
+```erde
+mycustomclass
+  >> :mymethod()
+  >> :myothermethod()
+```
+
+Note that pipes **cannot** pass multiple values:
+
+```erde
+local getchildren = () -> {
+  return 'child1', 'child2'
+}
+
+getchildren() >> print() -- only prints child!
+```
+
+While erde _could_ allow pipes to pass multiple values, we restrict this to
+avoid the headache of having to debug situations where too many or too few
+arguments are getting passed somewhere in the pipe chain.
