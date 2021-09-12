@@ -1,0 +1,12 @@
+/* https://docusaurus.io/docs/styling-layout */
+
+:root {
+  --ifm-color-primary: #4f4fff;
+  --ifm-color-primary-dark: #2e2eff;
+  --ifm-color-primary-darker: #1d1dff;
+  --ifm-color-primary-darkest: #0000ea;
+  --ifm-color-primary-light: #7070ff;
+  --ifm-color-primary-lighter: #8181ff;
+  --ifm-color-primary-lightest: #b3b3ff;
+  --ifm-code-font-size: 95%;
+}

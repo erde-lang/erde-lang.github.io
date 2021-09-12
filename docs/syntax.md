@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Erde Syntax
+# Syntax
 
 TODO: "Inspired by XXX" footnotes
 
