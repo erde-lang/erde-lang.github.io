@@ -5,7 +5,7 @@ const palenight = require('prism-react-renderer/themes/palenight');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Erde',
-  url: '/',
+  url: 'https://erde-lang.github.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
