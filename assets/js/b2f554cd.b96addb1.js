@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkerde_lang_github_io=self.webpackChunkerde_lang_github_io||[]).push([[477],{10:function(e){e.exports={blogPosts:[]}}}]);
