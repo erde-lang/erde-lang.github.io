@@ -8,14 +8,15 @@ TODO: "Inspired by XXX" footnotes
 
 ## Comments
 
-Erde uses the same comment syntax as lua:
+Erde uses the same single-line comment syntax as lua, but replaces the
+multiline comment with `---`:
 
 ```erde
 -- this is a comment
---[[
+---
   this is a
   multiline comment
-]]--
+---
 ```
 
 ## Variables
