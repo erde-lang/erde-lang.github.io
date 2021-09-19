@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (c4e8f9ed74, 2021-05-24)"
-   sodipodi:docname="favicon.svg"
+   sodipodi:docname="logo.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -35,7 +35,7 @@
      inkscape:window-x="1930"
      inkscape:window-y="60"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g18048" />
   <defs
      id="defs2">
     <linearGradient
@@ -96,6 +96,17 @@
          r="22.041563"
          inkscape:label="planet" />
     </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1770">
+      <circle
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10.5014;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:84.0113, 21.0028, 10.5014, 21.0028;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+         id="circle1772"
+         cx="33.866665"
+         cy="33.866665"
+         r="22.041563"
+         inkscape:label="planet" />
+    </clipPath>
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -126,25 +137,25 @@
        inkscape:label="moon" />
     <g
        id="g18048"
-       inkscape:label="land">
-      <circle
-         style="fill:#25c359;fill-opacity:1;stroke:none;stroke-width:2.56003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:20.4802, 5.12006, 2.56003, 5.12006;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
-         id="circle11507"
-         cx="54.740265"
-         cy="40.754196"
-         r="7.3559694"
-         clip-path="url(#clipPath11805)" />
-      <circle
-         style="fill:#25c359;fill-opacity:1;stroke:none;stroke-width:2.56003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:20.4802, 5.12006, 2.56003, 5.12006;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
-         id="path11835"
-         cx="37.923813"
-         cy="48.32045"
-         r="1.4599522" />
+       inkscape:label="land"
+       clip-path="url(#clipPath1770)">
       <path
          style="fill:#25c359;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          d="m 20.547357,12.819885 c 0,0 21.752371,5.570426 9.565515,12.473406 -12.186855,6.902979 -4.806807,11.291726 -10.041664,16.670716 -5.234857,5.37899 -5.873862,4.953934 -5.873862,4.953934 0,0 -16.3659503,-24.535593 6.350011,-34.098056 z"
          id="path17762"
          clip-path="url(#clipPath18020)" />
+      <circle
+         style="fill:#25c359;fill-opacity:1;stroke:none;stroke-width:4.63948;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:37.1157, 9.27895, 4.63948, 9.27895;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+         id="circle1514"
+         cx="36.955822"
+         cy="46.285454"
+         r="2.6458333" />
+      <circle
+         style="fill:#25c359;fill-opacity:1;stroke:none;stroke-width:16.959;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:135.672, 33.9179, 16.959, 33.9179;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+         id="circle1596"
+         cx="53.29726"
+         cy="40.388885"
+         r="9.6714878" />
     </g>
   </g>
 </svg>
