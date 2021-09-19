@@ -1,4 +1,5 @@
 /* https://docusaurus.io/docs/styling-layout */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
 :root {
   --ifm-color-primary: #4f4fff;
@@ -9,4 +10,5 @@
   --ifm-color-primary-lighter: #8181ff;
   --ifm-color-primary-lightest: #b3b3ff;
   --ifm-code-font-size: 95%;
+  --ifm-heading-font-family: 'Comfortaa', cursive;
 }
