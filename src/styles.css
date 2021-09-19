@@ -2,13 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
 :root {
-  --ifm-color-primary: #4f4fff;
-  --ifm-color-primary-dark: #2e2eff;
-  --ifm-color-primary-darker: #1d1dff;
-  --ifm-color-primary-darkest: #0000ea;
-  --ifm-color-primary-light: #7070ff;
-  --ifm-color-primary-lighter: #8181ff;
-  --ifm-color-primary-lightest: #b3b3ff;
+  --ifm-color-primary: #25c359;
+  --ifm-color-primary-dark: #21b050;
+  --ifm-color-primary-darker: #1fa64c;
+  --ifm-color-primary-darkest: #1a893e;
+  --ifm-color-primary-light: #29d662;
+  --ifm-color-primary-lighter: #33d869;
+  --ifm-color-primary-lightest: #50de7f;
   --ifm-code-font-size: 95%;
   --ifm-heading-font-family: 'Comfortaa', cursive;
 }
