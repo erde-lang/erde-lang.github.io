@@ -5,12 +5,16 @@ const palenight = require('prism-react-renderer/themes/palenight');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Erde',
+  favicon: 'logo.svg',
+
   url: 'https://erde-lang.github.io/',
   baseUrl: '/',
+
+  projectName: 'erde',
+  organizationName: 'erde-lang',
+
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  organizationName: 'erde-lang',
-  projectName: 'erde',
 
   presets: [
     [
@@ -33,7 +37,10 @@ module.exports = {
     {
       prism: { theme: palenight },
       navbar: {
-        title: 'Erde',
+        logo: {
+          alt: 'site logo',
+          src: 'logo.svg',
+        },
         items: [
           {
             href: 'https://github.com/erde-lang/erde',
