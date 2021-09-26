@@ -21,14 +21,12 @@ multiline comment with `---`:
 
 ## Variables
 
-Variables use the same syntax as lua. However, variables are no longer global
-by default. Instead, erde requires global variables to be declared using the
-`global` keyword and will warn you when you are using an undefined variable.
+Variables use the same syntax as lua. However, an optional `global` keyword has
+been added when declaring global variables, and is highly encouraged.
 
 ```erde
 local a = 1
 global b = 2
-c = 3 -- error! c is undeclared
 ```
 
 ## Strings
