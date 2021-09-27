@@ -223,17 +223,28 @@ print(child1) -- nil
 
 ### Declaration
 
-All functions in erde are arrow functions:
+Named functions are the same as in Lua, but with braces:
+
+```erde
+-- local function
+local function sum(a, b) {
+  return a + b
+}
+
+-- non-local function
+function sum(a, b) {
+  return a + b
+}
+```
+
+However, anonymous functions do NOT use the lua `function() ... end` syntax.
+Instead, erde opts for arrow functions:
 
 ```erde
 local greet = (name) -> {
   print(`hello {name}!`)
 }
 ```
-
-There is no shorthand such as `function greet() { ... }`. This makes the scope
-of the function much clearer, as opposed to lua's `local function() ... end`
-syntax, where the `local` identifier is often forgotten.
 
 ### Parameters
 
