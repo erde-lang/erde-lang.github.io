@@ -24,7 +24,7 @@ module.exports = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
-          routeBasePath: '/',
+          path: './src/docs',
           sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {
@@ -44,6 +44,11 @@ module.exports = {
           src: 'logo.svg',
         },
         items: [
+          {
+            href: '/docs',
+            label: 'Docs',
+            position: 'left',
+          },
           {
             href: 'https://github.com/erde-lang/erde',
             label: 'GitHub',

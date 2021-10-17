@@ -5,14 +5,6 @@ slug: /
 sidebar_position: 1
 ---
 
-import styles from '../src/index.module.scss';
-import Logo from '../static/logo.svg';
-
-<div className={styles.logo}>
-  <Logo />
-  <h1>Erde</h1>
-</div>
-
 Erde is a programming language that compiles to Lua. It was created with the
 intention of allowing for more expressive Lua code.
 
