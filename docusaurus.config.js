@@ -16,6 +16,8 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
+  plugins: ['docusaurus-plugin-sass'],
+
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -26,7 +28,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {
-          customCss: require.resolve('./src/styles.css'),
+          customCss: require.resolve('./src/theme.scss'),
         },
       },
     ],

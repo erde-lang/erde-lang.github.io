@@ -5,7 +5,7 @@ slug: /
 sidebar_position: 1
 ---
 
-import styles from '../src/index.module.css';
+import styles from '../src/index.module.scss';
 import Logo from '../static/logo.svg';
 
 <div className={styles.logo}>
