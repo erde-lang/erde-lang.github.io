@@ -1,0 +1,13 @@
+.page {
+  width: 80%;
+  max-width: 864px;
+  margin: 0 auto;
+}
+
+.logo {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 32px;
+}

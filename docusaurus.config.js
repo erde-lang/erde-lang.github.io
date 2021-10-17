@@ -50,6 +50,11 @@ module.exports = {
             position: 'left',
           },
           {
+            href: '/playground',
+            label: 'Playground',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/erde-lang/erde',
             label: 'GitHub',
             position: 'right',
