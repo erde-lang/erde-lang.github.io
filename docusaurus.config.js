@@ -23,7 +23,7 @@ module.exports = {
       {
         docs: {
           routeBasePath: '/',
-          sidebarPath: require.resolve('./src/sidebars.js'),
+          sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {
           customCss: require.resolve('./src/styles.css'),
