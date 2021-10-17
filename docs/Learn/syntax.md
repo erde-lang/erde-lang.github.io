@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # Syntax
 
 TODO: "Inspired by XXX" footnotes
