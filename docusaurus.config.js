@@ -1,5 +1,6 @@
 // https://docusaurus.io/docs/configuration
 
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const palenight = require('prism-react-renderer/themes/palenight');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -16,7 +17,15 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  plugins: ['docusaurus-plugin-sass'],
+  plugins: [
+    'docusaurus-plugin-sass',
+    () => ({
+      name: 'monaco-editor',
+      configureWebpack: () => ({
+        plugins: [new MonacoWebpackPlugin()],
+      }),
+    }),
+  ],
 
   presets: [
     [

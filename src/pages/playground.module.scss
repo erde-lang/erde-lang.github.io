@@ -9,16 +9,4 @@
     align-items: center;
     row-gap: 32px;
   }
-
-  .editors {
-    height: 100vh;
-    display: flex;
-    flex-grow: 1;
-    column-gap: 16px;
-
-    .editor {
-      width: 50%;
-      height: 100%;
-    }
-  }
 }

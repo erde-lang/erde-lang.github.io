@@ -1,0 +1,21 @@
+.liveCodeBlock {
+  width: 90%;
+  margin: 32px auto;
+
+  .editors {
+    height: 100vh;
+    display: flex;
+    flex-grow: 1;
+    column-gap: 16px;
+
+    .editor {
+      width: 50%;
+      height: 100%;
+    }
+  }
+}
+
+.monacoEditor {
+  width: 50%;
+  height: 100%;
+}
