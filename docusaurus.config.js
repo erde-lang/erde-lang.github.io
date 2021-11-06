@@ -36,6 +36,15 @@ module.exports = {
           path: './src/docs',
           sidebarPath: require.resolve('./sidebars.js'),
         },
+        blog: {
+          path: './src/blog',
+          blogTitle: 'Docusaurus blog!',
+          blogDescription: 'A Docusaurus powered blog!',
+          postsPerPage: 'ALL',
+          blogSidebarTitle: 'All posts',
+          blogSidebarCount: 'ALL',
+          showReadingTime: false,
+        },
         theme: {
           customCss: require.resolve('./src/theme.scss'),
         },
@@ -56,6 +65,11 @@ module.exports = {
           {
             href: '/docs',
             label: 'Docs',
+            position: 'left',
+          },
+          {
+            href: '/blog',
+            label: 'Blog',
             position: 'left',
           },
           {
