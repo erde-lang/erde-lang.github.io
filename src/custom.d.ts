@@ -8,6 +8,6 @@ declare module '*.scss' {
   export default styles;
 }
 
-declare module fengari-web {
-  function load(src: string, chunk: string): () => void;
+declare module 'fengari-web' {
+  export function load(src: string, chunk?: string): () => string;
 }
