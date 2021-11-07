@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
 import React, { useEffect, useState } from 'react';
+import { Tabs } from '../Tabs';
 import styles from './LiveCodeBlock.module.scss';
-import { Tabs } from './Tabs';
 
 //
 // Constants / Types
@@ -53,7 +53,7 @@ function useMonaco(options?: EditorOptions) {
 // LiveCodeBlock
 //
 
-interface LiveCodeBlockProps {
+export interface LiveCodeBlockProps {
   // Used when the LiveCodeBlock consumes the entire page. Particularly
   // useful for the playground.
   pageMode?: boolean;

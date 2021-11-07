@@ -5,6 +5,6 @@ import styles from './playground.module.scss';
 
 export default () => (
   <Layout pageClassName={styles.page}>
-    <LiveCodeBlock />
+    <LiveCodeBlock pageMode />
   </Layout>
 );
