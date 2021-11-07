@@ -38,10 +38,10 @@ module.exports = {
         },
         blog: {
           path: './src/blog',
-          blogTitle: 'Docusaurus blog!',
-          blogDescription: 'A Docusaurus powered blog!',
+          blogTitle: 'Blog',
+          blogDescription: 'Blog for the Erde programming language.',
           postsPerPage: 'ALL',
-          blogSidebarTitle: 'All posts',
+          blogSidebarTitle: 'All Posts',
           blogSidebarCount: 'ALL',
           showReadingTime: false,
         },
