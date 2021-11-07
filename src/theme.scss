@@ -1,9 +1,18 @@
 /* https://docusaurus.io/docs/styling-layout */
 
+// -----------------------------------------------------------------------------
+// Imports
+// -----------------------------------------------------------------------------
+
+// General font
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
 // Monaco editor font
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
+
+// -----------------------------------------------------------------------------
+// CSS Variables
+// -----------------------------------------------------------------------------
 
 :root {
   // Palette
@@ -27,6 +36,10 @@
   --ifm-heading-font-family: 'Comfortaa', cursive;
 }
 
+// -----------------------------------------------------------------------------
+// Defaults
+// -----------------------------------------------------------------------------
+
 body * {
   margin: 0;
   padding: 0;
@@ -43,4 +56,16 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+// -----------------------------------------------------------------------------
+// Overriden Styles
+// -----------------------------------------------------------------------------
+
+.navbar--fixed-top {
+  // Override text color on mobile navbar sidebar
+  --ifm-menu-color: var(--erde-white);
+
+  // Override hamburger icon on mobile navbar
+  color: var(--erde-white);
 }
