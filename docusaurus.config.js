@@ -1,7 +1,7 @@
 // https://docusaurus.io/docs/configuration
 
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const palenight = require('prism-react-renderer/themes/palenight');
+const vsLight = require('prism-react-renderer/themes/vsLight');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -55,7 +55,10 @@ module.exports = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
-      prism: { theme: palenight },
+      colorMode: {
+        disableSwitch: true,
+      },
+      prism: { theme: vsLight },
       navbar: {
         logo: {
           alt: 'site logo',

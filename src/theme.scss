@@ -1,14 +1,46 @@
 /* https://docusaurus.io/docs/styling-layout */
+
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 
+// Monaco editor font
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
+
 :root {
-  --ifm-color-primary: #25c359;
-  --ifm-color-primary-dark: #21b050;
-  --ifm-color-primary-darker: #1fa64c;
-  --ifm-color-primary-darkest: #1a893e;
+  // Palette
+  --erde-white: #e8e8e8;
+  --erde-black: #2c2c33;
+  --erde-green: #25c359;
+
+  // Core
+  --ifm-background-color: var(--erde-white);
+  --ifm-color-primary: var(--erde-green);
   --ifm-color-primary-light: #29d662;
   --ifm-color-primary-lighter: #33d869;
   --ifm-color-primary-lightest: #50de7f;
+
+  // Navbar
+  --ifm-navbar-background-color: var(--erde-black);
+  --ifm-navbar-link-color: var(--erde-white);
+
+  // Misc
   --ifm-code-font-size: 95%;
   --ifm-heading-font-family: 'Comfortaa', cursive;
+}
+
+body * {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  list-style: none;
+}
+
+button {
+  color: var(--erde-black);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
