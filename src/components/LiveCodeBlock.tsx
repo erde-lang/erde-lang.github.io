@@ -17,7 +17,6 @@ const MONACO_OPTIONS: EditorOptions = {
   theme: 'vs-light',
   fontFamily: 'Source Code Pro',
   tabSize: 2,
-  fontSize: 18,
   minimap: {
     enabled: false,
   },
@@ -54,16 +53,26 @@ function useMonaco(options?: EditorOptions) {
 // LiveCodeBlock
 //
 
-export const LiveCodeBlock = () => {
+interface LiveCodeBlockProps {
+  // Used when the LiveCodeBlock consumes the entire page. Particularly
+  // useful for the playground.
+  pageMode?: boolean;
+}
+
+export const LiveCodeBlock = (props: LiveCodeBlockProps) => {
   const [code, setCode] = useState(DEFAULT_PLAYGROUND_CODE);
   const [output, setOutput] = useState('');
+  const editorFontSize = props.pageMode ? 18 : 16;
+
   const [resultEditor, resultRef] = useMonaco({
     ...MONACO_OPTIONS,
+    fontSize: editorFontSize,
     readOnly: true,
   });
 
   const [inputEditor, inputRef] = useMonaco({
     ...MONACO_OPTIONS,
+    fontSize: editorFontSize,
     value: code,
   });
 
@@ -106,7 +115,11 @@ export const LiveCodeBlock = () => {
   }, [code, selectedTabId]);
 
   return (
-    <div className={styles.liveCodeBlock}>
+    <div
+      className={classNames(styles.liveCodeBlock, {
+        [styles.pageMode]: props.pageMode,
+      })}
+    >
       <div className={styles.inputEditor} ref={inputRef} />
       <div className={styles.results}>
         <Tabs

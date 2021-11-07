@@ -1,6 +1,7 @@
 .liveCodeBlock {
-  flex-grow: 1;
+  height: 400px;
   display: flex;
+  border: 2px solid var(--erde-black);
 
   > * {
     width: 50%;
@@ -34,6 +35,12 @@
       }
     }
   }
+}
+
+.liveCodeBlock.pageMode {
+  flex-grow: 1;
+  height: auto;
+  border: none;
 }
 
 @media (max-width: 768px) {
