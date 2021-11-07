@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://erde-lang.github.io/blog</id>
+    <title>Erde Blog</title>
+    <updated>2021-11-07T09:51:18.925Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://erde-lang.github.io/blog"/>
+    <subtitle>Erde Blog</subtitle>
+    <icon>https://erde-lang.github.io/logo.svg</icon>
+    <entry>
+        <title type="html"><![CDATA[Design Decisions]]></title>
+        <id>design-decisions</id>
+        <link href="https://erde-lang.github.io/blog/design-decisions"/>
+        <updated>2021-11-07T09:51:18.925Z</updated>
+        <summary type="html"><![CDATA[Design decisions of Erde.]]></summary>
+        <content type="html"><![CDATA[<p>Design decisions summary</p><h2>Dynamic vs Static Typing</h2><p>TODO</p><h2>Compatability with Lua</h2><p>TODO</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Motivation]]></title>
+        <id>motivation</id>
+        <link href="https://erde-lang.github.io/blog/motivation"/>
+        <updated>2021-11-07T09:51:18.925Z</updated>
+        <summary type="html"><![CDATA[The motivations behind Erde.]]></summary>
+        <content type="html"><![CDATA[<p>Motivation summary</p><h2>Dynamic vs Static Typing</h2><p>TODO</p><h2>Compatability with Lua</h2><p>TODO</p>]]></content>
+    </entry>
+</feed>

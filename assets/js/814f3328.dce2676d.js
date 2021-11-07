@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkerde_lang_github_io=self.webpackChunkerde_lang_github_io||[]).push([[2535],{45641:function(i){i.exports=JSON.parse('{"title":"All Posts","items":[{"title":"Design Decisions","permalink":"/blog/design-decisions"},{"title":"Motivation","permalink":"/blog/motivation"}]}')}}]);
