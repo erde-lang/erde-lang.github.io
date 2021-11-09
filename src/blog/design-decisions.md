@@ -15,3 +15,9 @@ TODO
 ## Compatability with Lua
 
 TODO
+
+## Breakage with Lua
+
+- table `:`
+
+## Shallow vs Deep destructuring
