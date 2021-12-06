@@ -1,58 +1,100 @@
-# Syntax
-
-TODO: "Inspired by XXX" footnotes
+---
+title: ''
+sidebar_label: Reference (for Lua users)
+---
 
 ## Comments
 
-Erde uses the same single-line comment syntax as lua, but replaces the
-multiline comment with `---`:
+Comments are unchanged from Lua.
 
 ```erde
--- this is a comment
----
+-- this is a single line comment
+--[[
   this is a
   multiline comment
----
+]]
 ```
 
-## Variables
+## Numbers
 
-Variables use the same syntax as lua. However, an optional `global` keyword has
-been added when declaring global variables, and is highly encouraged.
+Numbers are unchanged from Lua.
 
 ```erde
-local a = 1
-global b = 2
+print(43)
+print(1.9e1)
+print(0xfp+2)
 ```
 
 ## Strings
 
-Single/double quote strings are unchanged from lua:
+String syntax is _mostly_ unchanged from Lua. Erde additionally allows for
+interpolation in any string form using braces. Braces may be escaped to be used
+literally.
 
 ```erde
-local a = 'this is a single quote string'
-local b = "this is a double quote string"
+local msg = 'world'
+
+local singleQuotes = 'hello {msg}'
+local doubleQuotes = "double quotes: hello {msg}"
+local multiline = [[hello {msg}]]
+
+local braceLiteral = 'A brace literal: \{ 1, 2 \}'
 ```
 
-Strings that span multiple lines use backticks and allow for interpolation
-using braces:
+It is not necessary to escape the ending brace, but often helps with readability.
+
+## Variables / Scope
+
+Variable declarations are completely backwards compatible with Lua. However,
+the `global` and `module` scope keywords also have been added.
+
+### global
+
+An optional `global` keyword has been added when declaring global variables. It
+may only occur at the top level of a module.
 
 ```erde
-local msg = 'hello world!'
-local a = `
-  most programs
-  start with: {msg}
-`
+-- Good
+global MY_GLOBAL = 1
+
+if math.random(1, 10) > 5 {
+  -- Bad
+  global MY_GLOBAL = 1
+}
 ```
 
-You can escape backticks and braces to use them literally in a string:
+Note that Erde does not enforce the precence of the `global` operator, since the
+parser does not know the environment the script will be run in.
+
+### module
+
+A `module` keyword has been added that acts as an `export` statement. All
+variables with the `module` scope will be placed into a table, which is then
+returned at the end of the script. Like the `global` keyword, it may only occur
+at the top level of a module and may not be used in conjunction with `return`.
 
 ```erde
-local a = `
-  this is a backtick: \`
-  these are braces: \{\}
-`
+-- Good
+module function draw() {
+
+}
+
+if math.random(1, 10) > 5 {
+  -- Bad
+  module backgroundColor = '#ff0000'
+}
+
+-- Bad! Erde injects a return object automatically when using `module` keywords
+-- so this will cause an error.
+return {
+  draw = draw,
+}
 ```
+
+This keyword conflicts with the built-in `module` function in Lua 5.1, which
+means that the `module` function is not usable in Erde. However, due to this
+being the most fitting keyword and the [highly discouraged](http://lua-users.org/wiki/LuaModuleFunctionCritiqued)
+use of Lua's `module`, the decision was made to move forward regardless.
 
 ## Logic Flow
 
