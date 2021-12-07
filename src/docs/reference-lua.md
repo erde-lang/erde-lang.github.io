@@ -73,22 +73,15 @@ variables with the `module` scope will be placed into a table, which is then
 returned at the end of the script. Like the `global` keyword, it may only occur
 at the top level of a module and may not be used in conjunction with `return`.
 
-```erde
--- Good
-module function draw() {
-
+```erde title="foo.lua"
+module function echo(msg) {
+  print(msg)
 }
+```
 
-if math.random(1, 10) > 5 {
-  -- Bad
-  module backgroundColor = '#ff0000'
-}
-
--- Bad! Erde injects a return object automatically when using `module` keywords
--- so this will cause an error.
-return {
-  draw = draw,
-}
+```erde title="bar.lua"
+local foo = require('foo')
+foo.echo('hello world')
 ```
 
 This keyword conflicts with the built-in `module` function in Lua 5.1, which
@@ -96,19 +89,28 @@ means that the `module` function is not usable in Erde. However, due to this
 being the most fitting keyword and the [highly discouraged](http://lua-users.org/wiki/LuaModuleFunctionCritiqued)
 use of Lua's `module`, the decision was made to move forward regardless.
 
-## Logic Flow
+## Logic Constructs
 
-Logic flow constructs are the same as lua, but use braces for scoping:
+All logic constructs (`do`, `if...else`, `for`, `while`, `repeat...until`) in
+Lua are the same in Erde, with the exception of using braces instead of `end`.
+
+### do
+
+```erde
+do {
+  ...
+}
+```
 
 ### if else
 
 ```erde
 if n > 0 {
-  print('n is positive')
+  ...
 } elseif n < 0 {
-  print('n is negative')
+  ...
 } else {
-  print('n is zero')
+  ...
 }
 ```
 
@@ -116,11 +118,11 @@ if n > 0 {
 
 ```erde
 for i = 1, 10, 1 {
-  print(i)
+  ...
 }
 
 for i, v in ipairs({ 1, 2, 3 }) {
-  print(i, v)
+  ...
 }
 ```
 
@@ -128,34 +130,16 @@ for i, v in ipairs({ 1, 2, 3 }) {
 
 ```erde
 while true {
-  write_lua_programs()
+  ...
 }
 ```
 
 ### repeat ... until
 
 ```erde
-local n = 10
 repeat {
-  n = n - 1
-} until (n < 0)
-```
-
-### do
-
-`do` blocks in erde may optionally return values:
-
-```erde
-do {
-  local msg = 'hello world'
-  print(msg)
-}
-
-local msg = do {
-  -- do something
-  return 'hello world'
-}
-print(msg)
+  ...
+} until true
 ```
 
 ## Tables
