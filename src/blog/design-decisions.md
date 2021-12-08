@@ -10,14 +10,10 @@ Design decisions summary
 
 ## Dynamic vs Static Typing
 
-TODO
-
 ## Compatability with Lua
-
-TODO
 
 ## Breakage with Lua
 
-- table `:`
-
 ## Shallow vs Deep destructuring
+
+## No default local

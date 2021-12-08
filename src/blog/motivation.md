@@ -8,10 +8,6 @@ Motivation summary
 
 <!--truncate-->
 
-## Dynamic vs Static Typing
+## Braces vs end
 
-TODO
-
-## Compatability with Lua
-
-TODO
+## Why not moonscript

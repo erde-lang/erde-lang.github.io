@@ -27,21 +27,38 @@ print(0xfp+2)
 
 ## Strings
 
-String syntax is _mostly_ unchanged from Lua. Erde additionally allows for
+String are _mostly_ unchanged from Lua. Erde additionally allows for
 interpolation in any string form using braces. Braces may be escaped to be used
-literally.
+literally. Escaping the end brace is optional.
 
 ```erde
 local msg = 'world'
 
 local singleQuotes = 'hello {msg}'
-local doubleQuotes = "double quotes: hello {msg}"
+local doubleQuotes = "hello {msg}"
 local multiline = [[hello {msg}]]
 
-local braceLiteral = 'A brace literal: \{ 1, 2 \}'
+-- equivalent
+local braceLiteral1 = '\{ 1, 2 \}'
+local braceLiteral2 = '\{ 1, 2 }'
 ```
 
-It is not necessary to escape the ending brace, but often helps with readability.
+## Tables
+
+Tables are unchanged from Lua. This includes 1-based indexing.
+
+```erde
+local t = {
+  -- key value pairs
+  hello = 'world',
+  goodbye = 'society',
+  ['id:{myid}'] = 'test',
+
+  -- ipairs values
+  42,
+  'i am a string at index 2',
+}
+```
 
 ## Variables / Scope
 
@@ -50,8 +67,8 @@ the `global` and `module` scope keywords also have been added.
 
 ### global
 
-An optional `global` keyword has been added when declaring global variables. It
-may only occur at the top level of a module.
+The `global` keyword is an **_optional_** keyword for declaring global
+variables. It may only occur at the top level of a module.
 
 ```erde
 -- Good
@@ -63,15 +80,17 @@ if math.random(1, 10) > 5 {
 }
 ```
 
-Note that Erde does not enforce the precence of the `global` operator, since the
-parser does not know the environment the script will be run in.
+The reason the `global` keyword is optional is that the parser cannot know the
+environment the script will be run in. While we could provide "hints" to the
+compiler about a scripts environment, this is a lot of overhead that could prove
+more obnoxious than helpful. In the future, this may be an opt-in feature.
 
 ### module
 
-A `module` keyword has been added that acts as an `export` statement. All
-variables with the `module` scope will be placed into a table, which is then
-returned at the end of the script. Like the `global` keyword, it may only occur
-at the top level of a module and may not be used in conjunction with `return`.
+The `module` keyword acts as an `export` statement. All variables with the
+`module` scope will be placed into a table, which is then returned at the end of
+the script. Like the `global` keyword, it may only occur at the top level of a
+module and may not be used in conjunction with `return`.
 
 ```erde title="foo.lua"
 module function echo(msg) {
@@ -84,260 +103,10 @@ local foo = require('foo')
 foo.echo('hello world')
 ```
 
-This keyword conflicts with the built-in `module` function in Lua 5.1, which
-means that the `module` function is not usable in Erde. However, due to this
-being the most fitting keyword and the [highly discouraged](http://lua-users.org/wiki/LuaModuleFunctionCritiqued)
-use of Lua's `module`, the decision was made to move forward regardless.
-
-## Logic Constructs
-
-All logic constructs (`do`, `if...else`, `for`, `while`, `repeat...until`) in
-Lua are the same in Erde, with the exception of using braces instead of `end`.
-
-### do
-
-```erde
-do {
-  ...
-}
-```
-
-### if else
-
-```erde
-if n > 0 {
-  ...
-} elseif n < 0 {
-  ...
-} else {
-  ...
-}
-```
-
-### for
-
-```erde
-for i = 1, 10, 1 {
-  ...
-}
-
-for i, v in ipairs({ 1, 2, 3 }) {
-  ...
-}
-```
-
-### while
-
-```erde
-while true {
-  ...
-}
-```
-
-### repeat ... until
-
-```erde
-repeat {
-  ...
-} until true
-```
-
-## Tables
-
-### Declaration
-
-When declaring tables, erde uses `:` in place of `=` for key-value pairs. The
-bracket syntax from lua has been kept, but erde also allows for arbitrary
-strings as keys:
-
-```erde
-local t = {
-  -- key value pairs
-  hello: 'world',
-  goodbye: 'society',
-  ['id:' .. getkey()]: 'test',
-  'my-key': 'test',
-
-  -- ipairs values
-  42,
-  'i am a string at index 2',
-}
-```
-
-### Indexing (+ Optional Chaining)
-
-Indexing tables is the same as lua, including that tables are 1-indexed.
-However, erde also adds [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining),
-although with some slightly different semantics than javascript:
-
-```erde
-print(parent?.name)
-print(parent.children?[1])
-parent.children?[1].wakeparent?('i need food')
-```
-
-Contrary to javascript (which always requires `?.`), here we only need `?`
-before each index. As shown above, this also works for function calls.
-
-You can also use optional chaining during assignment. In this case, the
-assignment will simply not occur if the chain ends early:
-
-```erde
-local parent = {}
--- no children, doesn't do anything
-parent.children?[1].name = 'big complainer'
-```
-
-### Destructuring
-
-Erde tables support [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
-Destructuring key-value pairs uses the form `:xxx` (note the preceeding `:`)
-to distinguish itself from array destructuring:
-
-```erde
-local parent = {
-  name: 'bsuth',
-  'child1',
-  'child2',
-}
-
-local { :name } = parent
-local { firstkid, secondkid } = parent
-print(name, firstkid, secondkid) -- bsuth child1 child2
-
--- or all in one line
-local { :name, firstkid, secondkid } = parent
-```
-
-Nested destructuring is also supported, where the higher level index appears
-first, followed by it's destructure. Note that they are separated by a space.
-In this case, _only the deepest variables are kept in scope_.
-
-```erde
-local { :children { child1, child2 } } = parent
-print(children) -- nil
-print(child1) -- child
-print(child2) -- child
-```
-
-All destructured values can be assigned defaults. Note that this is also true
-for nested destructures:
-
-```erde
-local { :children = {} } = parent
-local { :children { child1 = 'mychild' } = {} } = parent
-print(child1) -- mychild
-```
-
-Note that nested destructuring will throw an `attempt to index a nil value`
-error if the key does not exist. While we can simply assign defaults everywhere,
-this can get pretty messy. Here, erde reuses the optional operator to allow
-an early exit of nested destructures. In this case the destructured variables
-will simply be `nil`:
-
-```erde
-local parent = {}
-local { :children? { child1 } } = parent
-print(child1) -- nil
-```
-
-## Functions
-
-### Declaration
-
-Named functions are the same as in Lua, but with braces:
-
-```erde
--- local function
-local function sum(a, b) {
-  return a + b
-}
-
--- non-local function
-function sum(a, b) {
-  return a + b
-}
-```
-
-However, anonymous functions do NOT use the lua `function() ... end` syntax.
-Instead, erde opts for arrow functions:
-
-```erde
-local greet = (name) -> {
-  print(`hello {name}!`)
-}
-```
-
-### Parameters
-
-Erde has support for optional parameters are varargs. Optional parameters are
-assigned a default value when nil and must come after non-optional parameters
-in the arguments list. Varargs must appear as the last parameter and may by
-optionally named:
-
-```erde
-local greet = (prefix, suffix = '!', ...names) -> {
-  print(prefix)
-  for _, name in ipairs(name) {
-    print(name)
-  }
-  print(suffix)
-}
-
-greet('hello') -- hello!
-greet('hello', nil, 'world') -- hello world!
-greet('hello', '...', 'a', 'b') -- hello a b ...
-```
-
-Table parameters may also be [destructured](#destructuring):
-
-```erde
-local greetperson = ({ :name }) -> {
-  print('hello {name}!')
-}
-
-greetperson({ name = 'world' })
-```
-
-### Fat vs Skinny Arrows
-
-Like lua, erde provides a shorthand for declaring functions that take self as
-the first parameter. In this case, the skinny arrow (`->`) is replaced with a
-fat one (`=>`):
-
-```erde
-local Person = { name = 'bsuth' }
-
-Person.introduce = () => {
-  print(`Hi, my name is {self.name}`)
-}
-```
-
-### Implicit Return
-
-Functions may specify an expression instead of a function body. In this case,
-the expression becomes the return value:
-
-```erde
-// these are equivalent
-
-local add = (x, y) -> x + y
-
-local add = (x, y) -> {
-  return x + y
-}
-```
-
-### Optional Parentheses
-
-If there is only one argument, then you may omit the parentheses. Note that this
-does _not_ work for optional parameters or varargs, but does work for
-destructuring:
-
-```erde
-local echo = name -> print(name)
-local greet = { :name } -> print('hello {name}!')
-```
+Note that this keyword conflicts with the built-in `module` function in Lua 5.1,
+which means that the `module` function is not usable in Erde (although the use
+of Lua's `module` function is [highly discouraged](http://lua-users.org/wiki/LuaModuleFunctionCritiqued)
+anyways).
 
 ## Operators
 
@@ -479,7 +248,7 @@ x /= 2
 print(x) -- 5
 ```
 
-## Pipes
+### Pipes
 
 Pipes are a new feature that forward an expression result into the arguments of
 a function call:
@@ -524,3 +293,218 @@ getchildren() >> print() -- only prints child!
 While erde _could_ allow pipes to pass multiple values, we restrict this to
 avoid the headache of having to debug situations where too many or too few
 arguments are getting passed somewhere in the pipe chain.
+
+## Logic Constructs
+
+All logic constructs in Lua (`do`, `if...else`, `for`, `while`, `repeat...until`)
+are the same in Erde, with the exception of using braces instead of `end`.
+
+### do
+
+```erde
+do {
+  ...
+}
+```
+
+### if else
+
+```erde
+if n > 0 {
+  ...
+} elseif n < 0 {
+  ...
+} else {
+  ...
+}
+```
+
+### for
+
+```erde
+for i = 1, 10, 1 {
+  ...
+}
+
+for i, v in ipairs({ 1, 2, 3 }) {
+  ...
+}
+```
+
+### while
+
+```erde
+while true {
+  ...
+}
+```
+
+### repeat ... until
+
+```erde
+repeat {
+  ...
+} until true
+```
+
+## Optional Chaining
+
+Erde allow for [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining),
+although with some slightly different semantics than JavaScript:
+
+```erde
+print(parent?.name)
+print(parent.children?[1])
+parent.children?[1].scream?('i need food')
+```
+
+Contrary to JavaScript (which always requires `?.`), here we only need `?`
+before each index. As shown above, this also works for function calls.
+
+You can also use optional chaining during assignment. In this case, the
+assignment will simply not occur if the chain ends early:
+
+```erde
+local parent = {}
+-- no children, doesn't do anything
+parent.children?[1].name = 'big complainer'
+```
+
+## Destructuring
+
+Erde tables support [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
+Destructuring key-value pairs uses the form `:xxx` (note the preceeding `:`)
+to distinguish itself from array destructuring:
+
+```erde
+local parent = {
+  name: 'bsuth',
+  'child1',
+  'child2',
+}
+
+local { :name } = parent
+local { firstkid, secondkid } = parent
+print(name, firstkid, secondkid) -- bsuth child1 child2
+
+-- or all in one line
+local { :name, firstkid, secondkid } = parent
+```
+
+Nested destructuring is also supported, where the higher level index appears
+first, followed by it's destructure. Note that they are separated by a space.
+In this case, _only the deepest variables are kept in scope_.
+
+```erde
+local { :children { child1, child2 } } = parent
+print(children) -- nil
+print(child1) -- child
+print(child2) -- child
+```
+
+All destructured values can be assigned defaults. Note that this is also true
+for nested destructures:
+
+```erde
+local { :children = {} } = parent
+local { :children { child1 = 'mychild' } = {} } = parent
+print(child1) -- mychild
+```
+
+Note that nested destructuring will throw an `attempt to index a nil value`
+error if the key does not exist. While we can simply assign defaults everywhere,
+this can get pretty messy. Here, erde reuses the optional operator to allow
+an early exit of nested destructures. In this case the destructured variables
+will simply be `nil`:
+
+```erde
+local parent = {}
+local { :children? { child1 } } = parent
+print(child1) -- nil
+```
+
+## Functions
+
+Named functions are the same as Lua, but use braces instead of `end`:
+
+```erde
+local function sum(a, b) {
+  return a + b
+}
+```
+
+However, anonymous functions do NOT use the `function() ... end` syntax.
+Instead, erde opts for arrow functions:
+
+```erde
+local greet = (name) -> {
+  print(`hello {name}!`)
+}
+```
+
+### Parameters
+
+Erde has support for optional parameters are varargs. Optional parameters are
+assigned a default value when nil and must come after non-optional parameters
+in the arguments list. Varargs must appear as the last parameter and may by
+optionally named:
+
+```erde
+local greet = (prefix, suffix = '!', ...names) -> {
+  print(prefix)
+  for _, name in ipairs(name) {
+    print(name)
+  }
+  print(suffix)
+}
+
+greet('hello') -- hello!
+greet('hello', nil, 'world') -- hello world!
+greet('hello', '...', 'a', 'b') -- hello a b ...
+```
+
+Table parameters may also be [destructured](#destructuring):
+
+```erde
+local greetperson = ({ :name }) -> {
+  print('hello {name}!')
+}
+
+greetperson({ name = 'world' })
+```
+
+### Arrow Functions
+
+Like lua, erde provides a shorthand for declaring functions that take self as
+the first parameter. In this case, the skinny arrow (`->`) is replaced with a
+fat one (`=>`):
+
+```erde
+local Person = { name = 'bsuth' }
+
+Person.introduce = () => {
+  print(`Hi, my name is {self.name}`)
+}
+```
+
+Functions may specify an expression instead of a function body. In this case,
+the expression becomes the return value:
+
+```erde
+// these are equivalent
+
+local add = (x, y) -> x + y
+
+local add = (x, y) -> {
+  return x + y
+}
+```
+
+If there is only one argument, then you may omit the parentheses. Note that this
+does _not_ work for optional parameters or varargs, but does work for
+destructuring:
+
+```erde
+local echo = name -> print(name)
+local greet = { :name } -> print('hello {name}!')
+```
