@@ -5,7 +5,7 @@ sidebar_label: Reference (for Lua users)
 
 ## Comments
 
-Comments are unchanged from Lua.
+Unchanged from Lua.
 
 ```erde
 -- this is a single line comment
@@ -17,7 +17,7 @@ Comments are unchanged from Lua.
 
 ## Numbers
 
-Numbers are unchanged from Lua.
+Unchanged from Lua.
 
 ```erde
 print(43)
@@ -45,7 +45,7 @@ local braceLiteral2 = '\{ 1, 2 }'
 
 ## Tables
 
-Tables are unchanged from Lua. This includes 1-based indexing.
+Unchanged from Lua. This includes 1-based indexing.
 
 ```erde
 local t = {
@@ -112,6 +112,8 @@ anyways).
 
 ### Arithmetic Operators
 
+Unchanged from Lua.
+
 <center>
 
 | Syntax | Operator       | Example      |
@@ -127,30 +129,9 @@ anyways).
 
 </center>
 
-### Bitwise Operators
-
-Erde supports bitwise operators, but unlike most languages repurposes the
-syntax. **_Traditional bitwise operators must be prefixed with `.`._**
-
-The reason for this is that the bitwise operators are far too seldom used to
-consume some of the most important operator characters available. The
-traditional bitwise operators have been assigned different functions in order to
-reduce noise. See [Logical Operators](#logical-operators) and [Pipes](#pipes).
-
-<center>
-
-| Syntax | Operator    | Example                  |
-| :----- | :---------- | :----------------------- |
-| .\|    | or          | 0b100 .\| 0b010 == 0b110 |
-| .&     | and         | 0b110 .& 0b101 == 0b100  |
-| .~     | xor         | 0b110 .~ 0b101 == 0b011  |
-| .~     | unary NOT   | .~0b100 == 0b011         |
-| .>>    | right shift | 0b010 .>> 1 == 0b001     |
-| .<<    | left shift  | 0b010 .<< 1 == 0b100     |
-
-</center>
-
 ### Relational Operators
+
+Unchanged from Lua.
 
 <center>
 
@@ -167,11 +148,6 @@ reduce noise. See [Logical Operators](#logical-operators) and [Pipes](#pipes).
 
 ### Logical Operators
 
-As mentioned in the [Bitwise Operators](#bitwise-operators) section, the
-traditional bitwise operator syntax is available for use, and this is one such
-where we employ it. Instead of the awkward doubling of operators (such as `&&`
-and `||`), we simply use the traditional bitwise counterparts.
-
 <center>
 
 | Syntax | Operator  | Example               |
@@ -181,65 +157,103 @@ and `||`), we simply use the traditional bitwise counterparts.
 | ~      | unary NOT | ~false == true        |
 
 </center>
+<br />
 
-The unary logical NOT operator uses the `~` syntax in order to maintain
-consistency with inequality (`~=`). Many will have mixed feelings about this,
-but I felt reluctant to change the `~=` syntax. I wanted erde to feel very
-natural specifically for _lua_ developers in particular, and having used lua for
-awhile now I have grow very accustomed (and even now enjoy) the syntax. After
-the decision to keep `~=` was made, I subsequently chose to adopt `~` as the
-unary NOT operator in order to maintain consistency.
+The unary logical NOT operator uses the `~` token in order to maintain
+consistency with inequality (`~=`). The `!` and `!=` tokens were intentionally
+avoided as it would surely cause divides among developers on which to use. It
+also leaves the `!` token available for use in the future.
 
-I intentionally did not add `!` and `!=` as aliases, as I feel the preference
-would cause divides the community and it leaves the `!` syntax open for future
-operations.
+### Bitwise Operators
 
-### Misc Operators
+Erde supports bitwise operators, but unlike most languages repurposes the
+syntax. **_Traditional bitwise operators must be prefixed with `.`._**
 
-#### Concatenation/Length Operators
+<center>
 
-Unchanged from lua.
+| Syntax | Operator    | Example                  |
+| :----- | :---------- | :----------------------- |
+| .\|    | or          | 0b100 .\| 0b010 == 0b110 |
+| .&     | and         | 0b110 .& 0b101 == 0b100  |
+| .~     | xor         | 0b110 .~ 0b101 == 0b011  |
+| .~     | unary NOT   | .~0b100 == 0b011         |
+| .>>    | right shift | 0b010 .>> 1 == 0b001     |
+| .<<    | left shift  | 0b010 .<< 1 == 0b100     |
+
+</center>
+<br />
+
+The reason for the unconventional syntax is that Erde uses the `~` symbol as the
+unary logical NOT to remain consistent with `~=`, which conflicts with Lua5.3+'s
+unary bitwise NOT and bitwise exclusive OR. The traditional bitop symbols also
+consume some of the most convenient syntax tokens while being seldom used by
+the average developer. Prefixing traditional bitwise operators with `.` frees
+these tokens for other uses, such as using `&` for logical AND (instead of the
+more awkward `&&`) and `>>` for the [Pipe Operator](#pipe-operator).
+
+When compiling to Lua 5.1 or 5.2, Erde will assume the target platform has
+access to the [BitOp](http://bitop.luajit.org) module and bit operations will
+compile down to `require('bit').xxx()` calls.
+
+### Concatenation / Length Operators
+
+Unchanged from Lua.
 
 ```erde
 print("hello" .. "world") -- helloworld
 print(#"hello") -- 5
 ```
 
-#### Ternary Operator
+### Ternary Operator
 
-```erde title="erde"
-a ? b : c
+The [ternary operator](https://en.wikipedia.org/wiki/Ternary_operation) is fully
+supported in Erde. It was added to avoid the more awkward `a and b or c` syntax
+(which is NOT compatible with the ternary operator in the case `b` is false).
+
+```erde
+local x = myCondition ? trueExpr : falseExpr
 ```
 
-```lua title="lua"
-(function()
-  if a then
-    return b
-  else
-    return c
-  end
-)()
+### Null Coalascing Operator
+
+The [null coalescing operator](https://en.wikipedia.org/wiki/Null_coalescing_operator)
+is fully supported in Erde using `??`.
+
+```erde
+local x = myValue ?? defaultValue
 ```
 
-#### Null Coalascing Operator
+### Pipe Operator
 
-```erde title="erde"
-a ?? b
+The pipe operator forwards expressions into the arguments of
+a function call. The initial values may be given as a single expression or as
+a list of expressions surrounded by parentheses. The right hand side of the pipe
+operator **must** be a function call.
+
+```erde
+ -- hello world
+'hello world' >> print()
+
+-- hello
+-- world
+('hello', 'world') >> print()
 ```
 
-```lua title="lua"
-(function()
-  if a ~= nil  then
-    return a
-  else
-    return b
-  end
-)()
+They may be chained together, passing the returns of one function into the
+arguments of another.
+
+```erde
+function add(a, b) {
+  return a + b
+}
+
+(1, 2) >> add() >> add(3) >> print() -- 6
 ```
 
 ### Assignment Operators
 
-All binary operators support assignment operator shorthands:
+All binary operators support assignment operator shorthands. This includes the
+[null coalescing](#null-coalascing-operator) operator
 
 ```erde
 local x = 4
@@ -247,52 +261,6 @@ x += 6
 x /= 2
 print(x) -- 5
 ```
-
-### Pipes
-
-Pipes are a new feature that forward an expression result into the arguments of
-a function call:
-
-```erde
-local getmessage = () -> {
-  return 'hello world'
-}
-
-'hello world' >> print()
-```
-
-They are particularly useful for chaining function calls:
-
-```erde
-{ 1, 2, 3}
-  >> map(n -> 2 * n)
-  >> reduce((sum, n) -> sum + n)
-  >> print() -- 11
-```
-
-Because this behavior conflicts with that of method calls
-(`mytable:somemethod()`), erde provides a syntax to pipe into methods, which
-places `self` as the first parameter and the expression result as the second:
-
-```erde
-mycustomclass
-  >> :mymethod()
-  >> :myothermethod()
-```
-
-Note that pipes **cannot** pass multiple values:
-
-```erde
-local getchildren = () -> {
-  return 'child1', 'child2'
-}
-
-getchildren() >> print() -- only prints child!
-```
-
-While erde _could_ allow pipes to pass multiple values, we restrict this to
-avoid the headache of having to debug situations where too many or too few
-arguments are getting passed somewhere in the pipe chain.
 
 ## Logic Constructs
 
