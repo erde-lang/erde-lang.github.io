@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://erde-lang.github.io/blog</id>
     <title>Erde Blog</title>
-    <updated>2021-12-07T03:31:01.764Z</updated>
+    <updated>2021-12-08T23:58:46.788Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://erde-lang.github.io/blog"/>
     <subtitle>Erde Blog</subtitle>
@@ -11,16 +11,16 @@
         <title type="html"><![CDATA[Design Decisions]]></title>
         <id>design-decisions</id>
         <link href="https://erde-lang.github.io/blog/design-decisions"/>
-        <updated>2021-12-07T03:31:01.764Z</updated>
+        <updated>2021-12-08T23:58:46.788Z</updated>
         <summary type="html"><![CDATA[Design decisions of Erde.]]></summary>
-        <content type="html"><![CDATA[<p>Design decisions summary</p><h2>Dynamic vs Static Typing</h2><p>TODO</p><h2>Compatability with Lua</h2><p>TODO</p><h2>Breakage with Lua</h2><ul><li>table <code>:</code></li></ul><h2>Shallow vs Deep destructuring</h2>]]></content>
+        <content type="html"><![CDATA[<p>Design decisions summary</p><h2>Dynamic vs Static Typing</h2><h2>Compatability with Lua</h2><h2>Breakage with Lua</h2><h2>Shallow vs Deep destructuring</h2><h2>No default local</h2>]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Motivation]]></title>
         <id>motivation</id>
         <link href="https://erde-lang.github.io/blog/motivation"/>
-        <updated>2021-12-07T03:31:01.764Z</updated>
+        <updated>2021-12-08T23:58:46.788Z</updated>
         <summary type="html"><![CDATA[The motivations behind Erde.]]></summary>
-        <content type="html"><![CDATA[<p>Motivation summary</p><h2>Dynamic vs Static Typing</h2><p>TODO</p><h2>Compatability with Lua</h2><p>TODO</p>]]></content>
+        <content type="html"><![CDATA[<p>Motivation summary</p><h2>Braces vs end</h2><h2>Why not moonscript</h2>]]></content>
     </entry>
 </feed>
