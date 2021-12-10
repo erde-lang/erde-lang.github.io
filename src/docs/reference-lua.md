@@ -227,8 +227,7 @@ local x = myValue ?? defaultValue
 
 The pipe operator forwards expressions into the arguments of
 a function call. The initial values may be given as a single expression or as
-a list of expressions surrounded by parentheses. The right hand side of the pipe
-operator **must** be a function call.
+a list of expressions surrounded by parentheses.
 
 ```erde
  -- hello world
@@ -239,15 +238,25 @@ operator **must** be a function call.
 ('hello', 'world') >> print()
 ```
 
-They may be chained together, passing the returns of one function into the
-arguments of another.
+Each function call may also specify additional arguments. These values will
+always be passed in _before_ the piped ones.
+
+```erde
+ -- a
+ -- b
+ -- c
+('b', 'c') >> print('a')
+```
+
+Pipes can be (and often are) chained together, passing the returns of one pipe
+function into the arguments of another.
 
 ```erde
 function add(a, b) {
   return a + b
 }
 
-(1, 2) >> add() >> add(3) >> print() -- 6
+1 >> add(2) >> add(3) >> print() -- 6
 ```
 
 ### Assignment Operators
@@ -265,7 +274,8 @@ print(x) -- 5
 ## Logic Constructs
 
 All logic constructs in Lua (`do`, `if...else`, `for`, `while`, `repeat...until`)
-are the same in Erde, with the exception of using braces instead of `end`.
+are the same in Erde, with the exception of using braces instead of `end`. Erde
+additionally adds a `continue` statement and `try...catch` construct.
 
 ### do
 
@@ -313,6 +323,34 @@ while true {
 repeat {
   ...
 } until true
+```
+
+### Try Catch
+
+Erde support `try...catch` statements to catch errors thrown by Lua's `error`
+function. Under the hood it is simply a wrapper around `pcall`.
+
+```erde
+try {
+  error('my error message')
+} catch (err) {
+  print(err) -- my error message
+}
+```
+
+### continue
+
+Erde adds the `continue` keyword, which will advance to the next iteration of
+the closest looping block (`for`, `while`, `repeat...until`).
+
+```erde
+for i = 1, 10 {
+  if i % 2 == 0 {
+    continue
+  }
+
+  print('i is odd')
+}
 ```
 
 ## Optional Chaining
@@ -406,7 +444,7 @@ Instead, erde opts for arrow functions:
 
 ```erde
 local greet = (name) -> {
-  print(`hello {name}!`)
+  print([[hello {name}!]])
 }
 ```
 
