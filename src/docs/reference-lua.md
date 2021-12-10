@@ -15,17 +15,11 @@ Unchanged from Lua.
 ]]
 ```
 
-## Numbers
+## Types
 
-Unchanged from Lua.
+Numbers, booleans, and `nil` are all unchanged from Lua.
 
-```erde
-print(43)
-print(1.9e1)
-print(0xfp+2)
-```
-
-## Strings
+### Strings
 
 String are _mostly_ unchanged from Lua. Erde additionally allows for
 interpolation in any string form using braces. Braces may be escaped to be used
@@ -43,9 +37,10 @@ local braceLiteral1 = '\{ 1, 2 \}'
 local braceLiteral2 = '\{ 1, 2 }'
 ```
 
-## Tables
+### Tables
 
-Unchanged from Lua. This includes 1-based indexing.
+Tables are completely backwards compatible with Lua, including that tables use
+1-based indexing.
 
 ```erde
 local t = {
@@ -58,6 +53,14 @@ local t = {
   42,
   'i am a string at index 2',
 }
+```
+
+Tables also support the [Spread Operator](#spread-operator).
+
+```erde
+local a = { hello = 'world' }
+local b = { ...a }
+print(b.hello) -- world
 ```
 
 ## Variables / Scope
@@ -221,6 +224,27 @@ is fully supported in Erde using `??`.
 
 ```erde
 local x = myValue ?? defaultValue
+```
+
+### Spread Operator
+
+Erde supports the [Spread Operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax),
+which expands a tables values into either another table or function arguments.
+Note that key, value pairs will be ignored when spreading into function arguments.
+
+```erde
+local a = { hello = 'world' }
+local b = { ...a }
+print(b.hello) -- world
+```
+
+```erde
+function add(a, b) {
+  return a + b
+}
+
+local a = { 1, 2 }
+print(add(...a)) -- 3
 ```
 
 ### Pipe Operator
