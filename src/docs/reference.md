@@ -1,7 +1,9 @@
 ---
 title: ''
-sidebar_label: Reference (for Lua users)
+sidebar_label: Reference
 ---
+
+This reference assumes previous knowledge of [Lua](https://www.lua.org/manual/).
 
 ## Comments
 
@@ -151,6 +153,9 @@ Unchanged from Lua.
 
 ### Logical Operators
 
+Due to Erde favor of symbols over words, the logical operators are quite
+different than Lua.
+
 <center>
 
 | Syntax | Operator  | Example               |
@@ -164,7 +169,7 @@ Unchanged from Lua.
 
 The unary logical NOT operator uses the `~` token in order to maintain
 consistency with inequality (`~=`). The `!` and `!=` tokens were intentionally
-avoided as it would surely cause divides among developers on which to use. It
+avoided as it would surely cause divides among the community on which to use. It
 also leaves the `!` token available for use in the future.
 
 ### Bitwise Operators
@@ -211,7 +216,7 @@ print(#"hello") -- 5
 
 The [ternary operator](https://en.wikipedia.org/wiki/Ternary_operation) is fully
 supported in Erde. It was added to avoid the more awkward `a and b or c` syntax
-(which is NOT compatible with the ternary operator in the case `b` is false).
+(which is **not** compatible with the ternary operator in the case `b` is false).
 
 ```erde
 local x = myCondition ? trueExpr : falseExpr
@@ -228,9 +233,8 @@ local x = myValue ?? defaultValue
 
 ### Spread Operator
 
-Erde supports the [Spread Operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax),
-which expands a tables values into either another table or function arguments.
-Note that key, value pairs will be ignored when spreading into function arguments.
+Erde supports the Spread Operator, which expands table values into either
+another table or function arguments.
 
 ```erde
 local a = { hello = 'world' }
@@ -246,6 +250,8 @@ function add(a, b) {
 local a = { 1, 2 }
 print(add(...a)) -- 3
 ```
+
+Note that key, value pairs will be ignored when spreading into function arguments.
 
 ### Pipe Operator
 
@@ -286,7 +292,7 @@ function add(a, b) {
 ### Assignment Operators
 
 All binary operators support assignment operator shorthands. This includes the
-[null coalescing](#null-coalascing-operator) operator
+[Null Coalescing Operator](#null-coalascing-operator).
 
 ```erde
 local x = 4
@@ -349,7 +355,7 @@ repeat {
 } until true
 ```
 
-### Try Catch
+### try ... catch
 
 Erde support `try...catch` statements to catch errors thrown by Lua's `error`
 function. Under the hood it is simply a wrapper around `pcall`.
@@ -377,34 +383,147 @@ for i = 1, 10 {
 }
 ```
 
-## Optional Chaining
+## Functions
 
-Erde allow for [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining),
-although with some slightly different semantics than JavaScript:
+Named functions are the same as Lua, but use braces instead of `end`:
 
 ```erde
-print(parent?.name)
-print(parent.children?[1])
-parent.children?[1].scream?('i need food')
+local function sum(a, b) {
+  return a + b
+}
 ```
 
-Contrary to JavaScript (which always requires `?.`), here we only need `?`
-before each index. As shown above, this also works for function calls.
-
-You can also use optional chaining during assignment. In this case, the
-assignment will simply not occur if the chain ends early:
+Table parameters may also be [destructured](#destructuring):
 
 ```erde
-local parent = {}
--- no children, doesn't do anything
-parent.children?[1].name = 'big complainer'
+local function introduce({ name }) {
+  print(name)
+}
+
+introduce({ name = 'world' })
+```
+
+### Parameter Defaults
+
+Erde has support for parameter defaults. Since all parameters in Lua are
+optional, any parameter in Erde may be assigned a default value, i.e.  defaulted
+parameters need not come after non-defaulted parameters.
+
+```erde
+function myfunc(a, b = 1, c) {
+  return a + b + c
+}
+
+myfunc(1, nil, 3) -- 5
+```
+
+### Varargs
+
+Erde supports varargs which, like Lua, **must** appear last in the parameter
+list. Erde adds the option to name varargs.
+
+``` erde
+function sum(...summands) {
+  local total = 0
+
+  for _, summand in ipairs(summands) {
+    total += summand
+  }
+
+  return total
+}
+```
+
+### Arrow Functions
+
+Lua's anonymous function syntax (`function() ... end`) is not valid in Erde.
+Instead, Erde opts for arrow functions.
+
+```erde
+local sum = (a, b) -> {
+  return a + b
+}
+```
+
+Arrow functions can implicitly take `self` as the first parameter by using a
+fat arrow instead of a skinny one.
+
+```erde
+local Person = { name = 'world' }
+
+Person.introduce = () => {
+  print(self.name)
+}
+```
+
+Arrow function mays also specify an expression instead of a function body. In
+this case, the expression becomes the return value:
+
+```erde
+// these are equivalent
+
+local add = (x, y) -> x + y
+
+local add = (x, y) -> {
+  return x + y
+}
+```
+
+The parameter parentheses are optional if there is only one argument. Note that
+this does _not_ work with [Parameter Defaults](#parameter-defaults) or
+[Varargs](#varargs) but does work for [Destructuring](#destructuring).
+
+```erde
+local greet = { name } -> print('hello {name}!')
+greet({ name = 'world' })
+```
+
+## Optional Chaining
+
+Erde supports optional chaining, which allows an index to return `nil` rather
+than throw an error if the variable is `nil`. It may be applied to key-value
+indexes, number indexes, and function calls.
+
+```erde
+local a = nil
+
+-- these are return nil
+print(a?.b) -- key, value index
+print(a?[1]) -- number index
+print(a?()) -- function call
+```
+
+It is particularly useful when indexing an object deeply, where an intermediate
+value may or may not be present.
+
+```erde
+local personA = {
+  name = 'A',
+  children = {
+    { name = 'Aa' }
+  }
+}
+
+local personB = { name = 'B' }
+
+print(personA.children?[1].name) -- Aa
+print(personB.children?[1].name) -- nil
+
+```
+
+You can also use optional chaining during assignment. In this case, the
+assignment will simply not occur if the chain ends early.
+
+```erde
+local personB = { name = 'B' }
+personB.children?[1].name = 'Bb'
+print(personB.children?[1].name) -- nil
 ```
 
 ## Destructuring
 
-Erde tables support [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
-Destructuring key-value pairs uses the form `:xxx` (note the preceeding `:`)
-to distinguish itself from array destructuring:
+Erde supports [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment),
+both for assignment and in function parameters.
 
 ```erde
 local parent = {
@@ -451,90 +570,4 @@ will simply be `nil`:
 local parent = {}
 local { :children? { child1 } } = parent
 print(child1) -- nil
-```
-
-## Functions
-
-Named functions are the same as Lua, but use braces instead of `end`:
-
-```erde
-local function sum(a, b) {
-  return a + b
-}
-```
-
-However, anonymous functions do NOT use the `function() ... end` syntax.
-Instead, erde opts for arrow functions:
-
-```erde
-local greet = (name) -> {
-  print([[hello {name}!]])
-}
-```
-
-### Parameters
-
-Erde has support for optional parameters are varargs. Optional parameters are
-assigned a default value when nil and must come after non-optional parameters
-in the arguments list. Varargs must appear as the last parameter and may by
-optionally named:
-
-```erde
-local greet = (prefix, suffix = '!', ...names) -> {
-  print(prefix)
-  for _, name in ipairs(name) {
-    print(name)
-  }
-  print(suffix)
-}
-
-greet('hello') -- hello!
-greet('hello', nil, 'world') -- hello world!
-greet('hello', '...', 'a', 'b') -- hello a b ...
-```
-
-Table parameters may also be [destructured](#destructuring):
-
-```erde
-local greetperson = ({ :name }) -> {
-  print('hello {name}!')
-}
-
-greetperson({ name = 'world' })
-```
-
-### Arrow Functions
-
-Like lua, erde provides a shorthand for declaring functions that take self as
-the first parameter. In this case, the skinny arrow (`->`) is replaced with a
-fat one (`=>`):
-
-```erde
-local Person = { name = 'bsuth' }
-
-Person.introduce = () => {
-  print(`Hi, my name is {self.name}`)
-}
-```
-
-Functions may specify an expression instead of a function body. In this case,
-the expression becomes the return value:
-
-```erde
-// these are equivalent
-
-local add = (x, y) -> x + y
-
-local add = (x, y) -> {
-  return x + y
-}
-```
-
-If there is only one argument, then you may omit the parentheses. Note that this
-does _not_ work for optional parameters or varargs, but does work for
-destructuring:
-
-```erde
-local echo = name -> print(name)
-local greet = { :name } -> print('hello {name}!')
 ```
