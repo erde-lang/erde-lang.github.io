@@ -522,52 +522,63 @@ print(personB.children?[1].name) -- nil
 
 ## Destructuring
 
-Erde supports [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment),
-both for assignment and in function parameters.
+Erde supports destructuring, which allows a convenient syntax to extract values
+from a table. It may be used to either declare variables or in function
+parameters.
 
 ```erde
-local parent = {
-  name: 'bsuth',
-  'child1',
-  'child2',
+-- declaration
+local a = { hello = 'world' }
+local { hello } = a
+print(hello) -- world
+
+-- function params
+function introduce({ name }) {
+  print(name)
 }
 
-local { :name } = parent
-local { firstkid, secondkid } = parent
-print(name, firstkid, secondkid) -- bsuth child1 child2
-
--- or all in one line
-local { :name, firstkid, secondkid } = parent
+introduce({ name = 'world' })
 ```
 
-Nested destructuring is also supported, where the higher level index appears
-first, followed by it's destructure. Note that they are separated by a space.
-In this case, _only the deepest variables are kept in scope_.
+Specified names extract key-value pairs from the destructured table. To extract
+array values, you may specify names in brackets.
 
 ```erde
-local { :children { child1, child2 } } = parent
-print(children) -- nil
-print(child1) -- child
-print(child2) -- child
+local a = {
+  hello = 'world',
+  'first index',
+  'second index',
+}
+
+local { hello, [first, second] } = a
 ```
 
-All destructured values can be assigned defaults. Note that this is also true
-for nested destructures:
+The braces are optional if only array values are destructured.
 
 ```erde
-local { :children = {} } = parent
-local { :children { child1 = 'mychild' } = {} } = parent
-print(child1) -- mychild
+local a = {
+  hello = 'world',
+  'first index',
+  'second index',
+}
+
+local [first, second] = a
 ```
 
-Note that nested destructuring will throw an `attempt to index a nil value`
-error if the key does not exist. While we can simply assign defaults everywhere,
-this can get pretty messy. Here, erde reuses the optional operator to allow
-an early exit of nested destructures. In this case the destructured variables
-will simply be `nil`:
+Destructured values may also be given aliases, which is particularly useful
+if the destructured key is a generic name.
 
 ```erde
-local parent = {}
-local { :children? { child1 } } = parent
-print(child1) -- nil
+local a = {
+  hello = 'world',
+  'first index',
+  'second index',
+}
+
+local { hello: worldHello } = a
+print(worldHello) -- 'world'
 ```
+
+Note that unlike most languages, nested destructuring is **_not_** supported.
+This is intentional, as nested destructuring syntax often makes code more
+cryptic and difficult to read.
