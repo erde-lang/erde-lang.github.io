@@ -73,7 +73,7 @@ the `global` and `module` scope keywords also have been added.
 ### global
 
 The `global` keyword is an **_optional_** keyword for declaring global
-variables. It may only occur at the top level of a module.
+variables (or rather, declaring a variable in the current environment).
 
 ```erde
 -- Good
@@ -86,16 +86,16 @@ if math.random(1, 10) > 5 {
 ```
 
 The reason the `global` keyword is optional is that the parser cannot know the
-environment the script will be run in. While we could provide "hints" to the
-compiler about a scripts environment, this is a lot of overhead that could prove
-more obnoxious than helpful. In the future, this may be an opt-in feature.
+environment the script will be run in, and thus is not able to determine the
+difference between assigning a new value to an existing environment variable and
+declaring a new variable.
 
 ### module
 
 The `module` keyword acts as an `export` statement. All variables with the
 `module` scope will be placed into a table, which is then returned at the end of
-the script. Like the `global` keyword, it may only occur at the top level of a
-module and may not be used in conjunction with `return`.
+the script. It may only occur at the top level of a module and may not be used
+in conjunction with `return`.
 
 ```erde title="foo.lua"
 module function echo(msg) {
