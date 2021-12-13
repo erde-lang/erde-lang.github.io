@@ -406,7 +406,7 @@ introduce({ name = 'world' })
 ### Parameter Defaults
 
 Erde has support for parameter defaults. Since all parameters in Lua are
-optional, any parameter in Erde may be assigned a default value, i.e.  defaulted
+optional, any parameter in Erde may be assigned a default value, i.e. defaulted
 parameters need not come after non-defaulted parameters.
 
 ```erde
@@ -422,7 +422,7 @@ myfunc(1, nil, 3) -- 5
 Erde supports varargs which, like Lua, **must** appear last in the parameter
 list. Erde adds the option to name varargs.
 
-``` erde
+```erde
 function sum(...summands) {
   local total = 0
 
