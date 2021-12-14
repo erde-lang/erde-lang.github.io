@@ -457,15 +457,21 @@ Person.introduce = () => {
 ```
 
 Arrow function mays also specify an expression instead of a function body. In
-this case, the expression becomes the return value:
+this case, the expression becomes the return value.
+
+When returning multiple values, the returns must be surrounded by parentheses.
 
 ```erde
 // these are equivalent
 
 local add = (x, y) -> x + y
-
 local add = (x, y) -> {
   return x + y
+}
+
+local echo = (x, y) -> (x, y)
+local echo = (x, y) -> {
+  return x, y
 }
 ```
 
