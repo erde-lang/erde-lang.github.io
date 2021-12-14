@@ -4,14 +4,14 @@
         <title>Erde Blog</title>
         <link>https://erde-lang.github.io/blog</link>
         <description>Erde Blog</description>
-        <lastBuildDate>Mon, 13 Dec 2021 08:35:31 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 14 Dec 2021 03:58:17 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[Design Decisions]]></title>
             <link>https://erde-lang.github.io/blog/design-decisions</link>
             <guid>design-decisions</guid>
-            <pubDate>Mon, 13 Dec 2021 08:35:31 GMT</pubDate>
+            <pubDate>Tue, 14 Dec 2021 03:58:17 GMT</pubDate>
             <description><![CDATA[Design decisions of Erde.]]></description>
             <content:encoded><![CDATA[<p>Design decisions summary</p><h2>Dynamic vs Static Typing</h2><h2>Compatability with Lua</h2><h2>Breakage with Lua</h2><h2>Shallow vs Deep destructuring</h2><h2>No default local</h2>]]></content:encoded>
         </item>
@@ -19,7 +19,7 @@
             <title><![CDATA[Motivation]]></title>
             <link>https://erde-lang.github.io/blog/motivation</link>
             <guid>motivation</guid>
-            <pubDate>Mon, 13 Dec 2021 08:35:31 GMT</pubDate>
+            <pubDate>Tue, 14 Dec 2021 03:58:17 GMT</pubDate>
             <description><![CDATA[The motivations behind Erde.]]></description>
             <content:encoded><![CDATA[<p>Motivation summary</p><h2>Braces vs end</h2><h2>Why not moonscript</h2>]]></content:encoded>
         </item>
