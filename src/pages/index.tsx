@@ -6,10 +6,8 @@ import styles from './index.module.scss';
 
 export default () => (
   <Layout pageClassName={styles.page}>
-    <div className={styles.logo}>
-      <Logo />
-      <h1>Erde</h1>
-    </div>
+    <Logo />
+    <h1>Erde</h1>
     <p>
       Erde is a programming language that compiles to Lua. It was created with
       the intention of allowing for more expressive Lua code.
