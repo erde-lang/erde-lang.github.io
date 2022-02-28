@@ -37,11 +37,11 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
         },
         blog: {
-          path: './src/blog',
-          blogTitle: 'Blog',
-          blogDescription: 'Blog for the Erde programming language.',
+          path: './src/articles',
+          routeBasePath: 'articles',
+          blogTitle: 'Articles',
           postsPerPage: 'ALL',
-          blogSidebarTitle: 'All Posts',
+          blogSidebarTitle: 'All Articles',
           blogSidebarCount: 'ALL',
           showReadingTime: false,
         },
@@ -71,8 +71,8 @@ module.exports = {
             position: 'left',
           },
           {
-            href: '/blog',
-            label: 'Blog',
+            href: '/articles',
+            label: 'Articles',
             position: 'left',
           },
           {
