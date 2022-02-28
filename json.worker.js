@@ -535,7 +535,7 @@ let _isWeb = false;
 let _isIOS = false;
 let _locale = undefined;
 let _language = (/* unused pure expression or super */ null && (LANGUAGE_DEFAULT));
-let _translationsConfigFile = undefined;
+let _translationsConfigFile = (/* unused pure expression or super */ null && (undefined));
 let _userAgent = undefined;
 const globals = (typeof self === 'object' ? self : typeof global === 'object' ? global : {});
 let nodeProcess = undefined;
