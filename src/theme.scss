@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------------
 
 // General font
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
 
 // Monaco editor font
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
@@ -16,24 +16,48 @@
 
 :root {
   // Palette
-  --erde-white: #e8e8e8;
-  --erde-black: #2c2c33;
-  --erde-green: #25c359;
+  --void: #000000;
+  --pure: #ffffff;
+  --white: #f0f0f0;
+  --black: #24272b;
+  --green: #25c359;
 
   // Core
-  --ifm-background-color: var(--erde-white);
-  --ifm-color-primary: var(--erde-green);
+  --ifm-color-primary: var(--green);
   --ifm-color-primary-light: #29d662;
   --ifm-color-primary-lighter: #33d869;
   --ifm-color-primary-lightest: #50de7f;
 
   // Navbar
-  --ifm-navbar-background-color: var(--erde-black);
-  --ifm-navbar-link-color: var(--erde-white);
+  --ifm-navbar-shadow: none;
+
+  // Headers
+  --ifm-heading-font-family: 'Manrope', sans-serif;
+  --ifm-heading-font-weight: 500;
 
   // Misc
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: 'Comfortaa', cursive;
+  --ifm-toc-border-color: none;
+}
+
+html[data-theme='light'] {
+  // Core
+  --ifm-background-color: var(--white);
+  --ifm-font-color-base: var(--void);
+
+  // Navbar
+  --ifm-navbar-background-color: var(--white);
+  --ifm-navbar-link-color: var(--void);
+}
+
+html[data-theme='dark'] {
+  // Core
+  --ifm-background-color: var(--black);
+  --ifm-font-color-base: var(--pure);
+
+  // Navbar
+  --ifm-navbar-background-color: var(--black);
+  --ifm-navbar-link-color: var(--pure);
 }
 
 // -----------------------------------------------------------------------------

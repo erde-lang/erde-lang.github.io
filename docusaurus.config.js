@@ -55,9 +55,6 @@ module.exports = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
-      colorMode: {
-        disableSwitch: true,
-      },
       prism: { theme: vsLight },
       navbar: {
         logo: {
