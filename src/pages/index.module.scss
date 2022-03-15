@@ -1,14 +1,57 @@
-.page {
+.features {
+  display: flex;
+  gap: 8px;
+
+  ul {
+    list-style-type: '➜ ';
+    list-style-position: inside;
+
+    li {
+      cursor: pointer;
+
+      &::before {
+        content: '';
+      }
+    }
+  }
+}
+
+.index {
   width: 80%;
   max-width: 864px;
   margin: 16px auto;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  row-gap: 16px;
+  gap: 16px;
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    svg {
+      margin-bottom: 16px;
+    }
+  }
 
   :global(.theme-code-block) {
     width: 100%;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .getStarted {
+      width: fit-content;
+      margin: 0 auto;
+      padding: 16px;
+      justify-self: center;
+
+      background-color: var(--green);
+      border-radius: 4px;
+    }
   }
 }
