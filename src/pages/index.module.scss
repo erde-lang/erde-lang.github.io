@@ -1,17 +1,42 @@
-.features {
+@use '../scss/palette';
+@use '../scss/breakpoints';
+
+.featureList {
   display: flex;
   gap: 8px;
 
-  ul {
-    list-style-type: '➜ ';
-    list-style-position: inside;
-
+  .features {
     li {
+      $bullet-size: 8px;
+
+      padding-left: $bullet-size + 8px;
+      position: relative;
       cursor: pointer;
+      white-space: nowrap;
 
       &::before {
         content: '';
+        width: $bullet-size;
+        height: $bullet-size;
+
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+
+        border: 2px solid palette.$black;
+        border-radius: 50%;
       }
+
+      &.selected::before {
+        background-color: palette.$black;
+      }
+    }
+  }
+
+  @media only screen and (max-width: breakpoints.$mobile) {
+    .codeBlock {
+      display: none;
     }
   }
 }
@@ -43,15 +68,5 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-
-    .getStarted {
-      width: fit-content;
-      margin: 0 auto;
-      padding: 16px;
-      justify-self: center;
-
-      background-color: var(--green);
-      border-radius: 4px;
-    }
   }
 }

@@ -1,7 +1,10 @@
+@use '../scss/palette';
+@use '../scss/breakpoints';
+
 .liveCodeBlock {
   height: 400px;
   display: flex;
-  border: 2px solid var(--erde-black);
+  border: 2px solid palette.$black;
 
   > * {
     width: 50%;
@@ -18,7 +21,7 @@
   .results {
     display: flex;
     flex-direction: column;
-    border-left: 2px solid var(--erde-black);
+    border-left: 2px solid palette.$black;
 
     #result {
       flex-grow: 1;
@@ -43,7 +46,7 @@
   border: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: breakpoints.$tablet) {
   .liveCodeBlock {
     flex-direction: column;
 

@@ -46,7 +46,7 @@ module.exports = {
           showReadingTime: false,
         },
         theme: {
-          customCss: require.resolve('./src/theme.scss'),
+          customCss: require.resolve('./src/scss/custom.scss'),
         },
       },
     ],

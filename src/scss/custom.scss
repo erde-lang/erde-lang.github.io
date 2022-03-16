@@ -1,4 +1,5 @@
 /* https://docusaurus.io/docs/styling-layout */
+@use 'palette';
 
 // -----------------------------------------------------------------------------
 // Imports
@@ -11,19 +12,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
 
 // -----------------------------------------------------------------------------
-// CSS Variables
+// IFM Vars
 // -----------------------------------------------------------------------------
 
 :root {
-  // Palette
-  --void: #000000;
-  --pure: #ffffff;
-  --white: #f0f0f0;
-  --black: #24272b;
-  --green: #25c359;
-
   // Core
-  --ifm-color-primary: var(--green);
+  --ifm-color-primary: palette.$green;
   --ifm-color-primary-light: #29d662;
   --ifm-color-primary-lighter: #33d869;
   --ifm-color-primary-lightest: #50de7f;
@@ -42,22 +36,22 @@
 
 html[data-theme='light'] {
   // Core
-  --ifm-background-color: var(--white);
-  --ifm-font-color-base: var(--void);
+  --ifm-background-color: palette.$white;
+  --ifm-font-color-base: palette.$void;
 
   // Navbar
-  --ifm-navbar-background-color: var(--white);
-  --ifm-navbar-link-color: var(--void);
+  --ifm-navbar-background-color: palette.$white;
+  --ifm-navbar-link-color: palette.$void;
 }
 
 html[data-theme='dark'] {
   // Core
-  --ifm-background-color: var(--black);
-  --ifm-font-color-base: var(--pure);
+  --ifm-background-color: palette.$black;
+  --ifm-font-color-base: palette.$white;
 
   // Navbar
-  --ifm-navbar-background-color: var(--black);
-  --ifm-navbar-link-color: var(--pure);
+  --ifm-navbar-background-color: palette.$black;
+  --ifm-navbar-link-color: palette.$white;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,20 +70,8 @@ ol {
 }
 
 button {
-  color: var(--erde-black);
+  color: palette.$black;
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
-
-// -----------------------------------------------------------------------------
-// Overriden Styles
-// -----------------------------------------------------------------------------
-
-.navbar--fixed-top {
-  // Override text color on mobile navbar sidebar
-  --ifm-menu-color: var(--erde-white);
-
-  // Override hamburger icon on mobile navbar
-  color: var(--erde-white);
 }

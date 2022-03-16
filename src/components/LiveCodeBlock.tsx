@@ -1,9 +1,10 @@
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import classNames from 'classnames';
 import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
 import React, { useEffect, useState } from 'react';
-import { Tabs } from '../Tabs';
 import styles from './LiveCodeBlock.module.scss';
+import { Tabs } from './Tabs';
 
 //
 // Constants / Types
@@ -50,17 +51,20 @@ function useMonaco(options?: EditorOptions) {
 }
 
 //
-// LiveCodeBlock
+// LiveCodeBlockCore
 //
 
-export interface LiveCodeBlockProps {
+export interface LiveCodeBlockCoreProps {
+  className?: string;
+  code?: string;
+  readOnly?: boolean;
   // Used when the LiveCodeBlock consumes the entire page. Particularly
   // useful for the playground.
   pageMode?: boolean;
 }
 
-export const LiveCodeBlock = (props: LiveCodeBlockProps) => {
-  const [code, setCode] = useState(DEFAULT_PLAYGROUND_CODE);
+export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
+  const [code, setCode] = useState(props.code ?? DEFAULT_PLAYGROUND_CODE);
   const [output, setOutput] = useState('');
   const editorFontSize = props.pageMode ? 18 : 16;
 
@@ -74,7 +78,15 @@ export const LiveCodeBlock = (props: LiveCodeBlockProps) => {
     ...MONACO_OPTIONS,
     fontSize: editorFontSize,
     value: code,
+    readOnly: props.readOnly,
   });
+
+  useEffect(() => {
+    if (props.code && inputEditor) {
+      inputEditor.setValue(props.code);
+      setCode(props.code);
+    }
+  }, [props.code]);
 
   useEffect(() => {
     inputEditor?.onDidChangeModelContent(
@@ -116,7 +128,7 @@ export const LiveCodeBlock = (props: LiveCodeBlockProps) => {
 
   return (
     <div
-      className={classNames(styles.liveCodeBlock, {
+      className={classNames(styles.liveCodeBlock, props.className, {
         [styles.pageMode]: props.pageMode,
       })}
     >
@@ -145,3 +157,11 @@ export const LiveCodeBlock = (props: LiveCodeBlockProps) => {
     </div>
   );
 };
+
+//
+// LiveCodeBlock
+//
+
+export const LiveCodeBlock = (props: LiveCodeBlockCoreProps) => (
+  <BrowserOnly>{() => <LiveCodeBlockCore {...props} />}</BrowserOnly>
+);

@@ -1,6 +1,8 @@
+@use '../scss/palette';
+
 .tabs {
   display: flex;
-  background-color: var(--erde-black);
+  background-color: palette.$black;
 
   li {
     flex-grow: 1;
@@ -9,10 +11,10 @@
       width: 100%;
       height: 100%;
       padding: 16px;
-      color: var(--erde-white);
+      color: palette.$white;
 
       &[aria-selected='true'] {
-        color: var(--erde-green);
+        color: palette.$green;
       }
     }
   }
