@@ -2,7 +2,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import classNames from 'classnames';
 import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './LiveCodeBlock.module.scss';
 import { Tabs } from './Tabs';
 

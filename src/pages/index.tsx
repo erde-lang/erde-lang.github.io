@@ -1,5 +1,5 @@
 import Layout from '@theme/Layout';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Logo from '../../static/logo.svg';
 import { LiveCodeBlock } from '../components/LiveCodeBlock';
 import { Menu } from '../components/Menu';

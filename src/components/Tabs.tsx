@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import styles from './Tabs.module.scss';
 
 export interface Tab {
