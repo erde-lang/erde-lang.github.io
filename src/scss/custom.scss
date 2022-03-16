@@ -17,7 +17,7 @@
 
 :root {
   // Core
-  --ifm-color-primary: palette.$green;
+  --ifm-color-primary: #{palette.$green};
   --ifm-color-primary-light: #29d662;
   --ifm-color-primary-lighter: #33d869;
   --ifm-color-primary-lightest: #50de7f;
@@ -36,22 +36,22 @@
 
 html[data-theme='light'] {
   // Core
-  --ifm-background-color: palette.$white;
-  --ifm-font-color-base: palette.$void;
+  --ifm-background-color: #{palette.$white};
+  --ifm-font-color-base: #{palette.$void};
 
   // Navbar
-  --ifm-navbar-background-color: palette.$white;
-  --ifm-navbar-link-color: palette.$void;
+  --ifm-navbar-background-color: #{palette.$white};
+  --ifm-navbar-link-color: #{palette.$void};
 }
 
 html[data-theme='dark'] {
   // Core
-  --ifm-background-color: palette.$black;
-  --ifm-font-color-base: palette.$white;
+  --ifm-background-color: #{palette.$black};
+  --ifm-font-color-base: #{palette.$white};
 
   // Navbar
-  --ifm-navbar-background-color: palette.$black;
-  --ifm-navbar-link-color: palette.$white;
+  --ifm-navbar-background-color: #{palette.$black};
+  --ifm-navbar-link-color: #{palette.$white};
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ ol {
 }
 
 button {
-  color: palette.$black;
+  color: #{palette.$black};
   background-color: transparent;
   border: none;
   cursor: pointer;
