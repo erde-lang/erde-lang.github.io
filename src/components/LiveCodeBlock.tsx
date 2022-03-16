@@ -82,7 +82,7 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
   });
 
   useEffect(() => {
-    if (props.code && inputEditor) {
+    if (props.code !== undefined && inputEditor) {
       inputEditor.setValue(props.code);
       setCode(props.code);
     }
@@ -136,7 +136,8 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
       <div className={styles.results}>
         <Tabs
           ariaControls={styles.result}
-          onChange={newTab => void setSelectedTabId(newTab.id)}
+          selectedTabId={selectedTabId}
+          onChange={newSelectedTabId => void setSelectedTabId(newSelectedTabId)}
           tabs={[
             { id: 'output', label: 'Output' },
             { id: 'parsed', label: 'Parsed (AST)' },

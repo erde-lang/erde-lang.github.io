@@ -12,37 +12,46 @@ export interface Tab {
 export interface TabsProps {
   tabs: Tab[];
   className?: string;
-  defaultSelected?: Tab;
+  selectedTabId?: string;
+  defaultSelectedTabId?: string;
   ariaControls?: string;
-  onChange?: (newTab: Tab) => void;
+  onChange?: (id: string) => void;
 }
 
 export const Tabs = (props: TabsProps) => {
-  const [selectedTab, setSelectedTab] = useState<Tab | null>(
-    props.defaultSelected ?? props.tabs[0]
+  const [selectedTabId, setSelectedTabId] = useState(
+    props.selectedTabId ?? props.defaultSelectedTabId ?? props.tabs[0]?.id ?? ''
   );
 
   useEffect(() => {
-    if (selectedTab) {
-      props.onChange?.(selectedTab);
+    if (props.selectedTabId !== undefined) {
+      setSelectedTabId(props.selectedTabId);
     }
-  }, [selectedTab]);
+  }, [props.selectedTabId]);
+
+  useEffect(() => {
+    if (selectedTabId) {
+      props.onChange?.(selectedTabId);
+    }
+  }, [selectedTabId]);
 
   return (
     <ul className={classNames(styles.tabs, props.className)}>
       {props.tabs.map(tab => (
-        <li key={tab.id}>
-          <button
-            role="tab"
-            aria-selected={tab.id === selectedTab?.id}
-            aria-controls={props.ariaControls}
-            children={tab.label ?? tab.id}
-            onClick={event => {
-              setSelectedTab(tab);
-              tab.onClick?.(event);
-            }}
-          />
-        </li>
+        <li
+          key={tab.id}
+          role="tab"
+          aria-selected={tab.id === selectedTabId}
+          aria-controls={props.ariaControls}
+          children={tab.label ?? tab.id}
+          onClick={event => {
+            tab.onClick?.(event);
+            props.onChange?.(tab.id);
+            if (props.selectedTabId === undefined) {
+              setSelectedTabId(tab.id);
+            }
+          }}
+        />
       ))}
     </ul>
   );

@@ -1,13 +1,11 @@
 @use '../scss/palette';
 
-.tabs {
+.menu {
   display: flex;
-  background-color: palette.$black;
+  flex-direction: column;
 
   li {
     flex-grow: 1;
-    padding: 16px;
-    color: palette.$white;
     cursor: pointer;
 
     &[aria-selected='true'] {

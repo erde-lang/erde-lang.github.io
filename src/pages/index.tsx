@@ -1,12 +1,19 @@
 import Layout from '@theme/Layout';
-import classNames from 'classnames';
 import React, { useState } from 'react';
-import { LiveCodeBlock } from '../components/LiveCodeBlock';
 import Logo from '../../static/logo.svg';
+import { LiveCodeBlock } from '../components/LiveCodeBlock';
+import { Menu } from '../components/Menu';
 import styles from './index.module.scss';
 
-const FEATURE_LIST = [
+interface Feature {
+  id: string;
+  label: string;
+  example: string;
+}
+
+const FEATURE_LIST: Feature[] = [
   {
+    id: 'assignment-ops',
     label: 'Assignment operators',
     example: `
 local a = 1
@@ -18,6 +25,7 @@ print(a)
 `,
   },
   {
+    id: 'param-defaults',
     label: 'Function parameter defaults',
     example: `
   function greet(message = 'hello world') {
@@ -28,41 +36,83 @@ print(a)
   greet('goodbye world')
 `,
   },
-  { label: 'Named varargs', example: '' },
-  { label: 'continue keyword', example: '' },
-  { label: 'String interpolation', example: '' },
-  { label: 'Arrow functions', example: '' },
-  { label: 'Table destructuring', example: '' },
-  { label: 'Optional chaining', example: '' },
-  { label: 'do expressions', example: '' },
-  { label: 'Ternary operator', example: '' },
-  { label: 'Null coalescing operator', example: '' },
-  { label: 'Spread operator', example: '' },
-  { label: 'Try catch statement', example: '' },
+  {
+    id: 'named-varargs',
+    label: 'Named varargs',
+    example: '',
+  },
+  {
+    id: 'continue',
+    label: 'continue keyword',
+    example: '',
+  },
+  {
+    id: 'interpolation',
+    label: 'String interpolation',
+    example: '',
+  },
+  {
+    id: 'arrow-functions',
+    label: 'Arrow functions',
+    example: '',
+  },
+  {
+    id: 'destructuring',
+    label: 'Table destructuring',
+    example: '',
+  },
+  {
+    id: 'optional-chaining',
+    label: 'Optional chaining',
+    example: '',
+  },
+  {
+    id: 'do-expressions',
+    label: 'do expressions',
+    example: '',
+  },
+  {
+    id: 'ternary',
+    label: 'Ternary operator',
+    example: '',
+  },
+  {
+    id: 'null-coalesce',
+    label: 'Null coalescing operator',
+    example: '',
+  },
+  {
+    id: 'spread',
+    label: 'Spread operator',
+    example: '',
+  },
+  {
+    id: 'try-catch',
+    label: 'Try catch statement',
+    example: '',
+  },
 ];
 
 const FeatureList = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const selectedFeature = FEATURE_LIST[selectedIndex];
+  const [selectedId, setSelectedId] = useState(FEATURE_LIST[0].id);
+  const selectedFeature = FEATURE_LIST.find(({ id }) => id === selectedId);
 
   return (
     <section className={styles.featureList}>
       <LiveCodeBlock
         className={styles.codeBlock}
-        code={selectedFeature.example.trim()}
+        code={selectedFeature?.example.trim()}
       />
       <div>
         <h2>Features</h2>
-        <ul className={styles.features}>
-          {FEATURE_LIST.map((feature, i) => (
-            <li
-              key={feature.label}
-              className={classNames(i === selectedIndex && styles.selected)}
-              children={feature.label}
-              onClick={() => void setSelectedIndex(i)}
-            />
-          ))}
-        </ul>
+        <Menu
+          selectedItemId={selectedId}
+          onChange={id => void setSelectedId(id)}
+          items={FEATURE_LIST.map(feature => ({
+            id: feature.id,
+            label: feature.label,
+          }))}
+        />
         <div>And more!</div>
       </div>
     </section>
