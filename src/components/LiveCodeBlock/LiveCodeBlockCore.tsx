@@ -1,16 +1,11 @@
-import BrowserOnly from '@docusaurus/BrowserOnly';
 import classNames from 'classnames';
 import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
 import { useEffect, useState } from 'react';
-import { observeResize, useRerender } from '../common/utils';
-import { Editor, MonacoEditor } from './Editor';
-import styles from './LiveCodeBlock.module.scss';
-import { Tabs } from './Tabs';
-
-//
-// LiveCodeBlockCore
-//
+import { observeResize, useRerender } from '../../common/utils';
+import { Editor, MonacoEditor } from '../Editor';
+import styles from './LiveCodeBlockCore.module.scss';
+import { Tabs } from '../Tabs';
 
 export interface LiveCodeBlockCoreProps {
   className?: string;
@@ -105,7 +100,7 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
       <div className={styles.results}>
         <Tabs
           selectedTabId={selectedTabId}
-          onChange={newSelectedTabId => void setSelectedTabId(newSelectedTabId)}
+          onChange={id => void setSelectedTabId(id)}
           tabs={[
             { id: 'output', label: 'Output' },
             { id: 'parsed', label: 'Parsed (AST)' },
@@ -126,11 +121,3 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
     </div>
   );
 };
-
-//
-// LiveCodeBlock
-//
-
-export const LiveCodeBlock = (props: LiveCodeBlockCoreProps) => (
-  <BrowserOnly>{() => <LiveCodeBlockCore {...props} />}</BrowserOnly>
-);
