@@ -2,7 +2,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import classNames from 'classnames';
 import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { observeResize, useRerender } from '../common/utils';
 import { Editor, MonacoEditor } from './Editor';
 import styles from './LiveCodeBlock.module.scss';
@@ -25,15 +25,27 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
   const [inputEditor, setInputEditor] = useState<MonacoEditor | undefined>();
   const [resultEditor, setResultEditor] = useState<MonacoEditor | undefined>();
 
-  const codeBlockRef = useRef<HTMLDivElement>(null);
-  const layout = props.layout ?? 'responsive';
+  const [codeBlockRef, setCodeBlockRef] = useState<HTMLDivElement | null>(null);
   const rerender = useRerender();
 
-  useEffect(() => {
-    if (layout === 'responsive' && codeBlockRef.current) {
-      return observeResize(codeBlockRef.current, rerender);
+  let layout: 'vertical' | 'horizontal';
+  if (!props.layout || props.layout === 'responsive') {
+    if (codeBlockRef) {
+      layout = codeBlockRef.clientWidth > 600 ? 'horizontal' : 'vertical';
+    } else {
+      layout = 'horizontal';
     }
-  }, [layout]); // eslint-disable-line react-hooks/exhaustive-deps
+  } else {
+    layout = props.layout;
+  }
+
+  useEffect(() => {
+    if (codeBlockRef) {
+      if (!props.layout || props.layout === 'responsive') {
+        return observeResize(codeBlockRef, rerender);
+      }
+    }
+  }, [codeBlockRef, props.layout]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (props.code !== undefined && inputEditor) {
@@ -82,14 +94,14 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
 
   return (
     <div
-      ref={codeBlockRef}
+      ref={setCodeBlockRef}
       className={classNames(
         styles.liveCodeBlock,
         props.className,
         styles[layout],
       )}
     >
-      <Editor ref={setInputEditor} />
+      <Editor ref={setInputEditor} className={styles.inputEditor} />
       <div className={styles.results}>
         <Tabs
           selectedTabId={selectedTabId}

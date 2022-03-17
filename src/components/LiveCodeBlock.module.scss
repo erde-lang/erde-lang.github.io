@@ -2,8 +2,6 @@
 @use '../scss/breakpoints';
 
 .liveCodeBlock {
-  width: 100%;
-  height: 400px;
   display: flex;
   border: 2px solid palette.$black;
 
