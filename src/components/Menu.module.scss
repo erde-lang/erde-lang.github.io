@@ -3,13 +3,24 @@
 .menu {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 
   li {
     flex-grow: 1;
+    padding: var(--ifm-menu-link-padding-vertical)
+      var(--ifm-menu-link-padding-horizontal);
+
+    color: var(--ifm-menu-color);
+    border-radius: 0.25rem;
     cursor: pointer;
 
+    &:hover {
+      background: var(--ifm-menu-color-background-hover);
+    }
+
     &[aria-selected='true'] {
-      color: palette.$green;
+      color: var(--ifm-menu-color-active);
+      background: var(--ifm-menu-color-background-active);
     }
   }
 }
