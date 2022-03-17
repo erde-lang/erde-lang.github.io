@@ -2,7 +2,8 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import classNames from 'classnames';
 import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { observeResize, useRerender } from '../common/utils';
 import styles from './LiveCodeBlock.module.scss';
 import { Tabs } from './Tabs';
 
@@ -58,28 +59,35 @@ export interface LiveCodeBlockCoreProps {
   className?: string;
   code?: string;
   readOnly?: boolean;
-  // Used when the LiveCodeBlock consumes the entire page. Particularly
-  // useful for the playground.
-  pageMode?: boolean;
+  layout?: 'vertical' | 'horizontal' | 'responsive';
 }
 
 export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
   const [code, setCode] = useState(props.code ?? DEFAULT_PLAYGROUND_CODE);
   const [output, setOutput] = useState('');
-  const editorFontSize = props.pageMode ? 18 : 16;
+
+  const codeBlockRef = useRef<HTMLDivElement>(null);
+  const layout = props.layout ?? 'responsive';
+  const rerender = useRerender();
 
   const [resultEditor, resultRef] = useMonaco({
     ...MONACO_OPTIONS,
-    fontSize: editorFontSize,
+    fontSize: 16,
     readOnly: true,
   });
 
   const [inputEditor, inputRef] = useMonaco({
     ...MONACO_OPTIONS,
-    fontSize: editorFontSize,
+    fontSize: 16,
     value: code,
     readOnly: props.readOnly,
   });
+
+  useEffect(() => {
+    if (layout === 'responsive' && codeBlockRef.current) {
+      return observeResize(codeBlockRef.current, rerender);
+    }
+  }, [layout]);
 
   useEffect(() => {
     if (props.code !== undefined && inputEditor) {
@@ -128,9 +136,12 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
 
   return (
     <div
-      className={classNames(styles.liveCodeBlock, props.className, {
-        [styles.pageMode]: props.pageMode,
-      })}
+      ref={codeBlockRef}
+      className={classNames(
+        styles.liveCodeBlock,
+        props.className,
+        styles[layout]
+      )}
     >
       <div className={styles.inputEditor} ref={inputRef} />
       <div className={styles.results}>

@@ -102,6 +102,7 @@ const FeatureList = () => {
       <LiveCodeBlock
         className={styles.codeBlock}
         code={selectedFeature?.example.trim()}
+        layout="vertical"
       />
       <div>
         <h2>Features</h2>

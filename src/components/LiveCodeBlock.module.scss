@@ -6,11 +6,6 @@
   display: flex;
   border: 2px solid palette.$black;
 
-  > * {
-    width: 50%;
-    height: 100%;
-  }
-
   .inputEditor,
   .resultEditor {
     // hide obnoxious monaco overflow:
@@ -21,7 +16,6 @@
   .results {
     display: flex;
     flex-direction: column;
-    border-left: 2px solid palette.$black;
 
     #result {
       flex-grow: 1;
@@ -40,23 +34,22 @@
   }
 }
 
-.liveCodeBlock.pageMode {
-  flex-grow: 1;
-  height: auto;
-  border: none;
+.liveCodeBlock.horizontal {
+  > * {
+    width: 50%;
+    height: 100%;
+  }
+
+  .results {
+    border-left: 2px solid palette.$black;
+  }
 }
 
-@media (max-width: breakpoints.$tablet) {
-  .liveCodeBlock {
-    flex-direction: column;
+.liveCodeBlock.vertical {
+  flex-direction: column;
 
-    > * {
-      width: 100%;
-      height: 50%;
-    }
-
-    .results {
-      border-left: none;
-    }
+  > * {
+    width: 100%;
+    height: 50%;
   }
 }
