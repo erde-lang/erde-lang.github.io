@@ -60,20 +60,20 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
         }
       }
     } else {
-      const readModel = resultEditor?.getModel();
-      if (!resultEditor || !readModel) return;
+      const resultEditorModel = resultEditor?.getModel();
+      if (!resultEditor || !resultEditorModel) return;
 
       if (selectedTabId === 'parsed') {
-        monaco.editor.setModelLanguage(readModel, 'json');
+        monaco.editor.setModelLanguage(resultEditorModel, 'json');
         // TODO: parse code
         resultEditor.setValue('{ "hello": "world" }');
       } else if (selectedTabId === 'compiled') {
-        monaco.editor.setModelLanguage(readModel, 'lua');
+        monaco.editor.setModelLanguage(resultEditorModel, 'lua');
         // TODO: compile code
         resultEditor.setValue('print("todo")');
       } else if (selectedTabId === 'formatted') {
         // TODO: set language to erde
-        monaco.editor.setModelLanguage(readModel, 'lua');
+        monaco.editor.setModelLanguage(resultEditorModel, 'lua');
         // TODO: format code
         resultEditor.setValue('print("todo")');
       }
@@ -104,7 +104,11 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
         {selectedTabId === 'output' ? (
           <div className={styles.output}>{output}</div>
         ) : (
-          <Editor ref={setResultEditor} monaco={{ readOnly: true }} />
+          <Editor
+            ref={setResultEditor}
+            monaco={{ readOnly: true }}
+            fitHeight={layout === 'vertical'}
+          />
         )}
       </div>
     </div>
