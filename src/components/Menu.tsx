@@ -22,7 +22,7 @@ export const Menu = (props: MenuProps) => {
     props.selectedItemId ??
       props.defaultSelectedItemId ??
       props.items[0]?.id ??
-      ''
+      '',
   );
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const Menu = (props: MenuProps) => {
     if (selectedItemId) {
       props.onChange?.(selectedItemId);
     }
-  }, [selectedItemId]);
+  }, [selectedItemId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <menu className={classNames(styles.menu, props.className)}>

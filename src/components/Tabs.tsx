@@ -19,7 +19,10 @@ export interface TabsProps {
 
 export const Tabs = (props: TabsProps) => {
   const [selectedTabId, setSelectedTabId] = useState(
-    props.selectedTabId ?? props.defaultSelectedTabId ?? props.tabs[0]?.id ?? ''
+    props.selectedTabId ??
+      props.defaultSelectedTabId ??
+      props.tabs[0]?.id ??
+      '',
   );
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export const Tabs = (props: TabsProps) => {
     if (selectedTabId) {
       props.onChange?.(selectedTabId);
     }
-  }, [selectedTabId]);
+  }, [selectedTabId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ul className={classNames(styles.tabs, props.className)}>

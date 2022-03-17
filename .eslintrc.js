@@ -13,6 +13,8 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'react/display-name': 'off',
+    'react/no-children-prop': 'off',
     'sort-imports': ['warn', { ignoreDeclarationSort: true }],
     'import/order': [
       'warn',

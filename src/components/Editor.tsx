@@ -43,10 +43,10 @@ function useMonaco(container?: HTMLDivElement | null, options?: EditorOptions) {
         monaco.editor.create(container, {
           ...DEFAULT_EDITOR_OPTIONS,
           ...options,
-        })
+        }),
       );
     }
-  }, [container, optionsJson]);
+  }, [container, optionsJson]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return editor;
 }
@@ -69,10 +69,10 @@ export const Editor = (props: EditorProps) => {
     if (container && editor) {
       return observeResize(
         container,
-        () => void editor.layout(container.getBoundingClientRect())
+        () => void editor.layout(container.getBoundingClientRect()),
       );
     }
-  }, [container]);
+  }, [container, editor]);
 
   useEffect(() => {
     if (props.fitHeight && container && editor) {
@@ -84,7 +84,7 @@ export const Editor = (props: EditorProps) => {
       editor.onDidContentSizeChange(updateHeight);
       updateHeight();
     }
-  }, [props.fitHeight, editor]);
+  }, [props.fitHeight, container, editor]);
 
   return (
     <div
