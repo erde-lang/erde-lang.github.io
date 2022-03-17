@@ -14,7 +14,6 @@ export interface TabsProps {
   className?: string;
   selectedTabId?: string;
   defaultSelectedTabId?: string;
-  ariaControls?: string;
   onChange?: (id: string) => void;
 }
 
@@ -42,7 +41,6 @@ export const Tabs = (props: TabsProps) => {
           key={tab.id}
           role="tab"
           aria-selected={tab.id === selectedTabId}
-          aria-controls={props.ariaControls}
           children={tab.label ?? tab.id}
           onClick={event => {
             tab.onClick?.(event);

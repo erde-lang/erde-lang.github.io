@@ -14,7 +14,6 @@ export interface MenuProps {
   className?: string;
   selectedItemId?: string;
   defaultSelectedItemId?: string;
-  ariaControls?: string;
   onChange?: (id: string) => void;
 }
 
@@ -44,7 +43,6 @@ export const Menu = (props: MenuProps) => {
         <li
           key={item.id}
           aria-selected={item.id === selectedItemId}
-          aria-controls={props.ariaControls}
           children={item.label ?? item.id}
           onClick={event => {
             item.onClick?.(event);
