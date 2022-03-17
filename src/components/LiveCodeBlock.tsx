@@ -4,60 +4,9 @@ import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 import { observeResize, useRerender } from '../common/utils';
-import { Editor } from './Editor';
+import { Editor, MonacoEditor } from './Editor';
 import styles from './LiveCodeBlock.module.scss';
 import { Tabs } from './Tabs';
-
-//
-// Constants / Types
-//
-
-type Editor = monaco.editor.IStandaloneCodeEditor;
-type EditorOptions = monaco.editor.IStandaloneEditorConstructionOptions;
-
-const MONACO_OPTIONS: EditorOptions = {
-  automaticLayout: true,
-  theme: 'vs-light',
-  fontFamily: 'Source Code Pro',
-  tabSize: 2,
-  minimap: {
-    enabled: false,
-  },
-};
-
-// TODO: better default code
-const DEFAULT_PLAYGROUND_CODE = `-- Erde playground
-return 1 + 2`;
-
-//
-// useMonaco
-//
-
-function useMonaco(options?: EditorOptions) {
-  const [mount, setMount] = useState<HTMLDivElement | null>(null);
-  const [editor, setEditor] = useState<Editor | null>(null);
-
-  useEffect(() => {
-    if (mount) {
-      setEditor(
-        monaco.editor.create(mount, {
-          // TODO: set language to erde
-          language: 'lua',
-          overviewRulerLanes: 0,
-          scrollBeyondLastLine: false,
-          wordWrap: 'on',
-          wrappingStrategy: 'advanced',
-          minimap: {
-            enabled: false,
-          },
-          ...options,
-        }),
-      );
-    }
-  }, [mount]);
-
-  return [editor, setMount] as const;
-}
 
 //
 // LiveCodeBlockCore
@@ -66,45 +15,32 @@ function useMonaco(options?: EditorOptions) {
 export interface LiveCodeBlockCoreProps {
   className?: string;
   code?: string;
-  readOnly?: boolean;
   layout?: 'vertical' | 'horizontal' | 'responsive';
 }
 
 export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
-  const [code, setCode] = useState(props.code ?? DEFAULT_PLAYGROUND_CODE);
+  const [code, setCode] = useState(props.code ?? '');
   const [output, setOutput] = useState('');
+
+  const [inputEditor, setInputEditor] = useState<MonacoEditor | undefined>();
+  const [resultEditor, setResultEditor] = useState<MonacoEditor | undefined>();
 
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const layout = props.layout ?? 'responsive';
   const rerender = useRerender();
 
-  const [inputEditor, inputRef] = useMonaco({
-    ...MONACO_OPTIONS,
-    fontSize: 16,
-    value: code,
-    readOnly: props.readOnly,
-    automaticLayout: true,
-  });
-
-  const [resultEditor, resultRef] = useMonaco({
-    ...MONACO_OPTIONS,
-    fontSize: 16,
-    readOnly: true,
-    automaticLayout: true,
-  });
-
   useEffect(() => {
     if (layout === 'responsive' && codeBlockRef.current) {
       return observeResize(codeBlockRef.current, rerender);
     }
-  }, [layout]);
+  }, [layout]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (props.code !== undefined && inputEditor) {
       inputEditor.setValue(props.code);
       setCode(props.code);
     }
-  }, [props.code]);
+  }, [props.code, inputEditor]);
 
   useEffect(() => {
     inputEditor?.onDidChangeModelContent(
@@ -142,7 +78,7 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
         resultEditor.setValue('print("todo")');
       }
     }
-  }, [code, selectedTabId]);
+  }, [resultEditor, code, selectedTabId]);
 
   return (
     <div
@@ -153,7 +89,7 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
         styles[layout],
       )}
     >
-      <div className={styles.inputEditor} ref={inputRef} />
+      <Editor ref={setInputEditor} />
       <div className={styles.results}>
         <Tabs
           selectedTabId={selectedTabId}
@@ -168,7 +104,7 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
         {selectedTabId === 'output' ? (
           <div className={styles.output}>{output}</div>
         ) : (
-          <div ref={resultRef} className={styles.resultEditor} />
+          <Editor ref={setResultEditor} monaco={{ readOnly: true }} />
         )}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as monaco from 'monaco-editor';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { observeResize } from '../common/utils';
 import styles from './Editor.module.scss';
 
@@ -8,10 +8,11 @@ import styles from './Editor.module.scss';
 // Constants / Types
 //
 
-type Editor = monaco.editor.IStandaloneCodeEditor;
-type EditorOptions = monaco.editor.IStandaloneEditorConstructionOptions;
+export type MonacoEditor = monaco.editor.IStandaloneCodeEditor;
+export type MonacoEditorOptions =
+  monaco.editor.IStandaloneEditorConstructionOptions;
 
-const DEFAULT_EDITOR_OPTIONS: EditorOptions = {
+const DEFAULT_MONACO_EDITOR_OPTIONS: MonacoEditorOptions = {
   language: 'lua', // TODO: set language to erde
   automaticLayout: true,
   fontFamily: 'Source Code Pro',
@@ -31,8 +32,11 @@ const DEFAULT_EDITOR_OPTIONS: EditorOptions = {
 // Hooks
 //
 
-function useMonaco(container?: HTMLDivElement | null, options?: EditorOptions) {
-  const [editor, setEditor] = useState<Editor | null>(null);
+export function useMonaco(
+  container?: HTMLDivElement | null,
+  options?: MonacoEditorOptions,
+) {
+  const [editor, setEditor] = useState<MonacoEditor | undefined>();
 
   // Use json string to detect options changes
   const optionsJson = JSON.stringify(options ?? {});
@@ -41,7 +45,7 @@ function useMonaco(container?: HTMLDivElement | null, options?: EditorOptions) {
     if (container) {
       setEditor(
         monaco.editor.create(container, {
-          ...DEFAULT_EDITOR_OPTIONS,
+          ...DEFAULT_MONACO_EDITOR_OPTIONS,
           ...options,
         }),
       );
@@ -57,13 +61,21 @@ function useMonaco(container?: HTMLDivElement | null, options?: EditorOptions) {
 
 interface EditorProps {
   className?: string;
-  monaco?: EditorOptions;
+  monaco?: MonacoEditorOptions;
   fitHeight?: boolean;
 }
 
-export const Editor = (props: EditorProps) => {
+export const Editor = forwardRef((props: EditorProps, ref) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const editor = useMonaco(container, props.monaco);
+
+  useEffect(() => {
+    if (typeof ref === 'function') {
+      ref(editor);
+    } else if (ref) {
+      ref.current = editor;
+    }
+  }, [ref, editor]);
 
   useEffect(() => {
     if (container && editor) {
@@ -92,4 +104,4 @@ export const Editor = (props: EditorProps) => {
       className={classNames(styles.editor, props.className)}
     />
   );
-};
+});
