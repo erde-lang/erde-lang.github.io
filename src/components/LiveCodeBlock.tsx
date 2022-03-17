@@ -4,6 +4,7 @@ import * as fengari from 'fengari-web';
 import * as monaco from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 import { observeResize, useRerender } from '../common/utils';
+import { Editor } from './Editor';
 import styles from './LiveCodeBlock.module.scss';
 import { Tabs } from './Tabs';
 
@@ -42,8 +43,15 @@ function useMonaco(options?: EditorOptions) {
         monaco.editor.create(mount, {
           // TODO: set language to erde
           language: 'lua',
+          overviewRulerLanes: 0,
+          scrollBeyondLastLine: false,
+          wordWrap: 'on',
+          wrappingStrategy: 'advanced',
+          minimap: {
+            enabled: false,
+          },
           ...options,
-        })
+        }),
       );
     }
   }, [mount]);
@@ -70,17 +78,19 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
   const layout = props.layout ?? 'responsive';
   const rerender = useRerender();
 
-  const [resultEditor, resultRef] = useMonaco({
-    ...MONACO_OPTIONS,
-    fontSize: 16,
-    readOnly: true,
-  });
-
   const [inputEditor, inputRef] = useMonaco({
     ...MONACO_OPTIONS,
     fontSize: 16,
     value: code,
     readOnly: props.readOnly,
+    automaticLayout: true,
+  });
+
+  const [resultEditor, resultRef] = useMonaco({
+    ...MONACO_OPTIONS,
+    fontSize: 16,
+    readOnly: true,
+    automaticLayout: true,
   });
 
   useEffect(() => {
@@ -98,7 +108,7 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
 
   useEffect(() => {
     inputEditor?.onDidChangeModelContent(
-      () => void setCode(inputEditor.getValue())
+      () => void setCode(inputEditor.getValue()),
     );
   }, [inputEditor]);
 
@@ -140,13 +150,12 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
       className={classNames(
         styles.liveCodeBlock,
         props.className,
-        styles[layout]
+        styles[layout],
       )}
     >
       <div className={styles.inputEditor} ref={inputRef} />
       <div className={styles.results}>
         <Tabs
-          ariaControls={styles.result}
           selectedTabId={selectedTabId}
           onChange={newSelectedTabId => void setSelectedTabId(newSelectedTabId)}
           tabs={[
@@ -156,15 +165,11 @@ export const LiveCodeBlockCore = (props: LiveCodeBlockCoreProps) => {
             { id: 'formatted', label: 'Formatted' },
           ]}
         />
-        <div
-          id={styles.result}
-          className={classNames({
-            [styles.outputMode]: selectedTabId === 'output',
-          })}
-        >
-          {selectedTabId === 'output' && output}
+        {selectedTabId === 'output' ? (
+          <div className={styles.output}>{output}</div>
+        ) : (
           <div ref={resultRef} className={styles.resultEditor} />
-        </div>
+        )}
       </div>
     </div>
   );
