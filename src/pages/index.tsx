@@ -1,6 +1,7 @@
 import Layout from '@theme/Layout';
 import { useState } from 'react';
 import Logo from '../../static/logo.svg';
+import { BREAKPOINTS, useCurrentBreakpoint } from '../common/breakpoints';
 import { LiveCodeBlock } from '../components/LiveCodeBlock';
 import { Menu } from '../components/Menu';
 import styles from './index.module.scss';
@@ -11,7 +12,7 @@ interface Feature {
   example: string;
 }
 
-const FEATURE_LIST: Feature[] = [
+const FEATURES: Feature[] = [
   {
     id: 'assignment-ops',
     label: 'Assignment operators',
@@ -93,30 +94,44 @@ print(a)
   },
 ];
 
-const FeatureList = () => {
-  const [selectedId, setSelectedId] = useState(FEATURE_LIST[0].id);
-  const selectedFeature = FEATURE_LIST.find(({ id }) => id === selectedId);
+const Features = () => {
+  const currentBreakpoint = useCurrentBreakpoint();
+  const [selectedId, setSelectedId] = useState(FEATURES[0].id);
+  const selectedFeature = FEATURES.find(({ id }) => id === selectedId);
 
-  return (
-    <section className={styles.featureList}>
-      <div className={styles.features}>
+  return currentBreakpoint < BREAKPOINTS.laptop ? (
+    <section className={styles.mobileFeatures}>
+      <h2>Features</h2>
+      <ul>
+        {FEATURES.map(feature => (
+          <li key={feature.id}>{feature.label}</li>
+        ))}
+        <li>and more!</li>
+      </ul>
+    </section>
+  ) : (
+    <section className={styles.features}>
+      <div className={styles.featureList}>
         <h2>Features</h2>
         <Menu
           className={styles.menu}
           selectedItemId={selectedId}
           onChange={id => void setSelectedId(id)}
-          items={FEATURE_LIST.map(feature => ({
+          items={FEATURES.map(feature => ({
             id: feature.id,
             label: feature.label,
           }))}
         />
         <div>and more!</div>
       </div>
-      <LiveCodeBlock
-        className={styles.codeBlock}
-        code={selectedFeature?.example.trim()}
-        layout="vertical"
-      />
+      <div className={styles.codeBlockContainer}>
+        <LiveCodeBlock
+          className={styles.codeBlock}
+          // TODO: fix trim hack
+          code={selectedFeature?.example.trim()}
+          layout="vertical"
+        />
+      </div>
     </section>
   );
 };
@@ -135,7 +150,7 @@ export default () => (
         features commonly found in other programming languages that Lua
         otherwise sacrifices for simplicity.
       </p>
-      <FeatureList />
+      <Features />
     </main>
   </Layout>
 );

@@ -1,11 +1,22 @@
 @use '../scss/palette';
 @use '../scss/breakpoints';
 
-.featureList {
+.mobileFeatures {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 
-  .features {
+  li {
+    text-align: center;
+  }
+}
+
+.features {
+  display: flex;
+  gap: 16px;
+
+  .featureList {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,9 +28,14 @@
     }
   }
 
-  @media only screen and (max-width: breakpoints.$mobile) {
+  .codeBlockContainer {
+    flex-grow: 1;
+    position: relative;
+
     .codeBlock {
-      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
     }
   }
 }

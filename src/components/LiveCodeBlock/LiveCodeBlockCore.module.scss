@@ -18,7 +18,9 @@
 }
 
 .liveCodeBlock.horizontal {
-  > * {
+  .inputEditor,
+  .results {
+    width: 50%;
     height: 100%;
   }
 
@@ -34,7 +36,12 @@
     flex-grow: 1;
   }
 
-  > * {
+  .resultEditor {
+    max-height: 50%;
+  }
+
+  .inputEditor,
+  .results {
     width: 100%;
   }
 }
