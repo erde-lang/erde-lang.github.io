@@ -6,6 +6,36 @@ import { LiveCodeBlock } from '../components/LiveCodeBlock';
 import { Menu } from '../components/Menu';
 import styles from './index.module.scss';
 
+//
+// Goals
+//
+
+const Goals = () => (
+  <section className={styles.goals}>
+    <h2>Goals</h2>
+    <ul>
+      <li>
+        Generate performant Lua 5.1+ compatible code, with optimizations for
+        targeted platforms (ex. compile w/ goto if compiling for 5.2+ / LuaJIT).
+      </li>
+      <li>
+        Provide concise syntax for common patterns to increase readability.
+      </li>
+      <li>
+        Maintain low cognitive overhead when switching between Lua and Erde
+      </li>
+      <li>
+        Address the common pitfalls of Lua (ex. forgetting local when declaring
+        a function)
+      </li>
+    </ul>
+  </section>
+);
+
+//
+// Features
+//
+
 interface Feature {
   id: string;
   label: string;
@@ -136,6 +166,10 @@ const Features = () => {
   );
 };
 
+//
+// Index
+//
+
 export default () => (
   <Layout pageClassName={styles.index}>
     <header>
@@ -144,12 +178,13 @@ export default () => (
       <p>A modern Lua dialect</p>
     </header>
     <main>
-      <p>
+      <section>
         Erde is an expressive programming language that compiles to Lua.
         Syntactically it favors symbols over keywords and adds support for many
         features commonly found in other programming languages that Lua
         otherwise sacrifices for simplicity.
-      </p>
+      </section>
+      <Goals />
       <Features />
     </main>
   </Layout>
