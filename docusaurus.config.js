@@ -37,11 +37,11 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
         },
         blog: {
-          path: './src/articles',
-          routeBasePath: 'articles',
-          blogTitle: 'Articles',
+          path: './src/blog',
+          routeBasePath: 'blog',
+          blogTitle: 'Blog',
           postsPerPage: 'ALL',
-          blogSidebarTitle: 'All Articles',
+          blogSidebarTitle: 'All Posts',
           blogSidebarCount: 'ALL',
           showReadingTime: false,
         },
@@ -68,8 +68,8 @@ module.exports = {
             position: 'left',
           },
           {
-            href: '/articles',
-            label: 'Articles',
+            href: '/blog',
+            label: 'Blog',
             position: 'left',
           },
           {
