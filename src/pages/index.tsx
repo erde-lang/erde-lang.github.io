@@ -1,5 +1,6 @@
 import Layout from '@theme/Layout';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../../static/logo.svg';
 import { BREAKPOINTS, useCurrentBreakpoint } from '../common/breakpoints';
 import { LiveCodeBlock } from '../components/LiveCodeBlock';
@@ -15,18 +16,16 @@ const Goals = () => (
     <h2>Goals</h2>
     <ul>
       <li>
+        Provide an expressive syntax while maintaining a low cognitive overhead
+        when switching between Lua and Erde.
+      </li>
+      <li>
         Generate performant Lua 5.1+ compatible code, with optimizations for
-        targeted platforms (ex. compile w/ goto if compiling for 5.2+ / LuaJIT).
+        targeted platforms (ex. using goto when compiling for 5.2+ / LuaJIT).
       </li>
       <li>
-        Provide concise syntax for common patterns to increase readability.
-      </li>
-      <li>
-        Maintain low cognitive overhead when switching between Lua and Erde
-      </li>
-      <li>
-        Address the common pitfalls of Lua (ex. forgetting local when declaring
-        a function)
+        Provide native tooling support for better developer experience (ex.
+        formatter, language server)
       </li>
     </ul>
   </section>
@@ -186,6 +185,15 @@ export default () => (
       </section>
       <Goals />
       <Features />
+      <section className={styles.buttons}>
+        <Link to="/docs/">
+          <button>Get Started</button>
+        </Link>
+        {/* TODO */}
+        {/* <Link to="/tutorial/"> */}
+        {/* <button>Tutorial</button> */}
+        {/* </Link> */}
+      </section>
     </main>
   </Layout>
 );
