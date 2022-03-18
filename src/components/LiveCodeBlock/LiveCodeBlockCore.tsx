@@ -4,8 +4,8 @@ import * as monaco from 'monaco-editor';
 import { useEffect, useState } from 'react';
 import { observeResize, useRerender } from '../../common/utils';
 import { Editor, MonacoEditor } from '../Editor';
-import styles from './LiveCodeBlockCore.module.scss';
 import { Tabs } from '../Tabs';
+import styles from './LiveCodeBlockCore.module.scss';
 
 export interface LiveCodeBlockCoreProps {
   className?: string;

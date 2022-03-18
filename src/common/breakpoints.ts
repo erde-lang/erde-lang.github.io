@@ -1,3 +1,4 @@
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useEffect, useState } from 'react';
 
 // NOTE: These should be synced w/ the breakpoints in scss/_breakpoints.scss
@@ -21,15 +22,19 @@ function getCurrentBreakpoint() {
 }
 
 export function useCurrentBreakpoint() {
+  const isBrowser = useIsBrowser();
   const [currentBreakpoint, setCurrentBreakpoint] = useState(
-    getCurrentBreakpoint(),
+    isBrowser ? getCurrentBreakpoint() : BREAKPOINTS.desktop,
   );
 
   useEffect(() => {
-    const onResize = () => void setCurrentBreakpoint(getCurrentBreakpoint());
-    window.addEventListener('resize', onResize);
-    return () => void window.removeEventListener('resize', onResize);
-  }, []);
+    if (isBrowser) {
+      const onResize = () => void setCurrentBreakpoint(getCurrentBreakpoint());
+      onResize();
+      window.addEventListener('resize', onResize);
+      return () => void window.removeEventListener('resize', onResize);
+    }
+  }, [isBrowser]);
 
   return currentBreakpoint;
 }
