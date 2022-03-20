@@ -43,6 +43,74 @@ interface Feature {
 
 const FEATURES: Feature[] = [
   {
+    id: 'arrow-functions',
+    label: 'Arrow functions',
+    example: `
+function map(t, callback) {
+  local copy = {}
+
+  for key, value in pairs(t) {
+    copy[key] = callback(value)
+  }
+
+  return copy
+}
+
+local evens = { 2, 4, 6, 8, 10 }
+
+local odds = map(evens, even -> {
+  return even - 1
+})
+
+-- OR with implicit return shorthand
+local odds = map(evens, even -> even - 1)
+`,
+  },
+  {
+    id: 'destructuring',
+    label: 'Table destructuring',
+    example: `
+local myTable = {
+  myValue = 5,
+  'child1',
+  'child2',
+}
+
+-- Normal destruct
+local { myValue } = myTable
+
+-- w/ array element destructs
+local { myValue, [ firstChild, secondChild ] } = myTable
+
+-- w/ only array destructs
+local [ firstChild, secondChild ] = myTable
+`,
+  },
+  {
+    id: 'optional-chaining',
+    label: 'Optional chaining',
+    example: `
+local nilTable = nil
+
+print(nilTable?.test)
+print(nilTable?[1])
+print(nilTable?())
+
+-- Optional chaining also works for assignments!
+nilTable?.test = 'goodbye world'
+print(nilTable?.test)
+
+local myTable = { test = 'hello world' }
+
+print(myTable?.test)
+print(myTable?[1])
+print(myTable?())
+
+myTable?.test = 'goodbye world'
+print(myTable?.test)
+`,
+  },
+  {
     id: 'assignment-ops',
     label: 'Assignment operators',
     example: `
@@ -56,70 +124,71 @@ print(a)
   },
   {
     id: 'param-defaults',
-    label: 'Function parameter defaults',
+    label: 'Parameter defaults',
     example: `
-  function greet(message = 'hello world') {
-    print(message)
-  }
+function greet(message = 'hello world') {
+  print(message)
+}
 
-  greet()
-  greet('goodbye world')
+greet()
+greet('goodbye world')
 `,
-  },
-  {
-    id: 'named-varargs',
-    label: 'Named varargs',
-    example: '',
   },
   {
     id: 'continue',
     label: 'continue keyword',
-    example: '',
+    example: `
+function printOdds(...) {
+  for _, value in ipairs({ ... }) {
+    if value % 2 == 0 {
+      continue
+    }
+
+    print(value)
+  }
+}
+
+printOdds(1, 2, 3, 4, 5)
+`,
   },
   {
     id: 'interpolation',
     label: 'String interpolation',
-    example: '',
-  },
-  {
-    id: 'arrow-functions',
-    label: 'Arrow functions',
-    example: '',
-  },
-  {
-    id: 'destructuring',
-    label: 'Table destructuring',
-    example: '',
-  },
-  {
-    id: 'optional-chaining',
-    label: 'Optional chaining',
-    example: '',
+    example: `
+local myValue = 4
+
+-- Can interpolate any string
+print('myValue is {myValue}')
+print("myValue is {myValue}")
+print([[myValue is {myValue}]])
+
+-- Can escape braces for literal print
+print('A literal brace: \\{')
+`,
   },
   {
     id: 'do-expressions',
     label: 'do expressions',
-    example: '',
-  },
-  {
-    id: 'ternary',
-    label: 'Ternary operator',
-    example: '',
-  },
-  {
-    id: 'null-coalesce',
-    label: 'Null coalescing operator',
-    example: '',
-  },
-  {
-    id: 'spread',
-    label: 'Spread operator',
-    example: '',
+    example: `
+local myVar = do {
+  local tmpVar = 4
+  return tmpVar + 3
+}
+
+print(myVar)
+print(tmpVar)
+`,
   },
   {
     id: 'try-catch',
     label: 'Try catch statement',
-    example: '',
+    example: `
+try {
+  print(1 / "hello")
+} catch (err) {
+  print('Caught: ', err)
+}
+`,
   },
 ];
 
