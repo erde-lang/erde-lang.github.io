@@ -4,14 +4,14 @@
         <title>Erde Blog</title>
         <link>https://erde-lang.github.io/blog</link>
         <description>Erde Blog</description>
-        <lastBuildDate>Sun, 20 Mar 2022 01:16:52 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 20 Mar 2022 11:56:39 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[Design Decisions]]></title>
             <link>https://erde-lang.github.io/blog/design-decisions</link>
             <guid>design-decisions</guid>
-            <pubDate>Sun, 20 Mar 2022 01:16:52 GMT</pubDate>
+            <pubDate>Sun, 20 Mar 2022 11:56:39 GMT</pubDate>
             <description><![CDATA[Design decisions of Erde.]]></description>
             <content:encoded><![CDATA[<p>Design decisions summary</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="dynamic-vs-static-typing">Dynamic vs Static Typing<a class="hash-link" href="#dynamic-vs-static-typing" title="Direct link to heading">​</a></h2><h2 class="anchor anchorWithStickyNavbar_mojV" id="compatability-with-lua">Compatability with Lua<a class="hash-link" href="#compatability-with-lua" title="Direct link to heading">​</a></h2><h2 class="anchor anchorWithStickyNavbar_mojV" id="breakage-with-lua">Breakage with Lua<a class="hash-link" href="#breakage-with-lua" title="Direct link to heading">​</a></h2><h2 class="anchor anchorWithStickyNavbar_mojV" id="shallow-vs-deep-destructuring">Shallow vs Deep destructuring<a class="hash-link" href="#shallow-vs-deep-destructuring" title="Direct link to heading">​</a></h2><h2 class="anchor anchorWithStickyNavbar_mojV" id="no-default-local">No default local<a class="hash-link" href="#no-default-local" title="Direct link to heading">​</a></h2>]]></content:encoded>
         </item>
@@ -19,7 +19,7 @@
             <title><![CDATA[Motivation]]></title>
             <link>https://erde-lang.github.io/blog/motivation</link>
             <guid>motivation</guid>
-            <pubDate>Sun, 20 Mar 2022 01:16:52 GMT</pubDate>
+            <pubDate>Sun, 20 Mar 2022 11:56:39 GMT</pubDate>
             <description><![CDATA[The motivations behind Erde.]]></description>
             <content:encoded><![CDATA[<p>Motivation summary</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="braces-vs-end">Braces vs end<a class="hash-link" href="#braces-vs-end" title="Direct link to heading">​</a></h2><h2 class="anchor anchorWithStickyNavbar_mojV" id="why-not-moonscript">Why not moonscript<a class="hash-link" href="#why-not-moonscript" title="Direct link to heading">​</a></h2>]]></content:encoded>
         </item>
