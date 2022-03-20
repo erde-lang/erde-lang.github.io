@@ -1,13 +1,6 @@
 @use '../scss/palette';
 @use '../scss/breakpoints';
 
-.goals {
-  ul {
-    list-style: disc;
-    padding: 0 32px;
-  }
-}
-
 .features {
   display: flex;
   gap: 16px;
@@ -88,6 +81,14 @@
       }
     }
 
+    .goals {
+      ul {
+        list-style: disc;
+        padding: 0 32px;
+      }
+    }
+
+    .faq,
     .installation {
       display: flex;
       flex-direction: column;

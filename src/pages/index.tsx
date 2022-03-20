@@ -1,36 +1,46 @@
 import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import Logo from '../../static/logo.svg';
 import { BREAKPOINTS, useCurrentBreakpoint } from '../common/breakpoints';
 import { LiveCodeBlock } from '../components/LiveCodeBlock';
 import { Menu } from '../components/Menu';
 import styles from './index.module.scss';
 
-//
-// Goals
-//
-
-const Goals = () => (
-  <section className={styles.goals}>
-    <h2>Goals</h2>
-    <ul>
-      <li>
-        Provide an expressive syntax while maintaining a low cognitive overhead
-        when switching between Lua and Erde.
-      </li>
-      <li>
-        Generate performant Lua 5.1+ compatible code, with optimizations for
-        targeted platforms (ex. using goto when compiling for 5.2+ / LuaJIT).
-      </li>
-      <li>
-        Provide native tooling support for better developer experience (ex.
-        formatter, language server)
-      </li>
-    </ul>
-  </section>
-);
+const FAQ: { question: ReactNode; answer: ReactNode }[] = [
+  {
+    question: 'Why not XXX (Moonscript / Fennel)?',
+    answer: (
+      <>
+        Unfortunately neither <a href="https://moonscript.org">moonscript</a>{' '}
+        nor <a href="https://fennel-lang.org">fennel</a> seemed like attractive
+        options, as I'm not a huge fan of whitespace languages nor lisp. The
+        other options seemed to be either unmaintained or lacking features I
+        wanted.
+      </>
+    ),
+  },
+  {
+    question: 'Why symbols over keywords?',
+    answer: `
+Many of the commonly used programming languages today tend to use symbols over
+keywords (Rust, Golang, Javascript, etc). This is meant to make Erde more 
+approachable for those coming from languages other than Lua. I personally also 
+find symbols to be much more concise and readable (although this is extremely 
+subjective).
+`,
+  },
+  {
+    question: 'Do I need Erde?',
+    answer: `
+Absolutely not. Lua is already an amazingly designed language. If you are only
+using Lua lightly, then working with Erde will probably incur more overhead than
+it's worth. However, if you are working with Lua a lot (or simply prefer the
+syntax of Erde), then by all means feel free to try it out!
+`,
+  },
+];
 
 //
 // Features
@@ -38,7 +48,7 @@ const Goals = () => (
 
 interface Feature {
   id: string;
-  label: string;
+  label: ReactNode;
   example: string;
 }
 
@@ -135,7 +145,11 @@ greet('goodbye world')
   },
   {
     id: 'continue',
-    label: 'continue keyword',
+    label: (
+      <>
+        <code>continue</code> keyword
+      </>
+    ),
     example: `
 function printOdds(...) {
   for _, value in ipairs({ ... }) {
@@ -250,7 +264,28 @@ export default () => (
         features commonly found in other programming languages that Lua
         otherwise sacrifices for simplicity.
       </section>
-      <Goals />
+      <section className={styles.goals}>
+        <h2>Goals</h2>
+        <ul>
+          <li>
+            Provide an expressive syntax while maintaining a low cognitive
+            overhead when switching between Lua and Erde.
+          </li>
+          <li>
+            Generate performant Lua 5.1+ compatible code, with optimizations for
+            targeted platforms.
+          </li>
+          <li>
+            Provide native tooling support for better developer experience.
+          </li>
+        </ul>
+      </section>
+      <section>
+        During development, Erde files may also be either run through the CLI or
+        even loaded directly into Lua scripts using{' '}
+        <code>require('erde.loader')</code>. In both cases, the files will be
+        dynamically compiled as they are loaded.
+      </section>
       <Features />
       <section className={styles.installation}>
         <h2>Installation</h2>
@@ -271,6 +306,17 @@ export default () => (
           language="bash"
           children="erde -v"
         />
+      </section>
+      <section className={styles.faq}>
+        <h2>FAQ</h2>
+        {FAQ.map((faq, i) => (
+          <div key={i}>
+            <h3>{faq.question}</h3>
+            <p>
+              {typeof faq.answer === 'string' ? faq.answer.trim() : faq.answer}
+            </p>
+          </div>
+        ))}
       </section>
     </main>
   </Layout>

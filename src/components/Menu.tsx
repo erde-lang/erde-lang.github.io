@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
 import styles from './Menu.module.scss';
 
 export interface MenuItem {
   id: string;
-  label?: string;
+  label?: ReactNode;
   className?: string;
   onClick?: MouseEventHandler;
 }
