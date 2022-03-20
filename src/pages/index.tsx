@@ -1,3 +1,4 @@
+import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -252,14 +253,25 @@ export default () => (
       </section>
       <Goals />
       <Features />
-      <section className={styles.buttons}>
-        <Link to="/docs/">
-          <button>Get Started</button>
-        </Link>
-        {/* TODO */}
-        {/* <Link to="/tutorial/"> */}
-        {/* <button>Tutorial</button> */}
-        {/* </Link> */}
+      <section className={styles.installation}>
+        <h2>Installation</h2>
+        <p>
+          The recommended way to install is through{' '}
+          <a href="https://luarocks.org">luarocks</a>:
+        </p>
+        <CodeBlock language="bash" children="luarocks install erde" />
+        <p>
+          Alternatively you can clone the{' '}
+          <a href="https://github.com/erde-lang/erde">repo</a> and update your{' '}
+          PATH and <a href="https://www.lua.org/pil/8.1.html">LUA_PATH</a>{' '}
+          accordingly.
+        </p>
+        <p>You can check whether Erde is installed correctly by running:</p>
+        <CodeBlock
+          className={styles.codeBlock}
+          language="bash"
+          children="erde -v"
+        />
       </section>
     </main>
   </Layout>
