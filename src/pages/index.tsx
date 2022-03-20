@@ -1,7 +1,7 @@
 import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
+import classNames from 'classnames';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Logo from '../../static/logo.svg';
 import { BREAKPOINTS, useCurrentBreakpoint } from '../common/breakpoints';
 import { LiveCodeBlock } from '../components/LiveCodeBlock';
@@ -197,7 +197,7 @@ const Features = () => {
   const selectedFeature = FEATURES.find(({ id }) => id === selectedId);
 
   return currentBreakpoint < BREAKPOINTS.laptop ? (
-    <section className={styles.mobileFeatures}>
+    <section className={classNames(styles.features, styles.mobile)}>
       <h2>Features</h2>
       <ul>
         {FEATURES.map(feature => (
@@ -207,7 +207,7 @@ const Features = () => {
       </ul>
     </section>
   ) : (
-    <section className={styles.features}>
+    <section className={classNames(styles.features, styles.laptop)}>
       <div className={styles.featureList}>
         <h2>Features</h2>
         <Menu
@@ -224,7 +224,6 @@ const Features = () => {
       <div className={styles.codeBlockContainer}>
         <LiveCodeBlock
           className={styles.codeBlock}
-          // TODO: fix trim hack
           code={selectedFeature?.example.trim()}
           layout="vertical"
         />

@@ -8,20 +8,18 @@
   }
 }
 
-.mobileFeatures {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-
-  li {
-    text-align: center;
-  }
-}
-
 .features {
   display: flex;
   gap: 16px;
+
+  &.mobile {
+    flex-direction: column;
+    align-items: center;
+
+    li {
+      text-align: center;
+    }
+  }
 
   .featureList {
     display: flex;
