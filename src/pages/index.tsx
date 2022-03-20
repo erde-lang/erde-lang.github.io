@@ -103,8 +103,6 @@ print(nilTable?.test)
 local myTable = { test = 'hello world' }
 
 print(myTable?.test)
-print(myTable?[1])
-print(myTable?())
 
 myTable?.test = 'goodbye world'
 print(myTable?.test)

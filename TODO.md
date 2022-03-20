@@ -3,6 +3,7 @@
 - Add breaking changes w/ Lua
   - spreading varargs in table
   - `~=` vs `!=`
+  - local function by default
 - Update language ref
 - Add language interactive tutorial
 - Add language internals docs
