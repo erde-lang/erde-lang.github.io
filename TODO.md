@@ -1,0 +1,12 @@
+- Upload erde to fengari
+- Add full feature list
+- Add breaking changes w/ Lua
+  - spreading varargs in table
+  - `~=` vs `!=`
+- Update language ref
+- Add language interactive tutorial
+- Add language internals docs
+- Add FAQ
+  - Why symbols over keywords?
+  - Why not moonscript / fennel / etc.
+  - Should I use erde?
