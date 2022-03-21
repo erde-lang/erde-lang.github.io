@@ -94,7 +94,7 @@ Varargs get spread completely when appearing last in a list, and otherwise only
 return the first element (this is true for both table declarations and function
 parameters).
 
-In Erde, spreading varargs behave exactly like the spread operator, that is the
+In Erde, spreading varargs behave exactly like the spread operator. That is, the
 varargs are spread completely regardless of their position:
 
 ```erde
