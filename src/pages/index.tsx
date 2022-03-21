@@ -264,6 +264,12 @@ export default () => (
         features commonly found in other programming languages that Lua
         otherwise sacrifices for simplicity.
       </section>
+      <section>
+        During development, Erde files may also be either run through the CLI or
+        even loaded directly into Lua scripts using{' '}
+        <code>require('erde.loader')</code>. In both cases, the files will be
+        dynamically compiled as they are loaded.
+      </section>
       <section className={styles.goals}>
         <h2>Goals</h2>
         <ul>
@@ -273,18 +279,12 @@ export default () => (
           </li>
           <li>
             Generate performant Lua 5.1+ compatible code, with optimizations for
-            targeted platforms.
+            targeted versions.
           </li>
           <li>
             Provide native tooling support for better developer experience.
           </li>
         </ul>
-      </section>
-      <section>
-        During development, Erde files may also be either run through the CLI or
-        even loaded directly into Lua scripts using{' '}
-        <code>require('erde.loader')</code>. In both cases, the files will be
-        dynamically compiled as they are loaded.
       </section>
       <Features />
       <section className={styles.installation}>

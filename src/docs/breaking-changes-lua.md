@@ -1,8 +1,9 @@
 ---
 sidebar_position: 2
 sidebar_label: Breaking Changes w/ Lua
-title: Breaking Changes w/ Lua
 ---
+
+# Breaking Changes w/ Lua
 
 While Erde attempts to keep most core behaviors consistent w/ Lua, there are a
 couple of necessary breaking changes.
