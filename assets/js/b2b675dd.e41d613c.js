@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkerde_lang_github_io=self.webpackChunkerde_lang_github_io||[]).push([[533],{28017:function(e){e.exports=JSON.parse('{"permalink":"/blog","page":1,"postsPerPage":2,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
