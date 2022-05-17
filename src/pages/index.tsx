@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { ReactNode, useState } from 'react';
 import Logo from '../../static/logo.svg';
 import { BREAKPOINTS, useCurrentBreakpoint } from '../common/breakpoints';
-import { LiveCodeBlock } from '../components/LiveCodeBlock';
 import { Menu } from '../components/Menu';
 import styles from './index.module.scss';
 
@@ -15,8 +14,8 @@ const FAQ: { question: ReactNode; answer: ReactNode }[] = [
       <>
         Unfortunately neither <a href="https://moonscript.org">moonscript</a>{' '}
         nor <a href="https://fennel-lang.org">fennel</a> seemed like attractive
-        options, as I'm not a huge fan of whitespace languages nor lisp. The
-        other options seemed to be either unmaintained or lacking features I
+        options, as I&apos;m not a huge fan of whitespace languages nor lisp.
+        The other options seemed to be either unmaintained or lacking features I
         wanted.
       </>
     ),
@@ -43,20 +42,20 @@ syntax of Erde), then by all means feel free to try it out!
 ];
 
 //
-// Features
+// Examples
 //
 
-interface Feature {
+interface Example {
   id: string;
   label: ReactNode;
-  example: string;
+  code: string;
 }
 
-const FEATURES: Feature[] = [
+const EXAMPLES: Example[] = [
   {
     id: 'arrow-functions',
     label: 'Arrow functions',
-    example: `
+    code: `
 function map(t, callback) {
   local copy = {}
 
@@ -80,7 +79,7 @@ local odds = map(evens, even -> even - 1)
   {
     id: 'destructuring',
     label: 'Table destructuring',
-    example: `
+    code: `
 local myTable = {
   myValue = 5,
   'child1',
@@ -100,7 +99,7 @@ local [ firstChild, secondChild ] = myTable
   {
     id: 'optional-chaining',
     label: 'Optional chaining',
-    example: `
+    code: `
 local nilTable = nil
 
 print(nilTable?.test)
@@ -122,7 +121,7 @@ print(myTable?.test)
   {
     id: 'assignment-ops',
     label: 'Assignment operators',
-    example: `
+    code: `
 local a = 1
 print(a)
 a += 1
@@ -134,7 +133,7 @@ print(a)
   {
     id: 'param-defaults',
     label: 'Parameter defaults',
-    example: `
+    code: `
 function greet(message = 'hello world') {
   print(message)
 }
@@ -150,7 +149,7 @@ greet('goodbye world')
         <code>continue</code> keyword
       </>
     ),
-    example: `
+    code: `
 function printOdds(...) {
   for _, value in ipairs({ ... }) {
     if value % 2 == 0 {
@@ -167,7 +166,7 @@ printOdds(1, 2, 3, 4, 5)
   {
     id: 'interpolation',
     label: 'String interpolation',
-    example: `
+    code: `
 local myValue = 4
 
 -- Can interpolate any string
@@ -182,7 +181,7 @@ print('A literal brace: \\{')
   {
     id: 'do-expressions',
     label: 'do expressions',
-    example: `
+    code: `
 local myVar = do {
   local tmpVar = 4
   return tmpVar + 3
@@ -195,7 +194,7 @@ print(tmpVar)
   {
     id: 'try-catch',
     label: 'Try catch statement',
-    example: `
+    code: `
 try {
   print(1 / "hello")
 } catch (err) {
@@ -205,43 +204,36 @@ try {
   },
 ];
 
-const Features = () => {
+const Examples = () => {
   const currentBreakpoint = useCurrentBreakpoint();
-  const [selectedId, setSelectedId] = useState(FEATURES[0].id);
-  const selectedFeature = FEATURES.find(({ id }) => id === selectedId);
+  const [selectedExample, setSelectedExample] = useState(EXAMPLES[0]);
 
   return currentBreakpoint < BREAKPOINTS.laptop ? (
-    <section className={classNames(styles.features, styles.mobile)}>
-      <h2>Features</h2>
+    <section className={classNames(styles.examples, styles.mobile)}>
+      <h2>Examples</h2>
       <ul>
-        {FEATURES.map(feature => (
-          <li key={feature.id}>{feature.label}</li>
+        {EXAMPLES.map(example => (
+          <li key={example.id}>{example.label}</li>
         ))}
-        <li>and more!</li>
       </ul>
     </section>
   ) : (
-    <section className={classNames(styles.features, styles.laptop)}>
-      <div className={styles.featureList}>
-        <h2>Features</h2>
+    <section className={classNames(styles.examples, styles.laptop)}>
+      <div className={styles.exampleMenu}>
+        <h2>Examples</h2>
         <Menu
           className={styles.menu}
-          selectedItemId={selectedId}
-          onChange={id => void setSelectedId(id)}
-          items={FEATURES.map(feature => ({
-            id: feature.id,
-            label: feature.label,
-          }))}
-        />
-        <div>and more!</div>
-      </div>
-      <div className={styles.codeBlockContainer}>
-        <LiveCodeBlock
-          className={styles.codeBlock}
-          code={selectedFeature?.example.trim()}
-          layout="vertical"
+          value={selectedExample}
+          onChange={setSelectedExample}
+          items={EXAMPLES}
         />
       </div>
+      <CodeBlock
+        className={styles.codeBlock}
+        language="erde"
+        children={selectedExample.code.trim()}
+        showLineNumbers
+      />
     </section>
   );
 };
@@ -251,7 +243,7 @@ const Features = () => {
 //
 
 export default () => (
-  <Layout pageClassName={styles.index}>
+  <Layout wrapperClassName={styles.index}>
     <header>
       <Logo />
       <h1>Erde</h1>
@@ -265,41 +257,33 @@ export default () => (
         otherwise sacrifices for simplicity.
       </section>
       <section>
-        During development, Erde files may also be either run through the CLI or
-        even loaded directly into Lua scripts using{' '}
-        <code>require('erde.loader')</code>. In both cases, the files will be
-        dynamically compiled as they are loaded.
+        Erde may be either compiled to lua, run on the command line, or loaded
+        directly into Lua scripts using{' '}
+        <code>require(&apos;erde.loader&apos;)</code>.
       </section>
-      <section className={styles.goals}>
-        <h2>Goals</h2>
-        <ul>
-          <li>
-            Provide an expressive syntax while maintaining a low cognitive
-            overhead when switching between Lua and Erde.
-          </li>
-          <li>
-            Generate performant Lua 5.1+ compatible code, with optimizations for
-            targeted versions.
-          </li>
-          <li>
-            Provide native tooling support for better developer experience.
-          </li>
-        </ul>
-      </section>
-      <Features />
+      <Examples />
       <section className={styles.installation}>
         <h2>Installation</h2>
         <p>
           The recommended way to install is through{' '}
-          <a href="https://luarocks.org">luarocks</a>:
+          <a href="https://luarocks.org/modules/bsuth/erde">luarocks</a>:
         </p>
         <CodeBlock language="bash" children="luarocks install erde" />
         <p>
           Alternatively you can clone the{' '}
           <a href="https://github.com/erde-lang/erde">repo</a> and update your{' '}
           PATH and <a href="https://www.lua.org/pil/8.1.html">LUA_PATH</a>{' '}
-          accordingly.
+          accordingly:
         </p>
+        <CodeBlock
+          language="bash"
+          children={[
+            'git clone https://github.com/erde-lang/erde.git',
+            'ERDE_ROOT="$(pwd)/erde"',
+            'export LUA_PATH="$ERDE_ROOT/?/init.lua;$LUA_PATH"',
+            'export PATH="$ERDE_ROOT/bin:$PATH"',
+          ].join('\n')}
+        />
         <p>You can check whether Erde is installed correctly by running:</p>
         <CodeBlock
           className={styles.codeBlock}
