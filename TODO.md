@@ -1,5 +1,14 @@
-- Upload erde to fengari
-- Add full feature list
-- Update language ref
-- Add language interactive tutorial
+- Update language reference
+  - remove pipe
+  - self shorthand
+  - generic for loop destructuring
+  - goto
+  - hoisting top block vars
+  - multi expression assignment
+  - standard operators
+  - do block expr
+  - breaking varargs change (actually spread in table!)
+  - remove block comments
 - Add language internals docs
+- Playground
+  - Upload erde to fengari
