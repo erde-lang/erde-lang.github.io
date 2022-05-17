@@ -15,25 +15,24 @@ const FAQ: { question: ReactNode; answer: ReactNode }[] = [
         Unfortunately neither <a href="https://moonscript.org">moonscript</a>{' '}
         nor <a href="https://fennel-lang.org">fennel</a> seemed like attractive
         options, as I&apos;m not a huge fan of whitespace languages nor lisp.
-        The other options seemed to be either unmaintained or lacking features I
-        wanted.
+        The other options seemed to be either unmaintained or lacking specific
+        features.
       </>
     ),
   },
   {
     question: 'Why symbols over keywords?',
     answer: `
-Many of the commonly used programming languages today tend to use symbols over
-keywords (Rust, Golang, Javascript, etc). This is meant to make Erde more 
-approachable for those coming from languages other than Lua. I personally also 
-find symbols to be much more concise and readable (although this is extremely 
-subjective).
+This is partially a personally preference and partially that many of the 
+commonly used programming languages today tend to use symbols over keywords 
+(Rust, Golang, Javascript, etc). This is meant to make Erde more approachable 
+for those coming from languages other than Lua.
 `,
   },
   {
-    question: 'Do I need Erde?',
+    question: 'Should I use Erde?',
     answer: `
-Absolutely not. Lua is already an amazingly designed language. If you are only
+It depends. Lua is already an amazingly designed language. If you are only
 using Lua lightly, then working with Erde will probably incur more overhead than
 it's worth. However, if you are working with Lua a lot (or simply prefer the
 syntax of Erde), then by all means feel free to try it out!
@@ -257,9 +256,8 @@ export default () => (
         otherwise sacrifices for simplicity.
       </section>
       <section>
-        Erde may be either compiled to lua, run on the command line, or loaded
-        directly into Lua scripts using{' '}
-        <code>require(&apos;erde.loader&apos;)</code>.
+        Erde may be compiled to Lua, run on the command line, or loaded directly
+        into Lua scripts using <code>require(&apos;erde.loader&apos;)</code>.
       </section>
       <Examples />
       <section className={styles.installation}>
