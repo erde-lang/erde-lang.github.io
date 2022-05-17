@@ -36,15 +36,6 @@ module.exports = {
           path: './src/docs',
           sidebarPath: require.resolve('./sidebars.js'),
         },
-        blog: {
-          path: './src/blog',
-          routeBasePath: 'blog',
-          blogTitle: 'Blog',
-          postsPerPage: 'ALL',
-          blogSidebarTitle: 'All Posts',
-          blogSidebarCount: 'ALL',
-          showReadingTime: false,
-        },
         theme: {
           customCss: require.resolve('./src/scss/custom.scss'),
         },
@@ -65,11 +56,6 @@ module.exports = {
           {
             href: '/docs',
             label: 'Docs',
-            position: 'left',
-          },
-          {
-            href: '/blog',
-            label: 'Blog',
             position: 'left',
           },
           {
