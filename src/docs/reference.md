@@ -3,28 +3,56 @@ title: ''
 sidebar_label: Reference
 ---
 
-This reference assumes previous knowledge of [Lua](https://www.lua.org/manual/).
+:::caution
+
+This reference assumes a basic working knowledge of 
+[Lua](https://www.lua.org/manual/).
+
+:::
 
 ## Comments
 
-Unchanged from Lua.
+[Lua Comments](https://www.lua.org/pil/1.3.html)
+
+Comments are unchanged from Lua. Both line comments and block comments are 
+supported.
 
 ```erde
 -- this is a single line comment
+
 --[[
   this is a
-  multiline comment
+  block comment
 ]]
 ```
 
 ## Types
 
-Numbers, booleans, and `nil` are all unchanged from Lua.
+`true`, `false` and `nil` are unchanged from Lua.
+
+### Numbers
+
+[Lua 5.4](https://www.lua.org/manual/5.4/manual.html#3.1)
+[Lua 5.3](https://www.lua.org/manual/5.3/manual.html#3.1)
+[Lua 5.2](https://www.lua.org/manual/5.2/manual.html#3.1)
+[Lua 5.1](https://www.lua.org/manual/5.1/manual.html#2.1)
+(See 'numeric/numerical constant')
+
+Numbers are unchanged from Lua. However, since the syntax for numbers differs
+across Lua 5.1 - Lua 5.4 (in particular, each version is either the same or a 
+superset of the previous version) you should only use the syntax for the least 
+supported Lua version. If Erde detects that you are using a syntax that
+is not supported by your compilation targets, it will throw an error.
+
+For example, trying to compile `0xA23p-4` when targeting Lua 5.1+ will cause 
+compilation errors, since hexadecimal exponents were not added until Lua 5.2.
 
 ### Strings
 
+[Lua Strings](https://www.lua.org/pil/2.4.html)
+
 String are _mostly_ unchanged from Lua. Erde additionally allows for
-interpolation in any string form using braces. Braces may be escaped to be used
+interpolation in any string form using braces, which may be escaped to be used
 literally. Escaping the end brace is optional.
 
 ```erde
@@ -41,21 +69,9 @@ local braceLiteral2 = '\{ 1, 2 }'
 
 ### Tables
 
-Tables are completely backwards compatible with Lua, including that tables use
-1-based indexing.
+[Lua Tables](https://www.lua.org/pil/2.5.html)
 
-```erde
-local t = {
-  -- key value pairs
-  hello = 'world',
-  goodbye = 'society',
-  ['id:{myid}'] = 'test',
-
-  -- ipairs values
-  42,
-  'i am a string at index 2',
-}
-```
+Tables are unchanged from Lua, including that tables use 1-based indexing.
 
 Tables also support the [Spread Operator](#spread-operator).
 
