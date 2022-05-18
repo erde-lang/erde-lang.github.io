@@ -278,8 +278,8 @@ export default () => (
           children={[
             'git clone https://github.com/erde-lang/erde.git',
             'ERDE_ROOT="$(pwd)/erde"',
-            'export LUA_PATH="$ERDE_ROOT/?/init.lua;$LUA_PATH"',
             'export PATH="$ERDE_ROOT/bin:$PATH"',
+            'export LUA_PATH="$ERDE_ROOT/?/init.lua;$LUA_PATH"',
           ].join('\n')}
         />
         <p>You can check whether Erde is installed correctly by running:</p>
