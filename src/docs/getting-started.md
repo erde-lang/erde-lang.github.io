@@ -69,13 +69,18 @@ into Lua using:
 erde compile fibonacci.erde
 ```
 
-This will create a `fibonacci.lua` file in the same directory. You can run the 
-compiled file with the `lua` interpreter as a sanity check to make sure the 
-output is the same:
+This will create a `fibonacci.lua` file in the same directory. 
+
+:::note
+
+You can run the compiled file with the `lua` interpreter as a sanity check to 
+make sure the output is the same:
 
 ```bash
 lua fibonacci.lua
 ```
+
+:::
 
 ## Cleaning Projects
 
@@ -94,6 +99,10 @@ erde clean
 
 By default this will clean all generated files in the current directory tree.
 
-For the astute who may be wondering how Erde handles shebangs, Erde will inject 
+:::info
+
+For those who may be wondering how Erde handles shebangs, Erde will inject 
 the comment _after_ the shebang during compilation and actually checks the first 
 _two_ lines of a file during cleaning.
+
+:::
