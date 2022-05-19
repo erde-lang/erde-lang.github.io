@@ -81,37 +81,77 @@ local b = { ...a }
 print(b.hello) -- world
 ```
 
-## Variables / Scope
+## Declarations / Scopes
 
-Variable declarations are completely backwards compatible with Lua. However,
-the `global` and `module` scope keywords also have been added.
+Unlike Lua, all variable declarations in Erde require a scope keyword, which is 
+one of `local`, `global`, or `module`. Erde will throw an error for declarations 
+that are missing a scope.
+
+For function declarations, the scope is optional; when the scope is
+omitted, the function will default to `local`:
+
+```erde
+-- These are equivalent!
+
+function myFunction() { }
+local function myFunction() { }
+```
+
+### local
+
+[Lua Local Variables](https://www.lua.org/pil/4.2.html)
+
+The `local` scope is unchanged from Lua.
 
 ### global
 
-The `global` keyword is an **_optional_** keyword for declaring global
-variables (or rather, declaring a variable in the current environment).
+[Lua Global Variables](https://www.lua.org/pil/1.2.html)
+
+Global variables in Erde _require_ the `global` keyword. Thus the following is
+no longer valid:
 
 ```erde
--- Good
-global MY_GLOBAL = 1
-
-if math.random(1, 10) > 5 {
-  -- Bad
-  global MY_GLOBAL = 1
-}
+MY_GLOBAL = 1
 ```
 
-The reason the `global` keyword is optional is that the parser cannot know the
-environment the script will be run in, and thus is not able to determine the
-difference between assigning a new value to an existing environment variable and
-declaring a new variable.
+Erde will throw an error about trying to assign a value to an undeclared
+variable. Instead, you can use:
+
+```erde
+global MY_GLOBAL = 1
+```
+
+Since Erde evaluates all variable declarations separately for each file, any
+globals you use in one file that are declared in another will need to declared
+before use:
+
+```erde title="foo.erde"
+global FOO = "foo"
+```
+
+```erde title="bar.erde"
+global FOO
+
+print(FOO) -- prints: foo
+```
+
+:::note
+
+Since functions default to `local` scope, global functions need to be explicitly
+declared as global:
+
+```erde
+global function myGlobalFunc() {}
+```
+
+:::
 
 ### module
 
-The `module` keyword acts as an `export` statement. All variables with the
+The `module` keyword acts as an `export` statement. Anything declared with the
 `module` scope will be placed into a table, which is then returned at the end of
 the script. It may only occur at the top level of a module and may not be used
-in conjunction with `return`.
+in conjunction with `return`:
 
 ```erde title="foo.lua"
 module function echo(msg) {
