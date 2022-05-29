@@ -180,6 +180,8 @@ anyways).
 
 ### Arithmetic Operators
 
+[Lua Arithmetic Operators](https://www.lua.org/manual/5.4/manual.html#3.4.1)
+
 Unchanged from Lua.
 
 <center>
@@ -198,6 +200,8 @@ Unchanged from Lua.
 </center>
 
 ### Relational Operators
+
+[Lua Relational Operators](https://www.lua.org/manual/5.4/manual.html#3.4.4)
 
 The NEQ operator uses `!=` instead of Lua's `~=`. This is due to the fact that 
 Erde supports both [Bitwise Operators](#bitwise-operators) as well as 
@@ -223,19 +227,20 @@ language.
 
 ### Bitwise Operators
 
-Erde supports bitwise operators, but unlike most languages repurposes the
-syntax. **_Traditional bitwise operators must be prefixed with `.`._**
+[Lua Bitwise Operators](https://www.lua.org/manual/5.4/manual.html#3.4.2)
+
+Erde supports bitwise operators and uses the same syntax as Lua 5.3+:
 
 <center>
 
 | Syntax | Operator    | Example                  |
 | :----- | :---------- | :----------------------- |
-| .\|    | or          | 0b100 .\| 0b010 == 0b110 |
-| .&     | and         | 0b110 .& 0b101 == 0b100  |
-| .~     | xor         | 0b110 .~ 0b101 == 0b011  |
-| .~     | unary NOT   | .~0b100 == 0b011         |
-| .>>    | right shift | 0b010 .>> 1 == 0b001     |
-| .<<    | left shift  | 0b010 .<< 1 == 0b100     |
+| \|     | or          | 0b100 .\| 0b010 == 0b110 |
+| &      | and         | 0b110 .& 0b101 == 0b100  |
+| ~      | xor         | 0b110 .~ 0b101 == 0b011  |
+| ~      | unary NOT   | .~0b100 == 0b011         |
+| >>     | right shift | 0b010 .>> 1 == 0b001     |
+| <<     | left shift  | 0b010 .<< 1 == 0b100     |
 
 </center>
 <br />
@@ -245,6 +250,8 @@ access to the [BitOp](http://bitop.luajit.org) module and bit operations will
 compile down to `require('bit').xxx()` calls.
 
 ### Logical Operators
+
+[Lua Logical Operators](https://www.lua.org/manual/5.4/manual.html#3.4.5)
 
 Due to Erde favor of symbols over words, the logical operators are quite
 different than Lua.
@@ -264,6 +271,9 @@ The unary logical NOT operator uses the `!` token to maintain consistency with
 the NEQ operator (see [Relational Operators](#relational-operators)).
 
 ### Concatenation / Length Operator
+
+[Lua Concatenation Operator](https://www.lua.org/manual/5.4/manual.html#3.4.6)
+[Lua Length Operators](https://www.lua.org/manual/5.4/manual.html#3.4.7)
 
 Unchanged from Lua.
 
@@ -324,6 +334,8 @@ additionally adds a `continue` statement and `try...catch` construct.
 
 ### do
 
+[Lua Do Block](https://www.lua.org/pil/4.2.html)
+
 ```erde
 do {
   ...
@@ -331,6 +343,8 @@ do {
 ```
 
 ### if else
+
+[Lua Do Block](https://www.lua.org/pil/4.3.1.html)
 
 ```erde
 if n > 0 {
@@ -344,6 +358,9 @@ if n > 0 {
 
 ### for
 
+[Lua Numeric For Loop](https://www.lua.org/pil/4.3.4.html)
+[Lua Generic For Loop](https://www.lua.org/pil/4.3.5.html)
+
 ```erde
 for i = 1, 10, 1 {
   ...
@@ -356,6 +373,8 @@ for i, v in ipairs({ 1, 2, 3 }) {
 
 ### while
 
+[Lua While Loop](https://www.lua.org/pil/4.3.2.html)
+
 ```erde
 while true {
   ...
@@ -363,6 +382,8 @@ while true {
 ```
 
 ### repeat ... until
+
+[Lua Repeat Until](https://www.lua.org/pil/4.3.3.html)
 
 ```erde
 repeat {
@@ -373,7 +394,7 @@ repeat {
 ### try ... catch
 
 Erde support `try...catch` statements to catch errors thrown by Lua's `error`
-function. Under the hood it is simply a wrapper around `pcall`.
+function. Under the hood it is simply a wrapper around [pcall](https://www.lua.org/pil/8.4.html).
 
 ```erde
 try {
@@ -396,6 +417,21 @@ for i = 1, 10 {
 
   print('i is odd')
 }
+```
+
+### goto
+
+Erde has support for the Lua's `goto` statement available in Lua 5.2+. Note that 
+there is no way to mimic this behavior in 5.1, so trying to use `goto` when 
+targeting 5.1+ will result in an error.
+
+```erde
+goto myJump
+
+print('this is skipped')
+
+::myJump::
+print('hello world')
 ```
 
 ## Functions
