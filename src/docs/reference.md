@@ -52,13 +52,12 @@ compilation errors, since hexadecimal exponents were not added until Lua 5.2.
 [Lua Strings](https://www.lua.org/pil/2.4.html)
 
 String are _mostly_ unchanged from Lua. Erde additionally allows for
-interpolation in any string form using braces, which may be escaped to be used
-literally. Escaping the end brace is optional.
+interpolation via braces when using double quote or block strings. Braces may be 
+escaped to be used literally and escaping the end brace is optional.
 
 ```erde
 local msg = 'world'
 
-local singleQuotes = 'hello {msg}'
 local doubleQuotes = "hello {msg}"
 local multiline = [[hello {msg}]]
 
@@ -192,41 +191,27 @@ Unchanged from Lua.
 
 ### Relational Operators
 
-Unchanged from Lua.
+The NEQ operator uses `!=` instead of Lua's `~=`. This is due to the fact that 
+Erde supports both [Bitwise Operators](#bitwise-operators) as well as 
+[Assignment Operators](#assignment-operators), which causes ambiguity on whether 
+`~=` represents the traditional NEQ operator or the XOR assignment operator.
+Because the bitwise operators are not used very often, I felt is was better to
+maintain consistency with Lua here, especially since the NEQ operator has a 
+very popular alternative that is present in nearly every other programming
+language.
 
 <center>
 
 | Syntax | Operator         | Example           |
 | :----- | :--------------- | :---------------- |
 | ==     | equality         | 1 + 1 == 2        |
-| ~=     | inequality       | 1 + 1 ~= 3        |
+| !=     | inequality       | 1 + 1 ~= 3        |
 | <      | less than        | 3 < 5             |
 | >      | greater than     | 9 > 7             |
 | <=     | less or equal    | 9 >= 8, 9 >= 9    |
 | >=     | greater or equal | 9 <= 11, 11 <= 11 |
 
 </center>
-
-### Logical Operators
-
-Due to Erde favor of symbols over words, the logical operators are quite
-different than Lua.
-
-<center>
-
-| Syntax | Operator  | Example               |
-| :----- | :-------- | :-------------------- |
-| \|     | or        | true \| false == true |
-| &      | and       | true & false == false |
-| ~      | unary NOT | ~false == true        |
-
-</center>
-<br />
-
-The unary logical NOT operator uses the `~` token in order to maintain
-consistency with inequality (`~=`). The `!` and `!=` tokens were intentionally
-avoided as it would surely cause divides among the community on which to use. It
-also leaves the `!` token available for use in the future.
 
 ### Bitwise Operators
 
@@ -247,44 +232,36 @@ syntax. **_Traditional bitwise operators must be prefixed with `.`._**
 </center>
 <br />
 
-The reason for the unconventional syntax is that Erde uses the `~` symbol as the
-unary logical NOT to remain consistent with `~=`, which conflicts with Lua5.3+'s
-unary bitwise NOT and bitwise exclusive OR. The traditional bitop symbols also
-consume some of the most convenient syntax tokens while being seldom used by
-the average developer. Prefixing traditional bitwise operators with `.` frees
-these tokens for other uses, such as using `&` for logical AND (instead of the
-more awkward `&&`) and `>>` for the [Pipe Operator](#pipe-operator).
-
 When compiling to Lua 5.1 or 5.2, Erde will assume the target platform has
 access to the [BitOp](http://bitop.luajit.org) module and bit operations will
 compile down to `require('bit').xxx()` calls.
 
-### Concatenation / Length Operators
+### Logical Operators
+
+Due to Erde favor of symbols over words, the logical operators are quite
+different than Lua.
+
+<center>
+
+| Syntax | Operator  | Example                 |
+| :----- | :-------- | :---------------------- |
+| \|\|   | or        | true \|\| false == true |
+| &&     | and       | true && false == false  |
+| !      | unary NOT | !false == true          |
+
+</center>
+<br />
+
+The unary logical NOT operator uses the `!` token to maintain consistency with
+the NEQ operator (see [Relational Operators](#relational-operators)).
+
+### Concatenation / Length Operator
 
 Unchanged from Lua.
 
 ```erde
 print("hello" .. "world") -- helloworld
 print(#"hello") -- 5
-```
-
-### Ternary Operator
-
-The [ternary operator](https://en.wikipedia.org/wiki/Ternary_operation) is fully
-supported in Erde. It was added to avoid the more awkward `a and b or c` syntax
-(which is **not** compatible with the ternary operator in the case `b` is false).
-
-```erde
-local x = myCondition ? trueExpr : falseExpr
-```
-
-### Null Coalascing Operator
-
-The [null coalescing operator](https://en.wikipedia.org/wiki/Null_coalescing_operator)
-is fully supported in Erde using `??`.
-
-```erde
-local x = myValue ?? defaultValue
 ```
 
 ### Spread Operator
@@ -307,48 +284,22 @@ local a = { 1, 2 }
 print(add(...a)) -- 3
 ```
 
-Note that key, value pairs will be ignored when spreading into function arguments.
+:::info
 
-### Pipe Operator
+Erde changes the behavior of variadic arguments to mimic spreading for consistency. 
+For more information, check [Spreading Varargs](/docs/breaking-changes-lua#spreading-varargs)
 
-The pipe operator forwards expressions into the arguments of
-a function call. The initial values may be given as a single expression or as
-a list of expressions surrounded by parentheses.
+:::
 
-```erde
- -- hello world
-'hello world' >> print()
+:::note
 
--- hello
--- world
-('hello', 'world') >> print()
-```
+Key, value pairs are ignored when spreading into function arguments.
 
-Each function call may also specify additional arguments. These values will
-always be passed in _before_ the piped ones.
-
-```erde
- -- a
- -- b
- -- c
-('b', 'c') >> print('a')
-```
-
-Pipes can be (and often are) chained together, passing the returns of one pipe
-function into the arguments of another.
-
-```erde
-function add(a, b) {
-  return a + b
-}
-
-1 >> add(2) >> add(3) >> print() -- 6
-```
+:::
 
 ### Assignment Operators
 
-All binary operators support assignment operator shorthands. This includes the
-[Null Coalescing Operator](#null-coalascing-operator).
+All binary operators support assignment operator shorthands:
 
 ```erde
 local x = 4

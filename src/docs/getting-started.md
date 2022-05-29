@@ -23,10 +23,12 @@ export PATH="$ERDE_ROOT/bin:$PATH"
 export LUA_PATH="$ERDE_ROOT/?/init.lua;$LUA_PATH"
 ```
 
-You can check whether Erde is installed correctly by running:
+Erde comes with 2 executables: `erde` for running files and `erdec` for 
+compiling files. You can check whether Erde is installed correctly by running:
 
 ```bash
 erde -v
+erdec -v
 ```
 
 ## Running Programs
@@ -63,10 +65,10 @@ erde fibonacci.erde
 
 Running `.erde` files directly is great for development, but for production code
 we want to distribute `.lua` files instead. We can compile our previous file 
-into Lua using:
+into Lua using the `erdec` command:
 
 ```bash
-erde compile fibonacci.erde
+erdec fibonacci.erde
 ```
 
 This will create a `fibonacci.lua` file in the same directory. 
@@ -94,7 +96,7 @@ at the top of the file. This allows us to be able to clean all generated files
 using:
 
 ```bash
-erde clean
+erdec --clean
 ```
 
 By default this will clean all generated files in the current directory tree.
