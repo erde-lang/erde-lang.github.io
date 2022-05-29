@@ -86,6 +86,14 @@ Unlike Lua, all variable declarations in Erde require a scope keyword, which is
 one of `local`, `global`, or `module`. Erde will throw an error for declarations 
 that are missing a scope.
 
+```erde
+-- okay
+local myVar
+
+-- error! undeclared variable
+myOtherVar = 2
+```
+
 For function declarations, the scope is optional; when the scope is
 omitted, the function will default to `local`:
 
