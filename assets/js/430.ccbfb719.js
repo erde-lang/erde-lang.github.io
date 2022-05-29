@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkerde_lang_github_io=self.webpackChunkerde_lang_github_io||[]).push([[430],{8430:function(e,n,t){t.r(n),t.d(n,{default:function(){return a}});var u=t(8277),i="notFound_v1pe",r=t(5893),a=function(){return(0,r.jsx)(u.Z,{pageClassName:i,title:"404",children:"404"})}}}]);
