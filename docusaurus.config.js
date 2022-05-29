@@ -34,6 +34,7 @@ module.exports = {
       {
         docs: {
           path: './src/docs',
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {
@@ -54,7 +55,7 @@ module.exports = {
         },
         items: [
           {
-            href: '/docs',
+            href: '/getting-started',
             label: 'Docs',
             position: 'left',
           },
