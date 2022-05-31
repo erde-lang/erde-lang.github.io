@@ -305,7 +305,7 @@ print(add(...a)) -- 3
 :::info
 
 Erde changes the behavior of variadic arguments to mimic spreading for consistency. 
-For more information, check [Spreading Varargs](/docs/breaking-changes-lua#spreading-varargs)
+For more information, check [Spreading Varargs](/breaking-changes-lua#spreading-varargs)
 
 :::
 
