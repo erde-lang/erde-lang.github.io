@@ -1,5 +1,14 @@
 /* https://docusaurus.io/docs/styling-layout */
-@use 'palette';
+
+// -----------------------------------------------------------------------------
+// Palette
+// -----------------------------------------------------------------------------
+
+$void: #000000;
+$pure: #ffffff;
+$white: #f0f0f0;
+$black: #24272b;
+$green: #25c359;
 
 // -----------------------------------------------------------------------------
 // Imports
@@ -17,7 +26,7 @@
 
 :root {
   // Core
-  --ifm-color-primary: #{palette.$green};
+  --ifm-color-primary: #{$green};
   --ifm-color-primary-light: #29d662;
   --ifm-color-primary-lighter: #33d869;
   --ifm-color-primary-lightest: #50de7f;
@@ -36,22 +45,22 @@
 
 html[data-theme='light'] {
   // Core
-  --ifm-background-color: #{palette.$white};
-  --ifm-font-color-base: #{palette.$void};
+  --ifm-background-color: #{$white};
+  --ifm-font-color-base: #{$void};
 
   // Navbar
-  --ifm-navbar-background-color: #{palette.$white};
-  --ifm-navbar-link-color: #{palette.$void};
+  --ifm-navbar-background-color: #{$white};
+  --ifm-navbar-link-color: #{$void};
 }
 
 html[data-theme='dark'] {
   // Core
-  --ifm-background-color: #{palette.$black};
-  --ifm-font-color-base: #{palette.$white};
+  --ifm-background-color: #{$black};
+  --ifm-font-color-base: #{$white};
 
   // Navbar
-  --ifm-navbar-background-color: #{palette.$black};
-  --ifm-navbar-link-color: #{palette.$white};
+  --ifm-navbar-background-color: #{$black};
+  --ifm-navbar-link-color: #{$white};
 }
 
 // -----------------------------------------------------------------------------

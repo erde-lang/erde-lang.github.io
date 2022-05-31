@@ -1,6 +1,5 @@
 // https://docusaurus.io/docs/configuration
 
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const vsLight = require('prism-react-renderer/themes/vsLight');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -17,15 +16,7 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  plugins: [
-    'docusaurus-plugin-sass',
-    () => ({
-      name: 'monaco-editor',
-      configureWebpack: () => ({
-        plugins: [new MonacoWebpackPlugin()],
-      }),
-    }),
-  ],
+  plugins: ['docusaurus-plugin-sass'],
 
   presets: [
     [
@@ -38,7 +29,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {
-          customCss: require.resolve('./src/scss/custom.scss'),
+          customCss: require.resolve('./src/theme/custom.scss'),
         },
       },
     ],
@@ -50,7 +41,7 @@ module.exports = {
       prism: { theme: vsLight },
       navbar: {
         logo: {
-          alt: 'site logo',
+          alt: 'Erde Logo',
           src: 'logo.svg',
         },
         items: [
