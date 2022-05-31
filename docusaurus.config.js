@@ -55,11 +55,6 @@ module.exports = {
         },
         items: [
           {
-            href: '/getting-started',
-            label: 'Docs',
-            position: 'left',
-          },
-          {
             href: 'https://github.com/erde-lang/erde',
             label: 'GitHub',
             position: 'right',

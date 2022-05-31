@@ -1,6 +1,6 @@
 ---
-title: ''
-sidebar_label: Reference
+title: Reference
+hide_title: true
 ---
 
 :::caution
