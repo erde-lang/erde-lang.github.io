@@ -26,6 +26,7 @@ module.exports = {
         docs: {
           path: './src/docs',
           routeBasePath: '/',
+          breadcrumbs: false,
           sidebarPath: require.resolve('./sidebars.js'),
         },
         theme: {

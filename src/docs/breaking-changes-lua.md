@@ -1,8 +1,3 @@
----
-sidebar_position: 3
-sidebar_label: Breaking Changes w/ Lua
----
-
 # Breaking Changes w/ Lua
 
 While Erde attempts to keep most core behaviors consistent w/ Lua, there are a

@@ -1,7 +1,4 @@
----
-title: Reference
-hide_title: true
----
+# Reference
 
 :::caution
 
