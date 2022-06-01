@@ -596,68 +596,53 @@ local greet = name = 'bob' -> print(name)
 
 ## Optional Chaining
 
-Erde supports optional chaining, which allows an index to return `nil` rather
-than throw an error if the variable is `nil`. It may be applied to key-value
-indexes, number indexes, and function calls.
+Erde supports a form of 
+[optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining),
+which allows an index chain to shortcircuit w/ `nil` instead of throwing an
+`attempt to index nil value` error.
+
+An optional chain may be used by simply prefixing the index with a question mark 
+(`?`). It may be applied to key indices, number indices, and function calls:
 
 ```erde
 local a = nil
 
--- these are return nil
-print(a?.b) -- key, value index
-print(a?[1]) -- number index
-print(a?()) -- function call
-```
+-- these all print nil
+print(a?.b)
+print(a?[1])
+print(a?())
 
-It is particularly useful when indexing an object deeply, where an intermediate
-value may or may not be present.
-
-```erde
-local personA = {
-  name = 'A',
-  children = {
-    { name = 'Aa' }
-  }
-}
-
-local personB = { name = 'B' }
-
-print(personA.children?[1].name) -- Aa
-print(personB.children?[1].name) -- nil
-
+-- also works with methods
+print(a?:b())
 ```
 
 You can also use optional chaining during assignment. In this case, the
 assignment will simply not occur if the chain ends early.
 
 ```erde
-local personB = { name = 'B' }
-personB.children?[1].name = 'Bb'
-print(personB.children?[1].name) -- nil
+local person = { name = 'Bob' }
+person.children?[1].name = 'Bobs Child'
+print(person.children?[1].name) -- nil
 ```
 
 ## Destructuring
 
-Erde supports destructuring, which allows a convenient syntax to extract values
-from a table. It may be used to either declare variables or in function
-parameters.
+Erde supports a simple form of [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment),
+which is a convenient way to extract values from a table.
+
+To extract keys from a table, you may specify a list of names in braces:
 
 ```erde
--- declaration
 local a = { hello = 'world' }
+
+-- Destructure `a` to extract the `hello` property
+-- This is equivalent to `local hello = a.hello`
 local { hello } = a
-print(hello) -- world
 
--- function params
-function introduce({ name }) {
-  print(name)
-}
-
-introduce({ name = 'world' })
+print(hello) -- prints: world
 ```
 
-Specified names extract key-value pairs from the destructured table. To extract
-array values, you may specify names in brackets.
+To extract from the array section of a table, you can use brackets:
 
 ```erde
 local a = {
@@ -666,35 +651,46 @@ local a = {
   'second index',
 }
 
-local { hello, [first, second] } = a
-```
-
-The braces are optional if only array values are destructured.
-
-```erde
-local a = {
-  hello = 'world',
-  'first index',
-  'second index',
-}
-
+-- Destructure array elements. This is equivalent to: 
+-- `local first = a[1]`
+-- `local second = a[2]`
 local [first, second] = a
+
+print(first) -- prints: first index
+print(second) -- prints: second index
 ```
 
-Destructured values may also be given aliases, which is particularly useful
-if the destructured key is a generic name.
+Destructured values may be given aliases or default values. Aliases simply 
+rename the destructured field and default values are used to replace `nil`. When
+using both, aliases must come before defaults
 
 ```erde
-local a = {
-  hello = 'world',
-  'first index',
-  'second index',
-}
+local a = { hello = 'world' }
 
-local { hello: worldHello } = a
-print(worldHello) -- 'world'
+-- Alias
+local { hello: myHello } = a
+print(myHello) -- prints: world
+
+-- Default
+local { world = 'default msg' } = a
+print(world) -- prints: default msg
+
+-- Alias + Default
+local { world: myWorld = 'default msg' } = a
+print(myWorld) -- prints: default msg
 ```
 
-Note that unlike most languages, nested destructuring is **_not_** supported.
-This is intentional, as nested destructuring syntax often makes code more
-cryptic and difficult to read.
+:::warning
+
+Using aliases inside of array destructuring is invalid syntax, as every name is
+already an alias.
+
+:::
+
+:::info
+
+Unlike most languages, nested destructuring is **_not_** supported. This is 
+intentional, as nested destructuring syntax makes code more cryptic and 
+difficult to read.
+
+:::
