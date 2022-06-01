@@ -155,17 +155,17 @@ global function myGlobalFunc() {}
 The `module` keyword acts as an `export` statement. Anything declared with the
 `module` scope will be placed into a table, which is then returned at the end of
 the script. It may only occur at the top level of a module and may not be used
-in conjunction with `return`:
+in conjunction with `return`.
 
-```erde title="foo.lua"
+```erde title="foo.erde"
 module function echo(msg) {
   print(msg)
 }
 ```
 
-```erde title="bar.lua"
+```erde title="bar.erde"
 local foo = require('foo')
-foo.echo('hello world')
+foo.echo('hello world') -- prints: hello world
 ```
 
 Note that this keyword conflicts with the built-in `module` function in Lua 5.1,
@@ -196,6 +196,15 @@ Unchanged from Lua.
 
 </center>
 
+<br />
+
+:::note
+
+Floor division (`//`) was not introduced until Lua 5.3, but is simple enough 
+that the compiler will polyfill it for you if necessary.
+
+:::
+
 ### Relational Operators
 
 [Lua Relational Operators](https://www.lua.org/manual/5.4/manual.html#3.4.4)
@@ -214,7 +223,7 @@ language.
 | Syntax | Operator         | Example           |
 | :----- | :--------------- | :---------------- |
 | ==     | equality         | 1 + 1 == 2        |
-| !=     | inequality       | 1 + 1 ~= 3        |
+| !=     | inequality       | 1 + 1 != 3        |
 | <      | less than        | 3 < 5             |
 | >      | greater than     | 9 > 7             |
 | <=     | less or equal    | 9 >= 8, 9 >= 9    |
@@ -269,7 +278,7 @@ the NEQ operator (see [Relational Operators](#relational-operators)).
 
 ### Concatenation / Length Operator
 
-[Lua Concatenation Operator](https://www.lua.org/manual/5.4/manual.html#3.4.6)
+[Lua Concatenation Operator](https://www.lua.org/manual/5.4/manual.html#3.4.6) <br />
 [Lua Length Operators](https://www.lua.org/manual/5.4/manual.html#3.4.7)
 
 Unchanged from Lua.
@@ -314,13 +323,14 @@ Key, value pairs are ignored when spreading into function arguments.
 
 ### Assignment Operators
 
-All binary operators support assignment operator shorthands:
+All binary operators (except of course [Relational Operators](#relational-operators)) 
+support assignment operator shorthands:
 
 ```erde
 local x = 4
 x += 6
 x /= 2
-print(x) -- 5
+print(x) -- prints: 5
 ```
 
 ## Logic Constructs
@@ -355,7 +365,7 @@ if n > 0 {
 
 ### for
 
-[Lua Numeric For Loop](https://www.lua.org/pil/4.3.4.html)
+[Lua Numeric For Loop](https://www.lua.org/pil/4.3.4.html) <br />
 [Lua Generic For Loop](https://www.lua.org/pil/4.3.5.html)
 
 ```erde
@@ -396,8 +406,29 @@ function. Under the hood it is simply a wrapper around [pcall](https://www.lua.o
 ```erde
 try {
   error('my error message')
-} catch (err) {
-  print(err) -- my error message
+} catch err {
+  print(err) -- prints: my error message
+}
+```
+
+The catch variable is optional and can be destructured if you are expecting a
+table to be thrown:
+
+```erde
+-- Destructured error
+
+try {
+  error({ err = 'my error message' })
+} catch { err } {
+  print(err) -- prints: my error message
+}
+
+-- Ignored error
+
+try {
+  error('my error message')
+} catch {
+  print('my custom error message') -- prints: my custom error message
 }
 ```
 
@@ -418,6 +449,8 @@ for i = 1, 10 {
 
 ### goto
 
+[Lua Goto](http://lua-users.org/wiki/GotoStatement)
+
 Erde has support for the Lua's `goto` statement available in Lua 5.2+. Note that 
 there is no way to mimic this behavior in 5.1, so trying to use `goto` when 
 targeting 5.1+ will result in an error.
@@ -433,7 +466,9 @@ print('hello world')
 
 ## Functions
 
-Named functions are the same as Lua, but use braces instead of `end`:
+[Lua Functions](https://www.lua.org/pil/5.html)
+
+Function declarations are the same as Lua, but use braces instead of `end`:
 
 ```erde
 local function sum(a, b) {
@@ -441,21 +476,27 @@ local function sum(a, b) {
 }
 ```
 
-Table parameters may also be [destructured](#destructuring):
+As stated in [Declarations / Scopes](#declarations--scopes), the scope of a 
+function is optional and defaults to _local_. Functions also support the 
+[module](#module) scope:
 
 ```erde
-local function introduce({ name }) {
-  print(name)
+-- This is a local function!
+function sum(a, b) {
+  return a + b
 }
 
-introduce({ name = 'world' })
+-- This is an exported function
+module function sum(a, b) {
+  return a + b
+}
 ```
 
-### Parameter Defaults
+### Default Parameters
 
 Erde has support for parameter defaults. Since all parameters in Lua are
-optional, any parameter in Erde may be assigned a default value, i.e. defaulted
-parameters need not come after non-defaulted parameters.
+optional, any parameter in Erde may be assigned a default value. In particular,
+defaulted parameters do not need to come after non-defaulted ones.
 
 ```erde
 function myfunc(a, b = 1, c) {
@@ -467,8 +508,24 @@ myfunc(1, nil, 3) -- 5
 
 ### Varargs
 
-Erde supports varargs which, like Lua, **must** appear last in the parameter
-list. Erde adds the option to name varargs.
+[Lua Varargs](https://www.lua.org/pil/5.2.html)
+
+Erde supports variadic arguments from Lua:
+
+```erde
+function sum(...) {
+  local total = 0
+
+  for _, summand in ipairs({ ... }) {
+    total += summand
+  }
+
+  return total
+}
+```
+
+Additionally, Erde provides the ability to give variadic arguments a name, which 
+will place them into a table for you:
 
 ```erde
 function sum(...summands) {
@@ -485,7 +542,7 @@ function sum(...summands) {
 ### Arrow Functions
 
 Lua's anonymous function syntax (`function() ... end`) is not valid in Erde.
-Instead, Erde opts for arrow functions.
+Instead, Erde opts for arrow functions:
 
 ```erde
 local sum = (a, b) -> {
@@ -494,7 +551,8 @@ local sum = (a, b) -> {
 ```
 
 Arrow functions can implicitly take `self` as the first parameter by using a
-fat arrow instead of a skinny one.
+fat arrow instead of a skinny one 
+([inspired by MoonScript](https://moonscript.org/reference/#the-language/function-literals/fat-arrows)):
 
 ```erde
 local Person = { name = 'world' }
@@ -505,31 +563,35 @@ Person.introduce = () => {
 ```
 
 Arrow function mays also specify an expression instead of a function body. In
-this case, the expression becomes the return value.
-
-When returning multiple values, the returns must be surrounded by parentheses.
+this case, the expression becomes the return value. If multiple values are being
+returned, the expression list needs to be wrapped in parentheses.
 
 ```erde
-// these are equivalent
+-- Return single value
+local getRandomNumber = () -> math.random()
 
-local add = (x, y) -> x + y
-local add = (x, y) -> {
-  return x + y
-}
-
-local echo = (x, y) -> (x, y)
-local echo = (x, y) -> {
-  return x, y
-}
+-- Return multiple values (must use parentheses!)
+local getRandomNumbers = () -> (
+  math.random(),
+  math.random(),
+)
 ```
 
-The parameter parentheses are optional if there is only one argument. Note that
-this does _not_ work with [Parameter Defaults](#parameter-defaults) or
-[Varargs](#varargs) but does work for [Destructuring](#destructuring).
+The parameter parentheses are optional if there is only one parameter, as long 
+as it does not have a default and is not variadic. This includes destructured
+parameters.
 
 ```erde
-local greet = { name } -> print('hello {name}!')
+local greet = name -> print("hello {name}!")
 greet({ name = 'world' })
+
+-- w/ destructuring
+local greet = { name } -> print("hello {name}!")
+greet({ name = 'world' })
+
+-- not valid!
+local greet = ... -> print(...)
+local greet = name = 'bob' -> print(name)
 ```
 
 ## Optional Chaining
