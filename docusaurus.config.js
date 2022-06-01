@@ -48,8 +48,8 @@ module.exports = {
         items: [
           {
             href: 'https://github.com/erde-lang/erde',
-            label: 'GitHub',
             position: 'right',
+            className: 'github-logo',
           },
         ],
       },
