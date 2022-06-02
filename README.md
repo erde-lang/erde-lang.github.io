@@ -1,33 +1,41 @@
-# Website
+# erde-lang.github.io
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This is the repository for [https://erde-lang.github.io/](https://erde-lang.github.io/),
+built using [Docusaurus 2](https://docusaurus.io/).
 
-### Installation
+If you see a problem with the documentation or feel like it could use some 
+improvement, feel free to open an issue or pull request!
 
-```
-$ yarn
-```
+### Development
 
-### Local Development
+Install dependencies and run the project using:
 
-```
-$ yarn start
-```
+```bash
+# DO NOT USE `npm install`, this does not respect package-lock.json!
+npm ci
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
+# Start dev server
+npm start
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## License
 
-### Deployment
+Copyright 2022 Brian Sutherland
 
-```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
