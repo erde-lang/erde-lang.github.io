@@ -23,6 +23,16 @@ simplicity.
 Erde may be compiled to Lua, run on the command line, or loaded directly into 
 Lua scripts using `require('erde.loader')`.
 
+:::info
+
+Erde is in active development. While I try to keep the documentation up to date,
+there may be times when I can't keep up and some things do not work as expected.
+As of the 0.2-1 release, the language spec _should_ start to stabilize and most
+of the reference should be accurate. The error handling, however, is largely
+underdeveloped and the main focus of the next release.
+
+:::
+
 ## FAQ
 
 #### Why not XXX (Moonscript / Fennel)?
