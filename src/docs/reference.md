@@ -69,8 +69,6 @@ local braceLiteral2 = '\{ 1, 2 }'
 
 Tables are unchanged from Lua, including that tables use 1-based indexing.
 
-Tables also support the [Spread Operator](#spread-operator).
-
 ```erde
 local a = { hello = 'world' }
 local b = { ...a }
@@ -287,39 +285,6 @@ Unchanged from Lua.
 print("hello" .. "world") -- helloworld
 print(#"hello") -- 5
 ```
-
-### Spread Operator
-
-Erde supports the Spread Operator, which expands table values into either
-another table or function arguments.
-
-```erde
-local a = { hello = 'world' }
-local b = { ...a }
-print(b.hello) -- world
-```
-
-```erde
-function add(a, b) {
-  return a + b
-}
-
-local a = { 1, 2 }
-print(add(...a)) -- 3
-```
-
-:::info
-
-Erde changes the behavior of variadic arguments to mimic spreading for consistency. 
-For more information, check [Spreading Varargs](/breaking-changes-lua#spreading-varargs)
-
-:::
-
-:::note
-
-Key, value pairs are ignored when spreading into function arguments.
-
-:::
 
 ### Assignment Operators
 
@@ -592,37 +557,6 @@ greet({ name = 'world' })
 -- not valid!
 local greet = ... -> print(...)
 local greet = name = 'bob' -> print(name)
-```
-
-## Optional Chaining
-
-Erde supports a form of 
-[optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining),
-which allows an index chain to shortcircuit w/ `nil` instead of throwing an
-`attempt to index nil value` error.
-
-An optional chain may be used by simply prefixing the index with a question mark 
-(`?`). It may be applied to key indices, number indices, and function calls:
-
-```erde
-local a = nil
-
--- these all print nil
-print(a?.b)
-print(a?[1])
-print(a?())
-
--- also works with methods
-print(a?:b())
-```
-
-You can also use optional chaining during assignment. In this case, the
-assignment will simply not occur if the chain ends early.
-
-```erde
-local person = { name = 'Bob' }
-person.children?[1].name = 'Bobs Child'
-print(person.children?[1].name) -- nil
 ```
 
 ## Destructuring

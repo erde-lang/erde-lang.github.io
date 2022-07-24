@@ -39,27 +39,6 @@ local { myValue } = myTable
 local [ firstChild, secondChild ] = myTable
 ```
 
-## Optional Chaining
-
-```erde
-local nilTable = nil
-
-print(nilTable?.test)
-print(nilTable?[1])
-print(nilTable?())
-
--- Optional chaining also works for assignments!
-nilTable?.test = 'goodbye world'
-print(nilTable?.test)
-
-local myTable = { test = 'hello world' }
-
-print(myTable?.test)
-
-myTable?.test = 'goodbye world'
-print(myTable?.test)
-```
-
 ## Assignment Operators
 
 ```erde
