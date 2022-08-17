@@ -105,3 +105,19 @@ button {
     background-repeat: no-repeat;
   }
 }
+
+// -----------------------------------------------------------------------------
+// Mobile
+// -----------------------------------------------------------------------------
+
+@media (max-width: 996px) {
+  // Prevent hiding the color mode toggle on mobile
+  .navbar div[class*='colorModeToggle'] {
+    display: block;
+  }
+
+  // Hide useless "Back to main menu" button
+  .navbar-sidebar__back {
+    display: none;
+  }
+}

@@ -41,6 +41,7 @@ module.exports = {
     {
       prism: { theme: vsLight },
       navbar: {
+        hideOnScroll: true,
         logo: {
           alt: 'Erde Logo',
           src: 'logo.svg',
