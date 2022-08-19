@@ -16,35 +16,36 @@ x ~= 0b011
 print(x) -- 0b110
 ```
 
-Initially, since bitwise operators are hardly used by most programmers, bitwise 
-operators were actually prefixed with `.` in order to preserve the `~=` operator.
-Thus, the above would have been:
+Furthermore, Lua reserves the unary `~` token for the bitwise unary NOT
+operator. This causes a problem if we try to keep `~=` from Lua, since the
+most natural token for the logical unary NOT (that would replace the `not`
+keyword in Lua) would also be `~`.
 
-```erde
-local x = 0b101
-x .~= 0b011
-print(x) -- 0b110
-```
-
-However, as the majority of bitwise operators are consistent across the majority
-of programming languages, combined w/ the fact that almost all other languages 
-use `!=`, I decided it would be best to simply use `!=` for the neq operator.
+Although it was a breaking change I did not want to make, these token collisions,
+combined with the fact that almost all other languages use `!=`, were enough to
+convince me that it would be best to simply use `!=` for the neq operator.
 
 ## Local Functions by Default
 
-In Lua, everything is global by default. Since the function syntax in Lua is 
-simply syntactic sugar for assigning an anonymous function to a label, this means
-that the following creates a global function:
+In Lua, everything is global by default. Since the function declaration syntax
+in Lua is simply syntactic sugar for assigning an anonymous function to a label,
+this means that the following creates a global function:
 
 ```lua
 function myFunction()
   print('hello world')
 end
+
+-- equivalent to:
+myFunction = function()
+  print('hello world')
+end
 ```
 
 This is an **extremely** common mistake in Lua, especially to those newer to the
-language (I _still_ forget this occasionally). To accomodate for this, functions
-in Erde are by default local. Thus the following are equivalent:
+language (I _still_ forget this occasionally). To accomodate for this, function
+declarations in Erde create local functions by default. Thus the following are
+equivalent:
 
 ```lua
 local function myFunction()
@@ -56,14 +57,4 @@ end
 function myFunction() {
   print('hello world')
 }
-```
-
-This is **not** true for labels. All declarations should have a scope keyword, 
-as it makes code much easier to read (one can easily spot when a variable is 
-declared). For functions, this is repetitive, as its obvious where a function is
-declared.
-
-```erde
--- Bad, this will create a global!
-myFunction = () -> print('hello world')
 ```
