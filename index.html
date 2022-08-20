@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="generator" content="Docusaurus v2.0.1">
 <title data-rh="true">Introduction | Erde</title><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://erde-lang.github.io//"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Introduction | Erde"><meta data-rh="true" name="description" content="Erde Logo"><meta data-rh="true" property="og:description" content="Erde Logo"><link data-rh="true" rel="icon" href="/logo.svg"><link data-rh="true" rel="canonical" href="https://erde-lang.github.io//"><link data-rh="true" rel="alternate" href="https://erde-lang.github.io//" hreflang="en"><link data-rh="true" rel="alternate" href="https://erde-lang.github.io//" hreflang="x-default"><script data-rh="true">function maybeInsertBanner(){window.__DOCUSAURUS_INSERT_BASEURL_BANNER&&insertBanner()}function insertBanner(){var n=document.getElementById("docusaurus-base-url-issue-banner-container");if(n){n.innerHTML='\n<div id="docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseurl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/</span>  (default value)</p>\n   <p>We suggest trying baseUrl = <span id="docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n';var e=document.getElementById("docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,r="/"===s.substr(-1)?s:s+"/";e.innerHTML=r}}window.__DOCUSAURUS_INSERT_BASEURL_BANNER=!0,document.addEventListener("DOMContentLoaded",maybeInsertBanner)</script><link rel="stylesheet" href="/assets/css/styles.4fb0fa2c.css">
-<link rel="preload" href="/assets/js/runtime~main.591a6678.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.9f9a9e71.js" as="script">
 <link rel="preload" href="/assets/js/main.bc9367de.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
@@ -41,12 +41,12 @@ and tooling.</p><h2 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="additio
 unmaintained, ill-documented, unstable, or too immature. The languages that
 don&#x27;t fall into any of these categories (such as <a href="https://moonscript.org" target="_blank" rel="noopener noreferrer">moonscript</a>
 and <a href="https://fennel-lang.org" target="_blank" rel="noopener noreferrer">fennel</a>) tend to have syntax or design patterns
-that diverge greatly from vanilla Lua. When I was newer to Lua, I didn&#x27;t want to
-use any of these languages due to fear of massive migrations later on if I
-needed to switch to vanilla Lua. Once I was much more familiar with Lua, I
-didn&#x27;t want to relearn another entirely new programming language, but was still
-still frustrated with Lua&#x27;s occasionally extreme simplicity (such as the lack of
-parameter defaults and assignment operators).</p><p>Ultimately, I wanted a language that I would almost <em>already</em> know as a Lua
+that diverge greatly from Lua. When I was newer to Lua, I didn&#x27;t want to use any
+of these languages due to fear of massive migrations later on if I needed to
+switch back. Even once I became much more familiar with Lua, I simply didn&#x27;t
+want to learn an entirely new programming language when Lua already sufficed,
+but was still frustrated with some of Lua&#x27;s lacking features (such as the lack
+of parameter defaults and assignment operators).</p><p>Ultimately, I wanted a language that I would <em>almost already know</em> as a Lua
 developer that addressed some of Lua&#x27;s shortcomings. No such language existed
 at the time, so I decided to create one.</p><h2 class="anchor anchorWithHideOnScrollNavbar_WYt5" id="why-symbols-over-keywords">Why symbols over keywords?<a class="hash-link" href="#why-symbols-over-keywords" title="Direct link to heading">​</a></h2><p>Many of the commonly used programming languages today tend to use symbols over
 keywords (Rust, Golang, Javascript, etc). This is meant to make Erde more
@@ -57,7 +57,7 @@ designed language. If you are only using Lua lightly, then working with Erde
 will probably incur more overhead than it&#x27;s worth. However, if you are working
 with Lua a lot (or simply prefer the syntax of Erde), then by all means feel
 free to try it out!</p></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"><a class="pagination-nav__link pagination-nav__link--next" href="/getting-started"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Getting Started</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#core-principles" class="table-of-contents__link toc-highlight">Core Principles</a><ul><li><a href="#close-mapping-to-lua" class="table-of-contents__link toc-highlight">Close Mapping to Lua</a></li><li><a href="#minimalistic" class="table-of-contents__link toc-highlight">Minimalistic</a></li><li><a href="#stable" class="table-of-contents__link toc-highlight">Stable</a></li></ul></li><li><a href="#additional-features" class="table-of-contents__link toc-highlight">Additional Features</a></li><li><a href="#why-another-language-that-compiles-to-lua" class="table-of-contents__link toc-highlight">Why <em>another</em> language that compiles to Lua?</a></li><li><a href="#why-symbols-over-keywords" class="table-of-contents__link toc-highlight">Why symbols over keywords?</a></li><li><a href="#should-i-use-erde" class="table-of-contents__link toc-highlight">Should I use Erde?</a></li></ul></div></div></div></div></main></div></div></div>
-<script src="/assets/js/runtime~main.591a6678.js"></script>
+<script src="/assets/js/runtime~main.9f9a9e71.js"></script>
 <script src="/assets/js/main.bc9367de.js"></script>
 </body>
 </html>
