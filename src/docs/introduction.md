@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Introduction
 hide_title: true
 slug: /
@@ -111,14 +110,14 @@ Most of the languages that currently compile to Lua tend to be either
 unmaintained, ill-documented, unstable, or too immature. The languages that
 don't fall into any of these categories (such as [moonscript](https://moonscript.org)
 and [fennel](https://fennel-lang.org)) tend to have syntax or design patterns
-that diverge greatly from vanilla Lua. When I was newer to Lua, I didn't want to
-use any of these languages due to fear of massive migrations later on if I
-needed to switch to vanilla Lua. Once I was much more familiar with Lua, I
-didn't want to relearn another entirely new programming language, but was still
-still frustrated with Lua's occasionally extreme simplicity (such as the lack of
-parameter defaults and assignment operators).
+that diverge greatly from Lua. When I was newer to Lua, I didn't want to use any
+of these languages due to fear of massive migrations later on if I needed to
+switch back. Even once I became much more familiar with Lua, I simply didn't
+want to learn an entirely new programming language when Lua already sufficed,
+but was still frustrated with some of Lua's lacking features (such as the lack
+of parameter defaults and assignment operators).
 
-Ultimately, I wanted a language that I would almost _already_ know as a Lua
+Ultimately, I wanted a language that I would _almost already know_ as a Lua
 developer that addressed some of Lua's shortcomings. No such language existed
 at the time, so I decided to create one.
 
