@@ -2,8 +2,7 @@
 
 :::caution
 
-This reference assumes a basic working knowledge of 
-[Lua](https://www.lua.org/manual/).
+This reference assumes previous knowledge of [Lua](https://www.lua.org/manual/).
 
 :::
 
@@ -36,27 +35,29 @@ supported.
 (See 'numeric/numerical constant')
 
 Numbers are unchanged from Lua. However, since the syntax for numbers differs
-across Lua 5.1 - Lua 5.4 (in particular, each version is either the same or a 
+across Lua versions (in particular, each version is either the same or a 
 superset of the previous version) you should only use the syntax for the least 
 supported Lua version. If Erde detects that you are using a syntax that
 is not supported by your compilation targets, it will throw an error.
 
-For example, trying to compile `0xA23p-4` when targeting Lua 5.1+ will cause 
-compilation errors, since hexadecimal exponents were not added until Lua 5.2.
+For example, trying to compile `0xA23p-4` when targeting 5.1+ will cause 
+compilation errors, since hexadecimal exponents were not added until 5.2.
 
 ### Strings
 
 [Lua Strings](https://www.lua.org/pil/2.4.html)
 
-String are _mostly_ unchanged from Lua. Erde additionally allows for
-interpolation via braces when using double quote or block strings. Braces may be 
-escaped to be used literally and escaping the end brace is optional.
+String are _mostly_ unchanged from Lua. Erde additionally allows for string
+interpolation inside of double quote or block strings (but not single quote
+strings!) using braces. Braces may be escaped to be used literally and escaping
+the end brace is optional.
 
 ```erde
 local msg = 'world'
 
-local doubleQuotes = "hello {msg}"
-local multiline = [[hello {msg}]]
+local singleQuotes = 'hello {msg}' -- hello {msg}
+local doubleQuotes = "hello {msg}" -- hello world
+local blockString = [[hello {msg}]] -- hello world
 
 -- equivalent
 local braceLiteral1 = '\{ 1, 2 \}'
@@ -67,369 +68,16 @@ local braceLiteral2 = '\{ 1, 2 }'
 
 [Lua Tables](https://www.lua.org/pil/2.5.html)
 
-Tables are unchanged from Lua, including that tables use 1-based indexing.
+Tables are unchanged from Lua.
 
 ```erde
-local a = { hello = 'world' }
+local a = { hello = 'world', 'hello world' }
 local b = { ...a }
 print(b.hello) -- world
+print(b[1]) -- hello world
 ```
 
-## Declarations / Scopes
-
-Unlike Lua, all variable declarations in Erde require a scope keyword, which is 
-one of `local`, `global`, or `module`. Erde will throw an error for declarations 
-that are missing a scope.
-
-```erde
--- okay
-local myVar
-
--- error! undeclared variable
-myOtherVar = 2
-```
-
-For function declarations, the scope is optional; when the scope is
-omitted, the function will default to `local`:
-
-```erde
--- These are equivalent!
-
-function myFunction() { }
-local function myFunction() { }
-```
-
-### local
-
-[Lua Local Variables](https://www.lua.org/pil/4.2.html)
-
-The `local` scope is unchanged from Lua.
-
-### global
-
-[Lua Global Variables](https://www.lua.org/pil/1.2.html)
-
-Global variables in Erde _require_ the `global` keyword. Thus the following is
-no longer valid:
-
-```erde
-MY_GLOBAL = 1
-```
-
-Erde will throw an error about trying to assign a value to an undeclared
-variable. Instead, you can use:
-
-```erde
-global MY_GLOBAL = 1
-```
-
-Since Erde evaluates all variable declarations separately for each file, any
-globals you use in one file that are declared in another will need to declared
-before use:
-
-```erde title="foo.erde"
-global FOO = "foo"
-```
-
-```erde title="bar.erde"
-global FOO
-
-print(FOO) -- prints: foo
-```
-
-:::note
-
-Since functions default to `local` scope, global functions need to be explicitly
-declared as global:
-
-```erde
-global function myGlobalFunc() {}
-```
-
-:::
-
-### module
-
-The `module` keyword acts as an `export` statement. Anything declared with the
-`module` scope will be placed into a table, which is then returned at the end of
-the script. It may only occur at the top level of a module and may not be used
-in conjunction with `return`.
-
-```erde title="foo.erde"
-module function echo(msg) {
-  print(msg)
-}
-```
-
-```erde title="bar.erde"
-local foo = require('foo')
-foo.echo('hello world') -- prints: hello world
-```
-
-Note that this keyword conflicts with the built-in `module` function in Lua 5.1,
-which means that the `module` function is not usable in Erde (although the use
-of Lua's `module` function is [highly discouraged](http://lua-users.org/wiki/LuaModuleFunctionCritiqued)
-anyways).
-
-## Operators
-
-### Arithmetic Operators
-
-[Lua Arithmetic Operators](https://www.lua.org/manual/5.4/manual.html#3.4.1)
-
-Unchanged from Lua.
-
-<center>
-
-| Syntax | Operator       | Example      |
-| :----- | :------------- | :----------- |
-| +      | addition       | 1 + 2 == 3   |
-| -      | subtraction    | 1 - 2 == -1  |
-| -      | unary minus    | -4           |
-| \*     | multiplication | 2 \* 4 == 8  |
-| /      | division       | 10 / 2 == 5  |
-| //     | floor division | 10 // 4 == 2 |
-| ^      | exponentiation | 2 ^ 6 == 64  |
-| %      | modulo         | 6 % 2 == 0   |
-
-</center>
-
-<br />
-
-:::note
-
-Floor division (`//`) was not introduced until Lua 5.3, but is simple enough 
-that the compiler will polyfill it for you if necessary.
-
-:::
-
-### Relational Operators
-
-[Lua Relational Operators](https://www.lua.org/manual/5.4/manual.html#3.4.4)
-
-The NEQ operator uses `!=` instead of Lua's `~=`. This is due to the fact that 
-Erde supports both [Bitwise Operators](#bitwise-operators) as well as 
-[Assignment Operators](#assignment-operators), which causes ambiguity on whether 
-`~=` represents the traditional NEQ operator or the XOR assignment operator.
-Because the bitwise operators are not used very often, I felt is was better to
-maintain consistency with Lua here, especially since the NEQ operator has a 
-very popular alternative that is present in nearly every other programming
-language.
-
-<center>
-
-| Syntax | Operator         | Example           |
-| :----- | :--------------- | :---------------- |
-| ==     | equality         | 1 + 1 == 2        |
-| !=     | inequality       | 1 + 1 != 3        |
-| <      | less than        | 3 < 5             |
-| >      | greater than     | 9 > 7             |
-| <=     | less or equal    | 9 >= 8, 9 >= 9    |
-| >=     | greater or equal | 9 <= 11, 11 <= 11 |
-
-</center>
-
-### Bitwise Operators
-
-[Lua Bitwise Operators](https://www.lua.org/manual/5.4/manual.html#3.4.2)
-
-Erde supports bitwise operators and uses the same syntax as Lua 5.3+:
-
-<center>
-
-| Syntax | Operator    | Example                  |
-| :----- | :---------- | :----------------------- |
-| \|     | or          | 0b100 .\| 0b010 == 0b110 |
-| &      | and         | 0b110 .& 0b101 == 0b100  |
-| ~      | xor         | 0b110 .~ 0b101 == 0b011  |
-| ~      | unary NOT   | .~0b100 == 0b011         |
-| >>     | right shift | 0b010 .>> 1 == 0b001     |
-| <<     | left shift  | 0b010 .<< 1 == 0b100     |
-
-</center>
-<br />
-
-When compiling to Lua 5.1 or 5.2, Erde will assume the target platform has
-access to the [BitOp](http://bitop.luajit.org) module and bit operations will
-compile down to `require('bit').xxx()` calls.
-
-### Logical Operators
-
-[Lua Logical Operators](https://www.lua.org/manual/5.4/manual.html#3.4.5)
-
-Due to Erde favor of symbols over words, the logical operators are quite
-different than Lua.
-
-<center>
-
-| Syntax | Operator  | Example                 |
-| :----- | :-------- | :---------------------- |
-| \|\|   | or        | true \|\| false == true |
-| &&     | and       | true && false == false  |
-| !      | unary NOT | !false == true          |
-
-</center>
-<br />
-
-The unary logical NOT operator uses the `!` token to maintain consistency with
-the NEQ operator (see [Relational Operators](#relational-operators)).
-
-### Concatenation / Length Operator
-
-[Lua Concatenation Operator](https://www.lua.org/manual/5.4/manual.html#3.4.6) <br />
-[Lua Length Operators](https://www.lua.org/manual/5.4/manual.html#3.4.7)
-
-Unchanged from Lua.
-
-```erde
-print("hello" .. "world") -- helloworld
-print(#"hello") -- 5
-```
-
-### Assignment Operators
-
-All binary operators (except of course [Relational Operators](#relational-operators)) 
-support assignment operator shorthands:
-
-```erde
-local x = 4
-x += 6
-x /= 2
-print(x) -- prints: 5
-```
-
-## Logic Constructs
-
-All logic constructs in Lua (`do`, `if...else`, `for`, `while`, `repeat...until`)
-are the same in Erde, with the exception of using braces instead of `end`. Erde
-additionally adds a `continue` statement and `try...catch` construct.
-
-### do
-
-[Lua Do Block](https://www.lua.org/pil/4.2.html)
-
-```erde
-do {
-  ...
-}
-```
-
-### if else
-
-[Lua Do Block](https://www.lua.org/pil/4.3.1.html)
-
-```erde
-if n > 0 {
-  ...
-} elseif n < 0 {
-  ...
-} else {
-  ...
-}
-```
-
-### for
-
-[Lua Numeric For Loop](https://www.lua.org/pil/4.3.4.html) <br />
-[Lua Generic For Loop](https://www.lua.org/pil/4.3.5.html)
-
-```erde
-for i = 1, 10, 1 {
-  ...
-}
-
-for i, v in ipairs({ 1, 2, 3 }) {
-  ...
-}
-```
-
-### while
-
-[Lua While Loop](https://www.lua.org/pil/4.3.2.html)
-
-```erde
-while true {
-  ...
-}
-```
-
-### repeat ... until
-
-[Lua Repeat Until](https://www.lua.org/pil/4.3.3.html)
-
-```erde
-repeat {
-  ...
-} until true
-```
-
-### try ... catch
-
-Erde support `try...catch` statements to catch errors thrown by Lua's `error`
-function. Under the hood it is simply a wrapper around [pcall](https://www.lua.org/pil/8.4.html).
-
-```erde
-try {
-  error('my error message')
-} catch err {
-  print(err) -- prints: my error message
-}
-```
-
-The catch variable is optional and can be destructured if you are expecting a
-table to be thrown:
-
-```erde
--- Destructured error
-
-try {
-  error({ err = 'my error message' })
-} catch { err } {
-  print(err) -- prints: my error message
-}
-
--- Ignored error
-
-try {
-  error('my error message')
-} catch {
-  print('my custom error message') -- prints: my custom error message
-}
-```
-
-### continue
-
-Erde adds the `continue` keyword, which will advance to the next iteration of
-the closest looping block (`for`, `while`, `repeat...until`).
-
-```erde
-for i = 1, 10 {
-  if i % 2 == 0 {
-    continue
-  }
-
-  print('i is odd')
-}
-```
-
-### goto
-
-[Lua Goto](http://lua-users.org/wiki/GotoStatement)
-
-Erde has support for the Lua's `goto` statement available in Lua 5.2+. Note that 
-there is no way to mimic this behavior in 5.1, so trying to use `goto` when 
-targeting 5.1+ will result in an error.
-
-```erde
-goto myJump
-
-print('this is skipped')
-
-::myJump::
-print('hello world')
-```
-
-## Functions
+### Functions
 
 [Lua Functions](https://www.lua.org/pil/5.html)
 
@@ -441,37 +89,45 @@ local function sum(a, b) {
 }
 ```
 
-As stated in [Declarations / Scopes](#declarations--scopes), the scope of a 
-function is optional and defaults to _local_. Functions also support the 
-[module](#module) scope:
+:::warning
+
+Unlike Lua, ***functions declarations are local by default***. You can read
+more about this [here](/breaking-changes-lua#local-functions-by-default).
 
 ```erde
 -- This is a local function!
 function sum(a, b) {
   return a + b
 }
-
--- This is an exported function
-module function sum(a, b) {
-  return a + b
-}
 ```
 
-### Default Parameters
+:::
 
-Erde has support for parameter defaults. Since all parameters in Lua are
-optional, any parameter in Erde may be assigned a default value. In particular,
-defaulted parameters do not need to come after non-defaulted ones.
+#### Parameters Defaults
+
+Erde has support for parameter defaults:
 
 ```erde
-function myfunc(a, b = 1, c) {
+function greet(name = 'world') {
+  return 'hello ' .. name
+}
+
+greet() -- hello world
+```
+
+Since all parameters in Lua are optional, any parameter in Erde may be assigned
+a default value. In particular, defaulted parameters need not come after
+non-defaulted ones:
+
+```erde
+function myfunc(a, b = 2, c) {
   return a + b + c
 }
 
-myfunc(1, nil, 3) -- 5
+myfunc(1, nil, 3) -- 6
 ```
 
-### Varargs
+#### Varargs
 
 [Lua Varargs](https://www.lua.org/pil/5.2.html)
 
@@ -479,9 +135,10 @@ Erde supports variadic arguments from Lua:
 
 ```erde
 function sum(...) {
+  local summands = { ... }
   local total = 0
 
-  for _, summand in ipairs({ ... }) {
+  for _, summand in ipairs(summands) {
     total += summand
   }
 
@@ -489,8 +146,8 @@ function sum(...) {
 }
 ```
 
-Additionally, Erde provides the ability to give variadic arguments a name, which 
-will place them into a table for you:
+Additionally, Erde allows for named varargs, which will place them into a table
+for you:
 
 ```erde
 function sum(...summands) {
@@ -504,7 +161,7 @@ function sum(...summands) {
 }
 ```
 
-### Arrow Functions
+#### Arrow Functions
 
 Lua's anonymous function syntax (`function() ... end`) is not valid in Erde.
 Instead, Erde opts for arrow functions:
@@ -543,25 +200,381 @@ local getRandomNumbers = () -> (
 ```
 
 The parameter parentheses are optional if there is only one parameter, as long 
-as it does not have a default and is not variadic. This includes destructured
-parameters.
+as it does not have a default and is not variadic. This also works for
+[destructured](#destructuring) parameters.
 
 ```erde
 local greet = name -> print("hello {name}!")
-greet({ name = 'world' })
+greet('world')
 
 -- w/ destructuring
 local greet = { name } -> print("hello {name}!")
 greet({ name = 'world' })
+```
 
--- not valid!
-local greet = ... -> print(...)
-local greet = name = 'bob' -> print(name)
+
+## Scopes
+
+Scopes apply to both normal declarations and function declarations. Their syntax
+is equivalent to Lua, although additional keywords have been added.
+
+### local
+
+[Lua Local Variables](https://www.lua.org/pil/4.2.html)
+
+The `local` scope keyword is unchanged from Lua.
+
+### global
+
+[Lua Global Variables](https://www.lua.org/pil/1.2.html)
+
+Global variables are unchanged from Lua. However, the `global` scope keyword has
+been added for convenience. Its use is highly recommended, as it is much easier
+to find where the variable is declared.
+
+```erde
+global MY_GLOBAL = 1
+```
+
+:::note
+
+Since [functions default to `local` scope](/breaking-changes-lua#local-functions-by-default), global functions need to be explicitly
+declared as global:
+
+```erde
+global function myGlobalFunction() {
+  ...
+}
+```
+
+:::
+
+### module
+
+The `module` scope keyword acts as an `export` statement. Anything declared with
+`module` will automatically be placed into a table, which is then returned at
+the end of the script. It may only occur at the top level of a module and may
+not be used in conjunction with `return`.
+
+```erde title="foo.erde"
+module function echo(msg) {
+  print(msg)
+}
+```
+
+```erde title="bar.erde"
+local foo = require('foo')
+foo.echo('hello world') -- hello world
+```
+
+:::caution
+
+The `module` keyword conflicts with the built-in `module` function in Lua 5.1,
+which means that the `module` function is not usable in Erde (although the use
+of Lua's `module` function is [highly discouraged](http://lua-users.org/wiki/LuaModuleFunctionCritiqued)
+anyways).
+
+:::
+
+## Operators
+
+### Arithmetic Operators
+
+[Lua Arithmetic Operators](https://www.lua.org/manual/5.4/manual.html#3.4.1)
+
+Unchanged from Lua.
+
+<center>
+
+| Syntax | Operator       | Example      |
+| :----- | :------------- | :----------- |
+| +      | addition       | 1 + 2 == 3   |
+| -      | subtraction    | 1 - 2 == -1  |
+| -      | unary minus    | -4           |
+| \*     | multiplication | 2 \* 4 == 8  |
+| /      | division       | 10 / 2 == 5  |
+| //     | floor division | 10 // 4 == 2 |
+| ^      | exponentiation | 2 ^ 6 == 64  |
+| %      | modulo         | 6 % 2 == 0   |
+
+</center>
+
+<br />
+
+:::note
+
+Floor division (`//`) was not introduced until Lua 5.3, but is simple enough 
+that the compiler will polyfill it for you where necessary.
+
+:::
+
+### Relational Operators
+
+[Lua Relational Operators](https://www.lua.org/manual/5.4/manual.html#3.4.4)
+
+Relational operators are the same as in Lua ***with the exception of the NEQ
+operator***, which uses `!=`. You can read more about this decision
+[here](/breaking-changes-lua#neq-operator--vs-).
+
+<center>
+
+| Syntax | Operator         | Example           |
+| :----- | :--------------- | :---------------- |
+| ==     | equality         | 1 + 1 == 2        |
+| !=     | inequality       | 1 + 1 != 3        |
+| <      | less than        | 3 < 5             |
+| >      | greater than     | 9 > 7             |
+| <=     | less than or equal    | 9 >= 8, 9 >= 9    |
+| >=     | greater than or equal | 9 <= 11, 11 <= 11 |
+
+</center>
+
+### Bitwise Operators
+
+[Lua Bitwise Operators](https://www.lua.org/manual/5.4/manual.html#3.4.2)
+
+Erde supports bitwise operators and uses the same syntax as Lua 5.3+:
+
+<center>
+
+| Syntax | Operator    | Example      |
+|-:------|-:-----------|-:------------|
+| \|     | or          | 4 \| 2 == 6  |
+| &      | and         | 6 & 5 == 4   |
+| ~      | xor         | 6 ~ 5 == 3   |
+| ~      | unary NOT   | ~4 == 3      |
+| >>     | right shift | 2 >> 1 == 1  |
+| <<     | left shift  | 2 << 1 == 4  |
+
+</center>
+<br />
+
+Compiling bitwise operators heavily depends on the Lua target. Erde uses the
+following table to determine how bit operations should be compiled:
+
+<center>
+
+| Target | Compilation                                                         | Input Example | Output Example                 |
+|--:-----|--:------------------------------------------------------------------|--:------------|--------------------------------|
+| jit    | [LuaBitOp]('http://bitop.luajit.org/')                              | 6 & 5         | require('bit').band(6, 5)      |
+| 5.1    | [LuaBitOp]('http://bitop.luajit.org/')                              | 6 & 5         | require('bit').band(6, 5)      |
+| 5.1+   | Requires `--bitLib` flag                                            | 6 & 5         | require('myBitLib').band(6, 5) |
+| 5.2    | [bit32]('https://www.lua.org/manual/5.2/manual.html#6.7')           | 6 & 5         | require('bit32').band(6, 5)    |
+| 5.2+   | Requires `--bitLib` flag                                            | 6 & 5         | require('myBitLib').band(6, 5) |
+| 5.3    | [Native Syntax]('https://www.lua.org/manual/5.3/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
+| 5.3+   | [Native Syntax]('https://www.lua.org/manual/5.3/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
+| 5.4    | [Native Syntax]('https://www.lua.org/manual/5.4/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
+| 5.4+   | [Native Syntax]('https://www.lua.org/manual/5.4/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
+
+</center>
+<br />
+
+You may also specify your own bit library using the `--bitLib` flag in the CLI.
+In this case, the library methods are assumed to be:
+
+<center>
+
+| Syntax | Operator    | Method                       |
+|-:------|-:-----------|-:----------------------------|
+| \|     | or          | require('myBitLib').bor    |
+| &      | and         | require('myBitLib').band   |
+| ~      | xor         | require('myBitLib').bxor   |
+| ~      | unary NOT   | require('myBitLib').bnot   |
+| >>     | right shift | require('myBitLib').rshift |
+| <<     | left shift  | require('myBitLib').lshift |
+
+</center>
+<br />
+
+:::caution
+
+Trying to compile bitwise operators when targeting 5.1+ or 5.2+ _requires_
+the use of `--bitLib`. This is because there really is no "sane" default here.
+By far the most common bit libraries for Lua are
+[LuaBitOp]('http://bitop.luajit.org/') (only works on 5.1 and 5.2) and
+[bit32]('https://www.lua.org/manual/5.2/manual.html#6.7') (only works on 5.2),
+so it is left to the developer to decide which library to use.
+
+:::
+
+### Logical Operators
+
+[Lua Logical Operators](https://www.lua.org/manual/5.4/manual.html#3.4.5)
+
+The logical operators in Erde are quite different than in Lua, but consistent
+with most other programming languages.
+
+<center>
+
+| Syntax | Operator  | Example                 |
+| :----- | :-------- | :---------------------- |
+| \|\|   | or        | true \|\| false == true |
+| &&     | and       | true && false == false  |
+| !      | unary NOT | !false == true          |
+
+</center>
+
+### Concatenation / Length Operators
+
+[Lua Concatenation Operator](https://www.lua.org/manual/5.4/manual.html#3.4.6) <br />
+[Lua Length Operator](https://www.lua.org/manual/5.4/manual.html#3.4.7)
+
+Unchanged from Lua.
+
+```erde
+print("hello " .. "world") -- hello world
+print(#"hello world") -- 11
+```
+
+### Assignment Operators
+
+All binary operators (except of course [Relational Operators](#relational-operators)) 
+support assignment operator shorthands:
+
+```erde
+local x = 4
+x += 6
+x /= 2
+print(x) -- 5
+```
+
+## Logic Constructs
+
+All logic constructs in Lua (`do`, `if...else`, `for`, `while`, `repeat...until`)
+are the same in Erde, with the exception of using braces for blocks instead of
+`end`. Erde additionally adds a `continue` statement and `try...catch` construct.
+
+Erde also has support for `goto` statements, but only when the compilation
+target also supports it (i.e. all targets other than 5.1 and 5.1+).
+
+### Do Block
+
+[Lua Do Block](https://www.lua.org/pil/4.2.html)
+
+```erde
+do {
+  ...
+}
+```
+
+### If Else
+
+[Lua If Else](https://www.lua.org/pil/4.3.1.html)
+
+```erde
+if n > 0 {
+  ...
+} elseif n < 0 {
+  ...
+} else {
+  ...
+}
+```
+
+### For Loop
+
+[Lua Numeric For Loop](https://www.lua.org/pil/4.3.4.html) <br />
+[Lua Generic For Loop](https://www.lua.org/pil/4.3.5.html)
+
+```erde
+-- numeric for loop
+for i = 1, 10, 1 {
+  ...
+}
+
+-- generic for loop
+for i, v in ipairs({ 1, 2, 3 }) {
+  ...
+}
+```
+
+### While Loop
+
+[Lua While Loop](https://www.lua.org/pil/4.3.2.html)
+
+```erde
+while true {
+  ...
+}
+```
+
+### Repeat Until
+
+[Lua Repeat Until](https://www.lua.org/pil/4.3.3.html)
+
+```erde
+repeat {
+  ...
+} until true
+```
+
+### Try Catch
+
+Erde supports `try...catch` statements to catch errors thrown by Lua's `error`
+function. Under the hood, it is simply a wrapper around
+[pcall](https://www.lua.org/pil/8.4.html).
+
+```erde
+try {
+  error('my error message')
+} catch err {
+  print(err) -- my error message
+}
+```
+
+The catch variable is optional and can be destructured if you are expecting a
+table to be thrown:
+
+```erde
+try {
+  error('my error message')
+} catch {
+  print('my custom error message') -- my custom error message
+}
+
+try {
+  error({ message = 'my error message' })
+} catch { message } {
+  print(message) -- my error message
+}
+```
+
+### Continue Statements
+
+Erde adds support for continue statements, which will advance to the next
+iteration of the closest looping block (`for`, `while`, `repeat...until`).
+
+```erde
+for i = 1, 10 {
+  if i % 2 == 0 {
+    continue
+  }
+
+  print('i is odd')
+}
+```
+
+### goto
+
+[Lua Goto](http://lua-users.org/wiki/GotoStatement)
+
+Erde has support for the Lua's `goto` statement (added in Lua 5.2). Note that 
+there is no way to mimic this behavior in 5.1, so trying to use `goto` when 
+targeting 5.1 or 5.1+ will result in a compilation error.
+
+```erde
+goto myJump
+
+print('this will not be printed')
+
+::myJump::
+print('hello world')
 ```
 
 ## Destructuring
 
-Erde supports a simple form of [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment),
+Erde supports a simple form of
+[destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment),
 which is a convenient way to extract values from a table.
 
 To extract keys from a table, you may specify a list of names in braces:
@@ -569,11 +582,10 @@ To extract keys from a table, you may specify a list of names in braces:
 ```erde
 local a = { hello = 'world' }
 
--- Destructure `a` to extract the `hello` property
--- This is equivalent to `local hello = a.hello`
+-- equivalent to: `local hello = a.hello`
 local { hello } = a
 
-print(hello) -- prints: world
+print(hello) -- world
 ```
 
 To extract from the array section of a table, you can use brackets:
@@ -585,36 +597,50 @@ local a = {
   'second index',
 }
 
--- Destructure array elements. This is equivalent to: 
+-- equivalent to: 
 -- `local first = a[1]`
 -- `local second = a[2]`
 local [first, second] = a
 
-print(first) -- prints: first index
-print(second) -- prints: second index
+print(first) -- first index
+print(second) -- second index
 ```
 
 Destructured values may be given aliases or default values. Aliases simply 
-rename the destructured field and default values are used to replace `nil`. When
-using both, aliases must come before defaults
+rename the destructured field and default values are applied to replace `nil`
+values. When using both, aliases must come before defaults:
 
 ```erde
 local a = { hello = 'world' }
 
 -- Alias
 local { hello: myHello } = a
-print(myHello) -- prints: world
+print(myHello) -- world
 
 -- Default
-local { world = 'default msg' } = a
-print(world) -- prints: default msg
+local { someNonExistentKey = 'goodbye' } = a
+print(someNonExistentKey) -- goodbye
 
 -- Alias + Default
-local { world: myWorld = 'default msg' } = a
-print(myWorld) -- prints: default msg
+local { someNonExistentKey: myAlias = 'James Bond' } = a
+print(myAlias) -- James Bond
 ```
 
-:::warning
+Destructuring is especially useful in combination with the [module](#module) 
+scope keyword, as it allows us to achieve the import / export paradigm:
+
+```erde title="foo.erde"
+module function myModuleFunction() {
+  print('hello world')
+}
+```
+
+```erde title="bar.erde"
+local { myModuleFunction } = require('foo')
+myModuleFunction() -- hello world
+```
+
+:::caution
 
 Using aliases inside of array destructuring is invalid syntax, as every name is
 already an alias.
@@ -623,8 +649,8 @@ already an alias.
 
 :::info
 
-Unlike most languages, nested destructuring is **_not_** supported. This is 
-intentional, as nested destructuring syntax makes code more cryptic and 
-difficult to read.
+Unlike other languages, nested destructuring is **_not_** supported. This is 
+intentional, as nested destructuring syntax often makes code much more cryptic
+and difficult to read.
 
 :::

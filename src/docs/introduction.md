@@ -52,7 +52,7 @@ even loaded directly from Lua scripts using the Erde package loader
 codebase containing both Lua and Erde files and is particularly useful for
 incremental adoption (in case you want to try out Erde on an existing codebase).
 
-Erde runs on all major platforms (Lua5.1 - Lua5.4 and LuaJIT) and can generate
+Erde runs on all major platforms (Lua 5.1 - 5.4 and LuaJIT) and can generate
 Lua code for multiple target platforms. For example, targeting `5.3` will
 generate code that is only guaranteed to work on Lua5.3 (may work on other
 platforms as well, but not guaranteed) while targeting `5.1+` will generate code
