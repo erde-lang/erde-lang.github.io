@@ -65,7 +65,7 @@ erde compile fibonacci.erde
 
 This will create a `fibonacci.lua` file in the same directory. 
 
-:::note
+:::info
 
 You can run the compiled file with the `lua` interpreter as a sanity check to 
 make sure the output is the same:

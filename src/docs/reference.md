@@ -236,10 +236,10 @@ to find where the variable is declared.
 global MY_GLOBAL = 1
 ```
 
-:::note
+:::info
 
-Since [functions default to `local` scope](/breaking-changes-lua#local-functions-by-default), global functions need to be explicitly
-declared as global:
+Since [functions default to `local` scope](/breaking-changes-lua#local-functions-by-default),
+global functions need to be explicitly declared as global:
 
 ```erde
 global function myGlobalFunction() {
@@ -301,7 +301,7 @@ Unchanged from Lua.
 
 <br />
 
-:::note
+:::info
 
 Floor division (`//`) was not introduced until Lua 5.3, but is simple enough 
 that the compiler will polyfill it for you where necessary.
@@ -437,6 +437,49 @@ x += 6
 x /= 2
 print(x) -- 5
 ```
+
+Similar to regular assignments, assignment operators can also perform multiple
+assignments in a single statement:
+
+```erde
+local x, y, z = 0, 0, 0
+x, y, z += 1, 2, 3
+print(x, y, z) -- 1 2 3
+```
+
+:::info
+
+Internally, Erde _must_ assign the expression list to temporary variables in
+order to ensure that functions with multiple returns do not get called more than
+once. This causes a problem in the error message if the operation fails:
+
+```erde title="Erde"
+local myMultiReturnFunc = () -> (1, nil, 3)
+local x, y, z = 0, 0, 0
+
+x, y, z += myMultiReturnFunc() -- error here from `y += nil`
+
+print(x, y, z)
+```
+
+```lua title="Compiled Lua"
+local myMultiReturnFunc = function() return 1, nil, 3 end
+local x, y, z = 0, 0, 0
+
+local tmpX, tmpY, tmpZ = myMultiReturnFunc()
+x = x + tmpX
+y = y + tmpY -- attempt to perform arithmetic on a nil value (local 'tmpY')
+z = z + tmpZ
+
+print(x, y, z) -- 1 2 3
+```
+
+Lua's error message will reference the _temporary_ variable name (`tmpY` here),
+which doesn't actually appear in the source code. Unfortunately, there is not
+much to do about this without incurring a nontrivial amount of overhead, but I
+am open to suggestions for improvement here!
+
+:::
 
 ## Logic Constructs
 
@@ -654,3 +697,75 @@ intentional, as nested destructuring syntax often makes code much more cryptic
 and difficult to read.
 
 :::
+
+## Miscellaneous
+
+### Trailing Commas
+
+Erde is much more lenient than Lua in allowing the presence of trailing commas.
+Any enclosed list (i.e. surrounded by paired tokens such as `{}`, `[]`, `()`)
+is allowed to have trailing commas. Some examples are:
+
+- Function declaration parameters
+- Function call parameters
+- Destructures
+- [Return Parentheses](#return-parentheses)
+
+The lack of trailing commas in Lua's function call parameters was a particular
+pain point for me. For example, the following is valid in Erde, but invalid in
+Lua:
+
+```erde
+print(
+  'this is the first line to print',
+  'this is the second line to print',
+  'this is the third line to print', -- trailing comma!
+)
+```
+
+### Semicolons
+
+Erde supports using semicolons to separate statements. In Lua, this is most
+commonly used to avoid the following ambiguous syntax:
+
+```lua
+local x = y
+(function() print('hello world') end)()
+
+-- can be interpreted as either:
+local x = y;
+(function() print('hello world') end)()
+
+-- or:
+local x = y(function() print('hello world') end)()
+```
+
+While you can still use a semicolon to differentiate these statements in Erde,
+Erde will also try to infer the user's intention based on the presence of
+newlines. If there is a newline before the ambiguous parentheses, it is parsed
+as a separate statement, otherwise it is parsed as a function call:
+
+```erde
+-- parsed as two separate statements
+local x = y
+(() -> print('hello world'))()
+
+-- parsed as one statement (back-to-back function calls)
+local x = y(() -> print('hello world'))()
+```
+
+### Return Parentheses
+
+Unlike Lua, functions in Erde are allowed to wrap their returns in parentheses.
+This makes functions that return multiple expressions a little more readable:
+
+```erde
+function getBasicPairOperations(a, b) {
+  return (
+    a + b,
+    a - b,
+    a * b,
+    a / b,
+  )
+}
+```
