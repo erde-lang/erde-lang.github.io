@@ -96,7 +96,7 @@ and tooling.
 ## Additional Features
 
 - Assignment Operators (+=, *=, etc)
-- Optional Parameters
+- Parameter Defaults
 - Named Varargs
 - `continue` Statement
 - String Interpolation

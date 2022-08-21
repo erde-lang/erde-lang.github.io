@@ -55,13 +55,13 @@ the end brace is optional.
 ```erde
 local msg = 'world'
 
-local singleQuotes = 'hello {msg}' -- hello {msg}
-local doubleQuotes = "hello {msg}" -- hello world
-local blockString = [[hello {msg}]] -- hello world
+print('hello {msg}') -- hello {msg}
+print("hello {msg}") -- hello world
+print([[hello {msg}]]) -- hello world
 
 -- equivalent
-local braceLiteral1 = '\{ 1, 2 \}'
-local braceLiteral2 = '\{ 1, 2 }'
+print("hello \{msg}") -- hello {msg}
+print("hello \{msg\}") -- hello {msg}
 ```
 
 ### Tables
@@ -554,7 +554,7 @@ for i = 1, 10 {
 }
 ```
 
-### goto
+### Goto
 
 [Lua Goto](http://lua-users.org/wiki/GotoStatement)
 
