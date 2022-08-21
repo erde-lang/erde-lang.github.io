@@ -28,8 +28,6 @@
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^6.2.1",
     "@tsconfig/docusaurus": "^1.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.15.0",
-    "@typescript-eslint/parser": "^5.15.0",
     "docusaurus-plugin-sass": "^0.2.1",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
@@ -39,7 +37,6 @@
     "file-loader": "^6.2.0",
     "prettier": "^2.3.2",
     "sass": "^1.43.2",
-    "typescript": "^4.6.2",
     "url-loader": "^4.1.1"
   },
   "browserslist": {
