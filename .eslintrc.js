@@ -24,7 +24,7 @@ module.exports = {
     'import/no-unresolved': [
       2,
       // These are docusaurus webpack aliases!
-      { ignore: ['^@theme', '^@docusaurus', '^@site'] },
+      { ignore: ['^@theme', '^@docusaurus', '^@site', '^@generated'] },
     ],
   },
 };

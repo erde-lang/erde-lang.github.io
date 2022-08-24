@@ -1,7 +1,5 @@
 // https://docusaurus.io/docs/configuration
 
-const vsLight = require('prism-react-renderer/themes/vsLight');
-
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Erde',
@@ -39,7 +37,6 @@ module.exports = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
-      prism: { theme: vsLight },
       navbar: {
         hideOnScroll: true,
         logo: {

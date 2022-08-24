@@ -1,5 +1,3 @@
-- prismjs syntax highlighting
-
 - tutorial
 - playground
 
