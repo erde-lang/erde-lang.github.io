@@ -32,7 +32,7 @@ In Lua, everything is global by default. Since the function declaration syntax
 in Lua is simply syntactic sugar for assigning an anonymous function to a label,
 this means that the following creates a global function:
 
-```lua
+```lua title="Lua"
 function myFunction()
   print('hello world')
 end

@@ -10,7 +10,6 @@ const PRISM_COMMON = {
   boolean: /\b(?:false|true)\b/,
   number:
     /\b0x[a-f\d]+(?:\.[a-f\d]*)?(?:p[+-]?\d+)?\b|\b\d+(?:\.\B|(?:\.\d*)?(?:e[+-]?\d+)?\b)|\B\.\d+(?:e[+-]?\d+)?\b/i,
-  function: { pattern: /(?!\d)\w+(?=\s*(?:[({]))/, greedy: true },
   operator: { pattern: /(^|[^.])\.\.(?!\.)/, lookbehind: true }, // Match ".." but don't break "..."
   punctuation: /[[\](){},;]|\.+|:+/,
 };
@@ -20,6 +19,7 @@ const PRISM_LUA = {
   ...PRISM_COMMON,
   keyword: [PRISM_COMMON.keyword, /\b(?:and|end|not|or|then)\b/],
   operator: [PRISM_COMMON.operator, /[-+*%^&|#]|\/\/?|<[<=]?|>[>=]?|[=~]=?/],
+  function: { pattern: /(?!\d)\w+(?=\s*(?:[({]))/, greedy: true },
   // \z may be used to skip the following space
   string: {
     pattern:
@@ -35,6 +35,7 @@ const PRISM_ERDE = {
   keyword: [PRISM_COMMON.keyword, /\b(?:catch|continue|try)\b/],
   operator: [PRISM_COMMON.operator, /[-+*%^&|#/<>=~!]/],
   punctuation: [PRISM_COMMON.punctuation, { pattern: /=>|->/ }],
+  function: { pattern: /(?!\d)\w+(?=\s*(?:[(]))/, greedy: true },
   'single-quote-string': {
     pattern: /'(?:(?!')[^\\\r\n]|\\z(?:\r\n|\s)|\\(?:\r\n|[^z]))*'/,
     alias: 'string',
