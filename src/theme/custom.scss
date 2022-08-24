@@ -14,7 +14,7 @@ $green: #25c359;
 // Imports
 // -----------------------------------------------------------------------------
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
 @import './prism-one-dark.css'; // PrismJS theme
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ $green: #25c359;
   // Fonts
   --ifm-heading-font-family: 'Open Sans', sans-serif;
   --ifm-font-family-base: 'Open Sans', sans-serif;
-  --ifm-font-family-monospace: 'Fira Code', monospace;
+  --ifm-font-family-monospace: 'Source Code Pro', monospace;
   --ifm-font-size-base: 120%; // make text bigger for better readability
   --ifm-code-font-size: 95%;
 

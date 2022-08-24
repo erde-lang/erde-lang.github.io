@@ -66,26 +66,9 @@ function readOnly(t) {
 }
 ```
 
-## Feature Examples
-
-### Assignment Operators
-
-[Documentation](/reference#assignment-operators)
-
-```erde
-local a = 1
-print(a) -- 1
-
-a += 1
-print(a) -- 2
-
-a *= 5
-print(a) -- 10
-```
-
 ### Valid Anagram
 
-Returns true if `s` and `t` are [anagrams](https://en.wikipedia.org/wiki/Anagram),
+Returns true if s and t are [anagrams](https://en.wikipedia.org/wiki/Anagram),
 otherwise false. Does not take casing into account.
 
 ```erde
@@ -127,6 +110,23 @@ print(isAnagram('new york times', 'monkeys write')) -- true
 print(isAnagram('anagram', 'nag a ran')) -- false
 print(isAnagram('binari', 'brainy')) -- false
 print(isAnagram('new york times', 'monkeys rite')) -- false
+```
+
+## Feature Examples
+
+### Assignment Operators
+
+[Documentation](/reference#assignment-operators)
+
+```erde
+local a = 1
+print(a) -- 1
+
+a += 1
+print(a) -- 2
+
+a *= 5
+print(a) -- 10
 ```
 
 ### Parameter Defaults
