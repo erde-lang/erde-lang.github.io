@@ -18,16 +18,6 @@ Erde is a programming language that compiles to Lua. It uses a more symbol
 favored syntax (similar to languages such as Rust, Golang, JavaScript, etc) and
 has been designed to map very closely to Lua.
 
-:::info
-
-Erde is in active development. While I try to keep the documentation up to date,
-there may be times when I can't keep up and some things do not work as expected.
-As of the 0.2-1 release, the language spec _should_ start to stabilize and most
-of the reference should be accurate. The error handling, however, is largely
-underdeveloped and the main focus of the next release.
-
-:::
-
 ```erde
 local function sumEvens(...numbers) {
   local sum = 0
