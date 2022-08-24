@@ -14,11 +14,8 @@ $green: #25c359;
 // Imports
 // -----------------------------------------------------------------------------
 
-// General font
-@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
-
-// PrismJS theme
-@import './prism-one-dark.css';
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Open+Sans&display=swap');
+@import './prism-one-dark.css'; // PrismJS theme
 
 // -----------------------------------------------------------------------------
 // IFM Vars
@@ -31,16 +28,16 @@ $green: #25c359;
   --ifm-color-primary-lighter: #33d869;
   --ifm-color-primary-lightest: #50de7f;
 
-  // Navbar
-  --ifm-navbar-shadow: none;
-
-  // Headers
-  --ifm-heading-font-family: 'Manrope', sans-serif;
-  --ifm-heading-font-weight: 500;
+  // Fonts
+  --ifm-heading-font-family: 'Open Sans', sans-serif;
+  --ifm-font-family-base: 'Open Sans', sans-serif;
+  --ifm-font-family-monospace: 'Fira Code', monospace;
+  --ifm-font-size-base: 120%; // make text bigger for better readability
+  --ifm-code-font-size: 95%;
 
   // Misc
-  --ifm-code-font-size: 95%;
-  --ifm-font-size-base: 120%;
+  --ifm-navbar-shadow: none;
+  --ifm-heading-font-weight: 500;
   --ifm-toc-border-color: none;
 }
 
