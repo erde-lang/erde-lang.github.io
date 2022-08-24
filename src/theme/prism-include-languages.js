@@ -31,7 +31,10 @@ const PRISM_LUA = {
 // TODO: Make MR to PrismJS to add Erde?
 const PRISM_ERDE = {
   ...PRISM_COMMON,
-  scope: [PRISM_COMMON.scope, /\b(?:global|module)\b/],
+  scope: [
+    PRISM_COMMON.scope,
+    { pattern: /\b(?:global|module)\b/, alias: 'class-name' },
+  ],
   keyword: [PRISM_COMMON.keyword, /\b(?:catch|continue|try)\b/],
   operator: [PRISM_COMMON.operator, /[-+*%^&|#/<>=~!]/],
   punctuation: [PRISM_COMMON.punctuation, { pattern: /=>|->/ }],

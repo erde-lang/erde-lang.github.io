@@ -52,6 +52,20 @@ for i = 1, 100 {
 }
 ```
 
+### Read-Only Tables
+
+Erde port of Lua's [Read-Only Tables](https://www.lua.org/pil/13.4.5.html),
+commonly used to illustrate the power of metatables.
+
+```erde
+function readOnly(t) {
+  return setmetatable({}, {
+    __index = t,
+    __newindex = () -> error('attempt to update a read-only table', 2)
+  })
+}
+```
+
 ## Feature Examples
 
 ### Assignment Operators
