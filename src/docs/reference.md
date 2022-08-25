@@ -356,15 +356,15 @@ following table to determine how bit operations should be compiled:
 
 | Target | Compilation                                                         | Input Example | Output Example                 |
 |--:-----|--:------------------------------------------------------------------|--:------------|--------------------------------|
-| jit    | [LuaBitOp]('http://bitop.luajit.org/')                              | 6 & 5         | require('bit').band(6, 5)      |
-| 5.1    | [LuaBitOp]('http://bitop.luajit.org/')                              | 6 & 5         | require('bit').band(6, 5)      |
+| jit    | [LuaBitOp](http://bitop.luajit.org/)                              | 6 & 5         | require('bit').band(6, 5)      |
+| 5.1    | [LuaBitOp](http://bitop.luajit.org/)                              | 6 & 5         | require('bit').band(6, 5)      |
 | 5.1+   | Requires `--bitLib` flag                                            | 6 & 5         | require('myBitLib').band(6, 5) |
-| 5.2    | [bit32]('https://www.lua.org/manual/5.2/manual.html#6.7')           | 6 & 5         | require('bit32').band(6, 5)    |
+| 5.2    | [bit32](https://www.lua.org/manual/5.2/manual.html#6.7)           | 6 & 5         | require('bit32').band(6, 5)    |
 | 5.2+   | Requires `--bitLib` flag                                            | 6 & 5         | require('myBitLib').band(6, 5) |
-| 5.3    | [Native Syntax]('https://www.lua.org/manual/5.3/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
-| 5.3+   | [Native Syntax]('https://www.lua.org/manual/5.3/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
-| 5.4    | [Native Syntax]('https://www.lua.org/manual/5.4/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
-| 5.4+   | [Native Syntax]('https://www.lua.org/manual/5.4/manual.html#3.4.2') | 6 & 5         | 6 & 5                          |
+| 5.3    | [Native Syntax](https://www.lua.org/manual/5.3/manual.html#3.4.2) | 6 & 5         | 6 & 5                          |
+| 5.3+   | [Native Syntax](https://www.lua.org/manual/5.3/manual.html#3.4.2) | 6 & 5         | 6 & 5                          |
+| 5.4    | [Native Syntax](https://www.lua.org/manual/5.4/manual.html#3.4.2) | 6 & 5         | 6 & 5                          |
+| 5.4+   | [Native Syntax](https://www.lua.org/manual/5.4/manual.html#3.4.2) | 6 & 5         | 6 & 5                          |
 
 </center>
 <br />
@@ -391,8 +391,8 @@ In this case, the library methods are assumed to be:
 Trying to compile bitwise operators when targeting 5.1+ or 5.2+ _requires_
 the use of `--bitLib`. This is because there really is no "sane" default here.
 By far the most common bit libraries for Lua are
-[LuaBitOp]('http://bitop.luajit.org/') (only works on 5.1 and 5.2) and
-[bit32]('https://www.lua.org/manual/5.2/manual.html#6.7') (only works on 5.2),
+[LuaBitOp](http://bitop.luajit.org/) (only works on 5.1 and 5.2) and
+[bit32](https://www.lua.org/manual/5.2/manual.html#6.7) (only works on 5.2),
 so it is left to the developer to decide which library to use.
 
 :::
