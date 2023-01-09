@@ -11,20 +11,20 @@ and allows for operator assignments w/ these operators. This means that `~=` is
 already taken by the bitwise exclusive OR operator assignment:
 
 ```erde
-local x = 0b101
-x ~= 0b011
-print(x) -- 0b110
+local x = 5 -- 0b101
+x ~= 3 -- 0b011
+print(x) -- 6 (0b110)
 ```
 
-Furthermore, Lua reserves the unary `~` operator token for the bitwise unary NOT
-operator. This causes a problem if we try to keep `~=` from Lua, since the
-most natural token for the logical unary NOT (that would replace the `not`
-keyword in Lua) would also be `~`.
+Additionally, if we try to keep `~=` from Lua, the most natural token for the
+logical unary NOT (that would replace the `not` keyword in Lua) would be `~`.
+However, Lua already reserves the unary `~` operator token for the bitwise
+unary NOT operator:
 
-Although it was a breaking change I did not want to make (as I've actually grown
-fond of the `~=` token), these token collisions combined with the fact that
-almost all other languages use `!=`, were enough to convince me that it would be
-best to simply use `!=` for the NEQ operator.
+```lua
+local x = 5 -- 0b101
+print(~x) -- 2 (0b010)
+```
 
 ## Local Functions by Default
 
@@ -43,8 +43,9 @@ myFunction = function()
 end
 ```
 
-This is an **extremely** common mistake in Lua, especially to those newer to the
-language (I _still_ forget this occasionally). To accomodate for this, function
+An **extremely** common mistake in Lua is to accidentally create a global
+function instead of a local one, especially to those newer to the language
+(I _still_ forget this occasionally). To accomodate for this, function
 declarations in Erde create local functions by default. Thus the following are
 equivalent:
 
@@ -56,6 +57,14 @@ end
 
 ```erde title="Erde"
 function myFunction() {
+  print('hello world')
+}
+```
+
+Global functions can still be created in Erde using `global`:
+
+```erde
+global function myGlobalFunction() {
   print('hello world')
 }
 ```

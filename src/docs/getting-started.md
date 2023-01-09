@@ -47,10 +47,10 @@ function fibonacci(n) {
 fibonacci(10)
 ```
 
-We can run the file from the command line using the `erde run` command:
+We can then run the file from the command line using the `erde` command:
 
 ```bash
-erde run fibonacci.erde
+erde fibonacci.erde
 ```
 
 ## Compiling Programs
@@ -88,8 +88,7 @@ at the end of the file. This allows us to be able to clean all generated files
 using:
 
 ```bash
-erde clean
+erde clean .
 ```
 
-By default this will recursively clean all generated files under the current
-directory.
+This will recursively clean all generated files under the current directory.
