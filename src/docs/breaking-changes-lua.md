@@ -68,3 +68,34 @@ global function myGlobalFunction() {
   print('hello world')
 }
 ```
+
+## Significant Whitespace for Ambiguous Syntax
+
+In Lua, there is a well-known ambiguous syntax involving
+[iife statements](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression):
+
+```lua
+local x = y
+(function() print('hello world') end)()
+
+-- can be interpreted as either:
+local x = y;
+(function() print('hello world') end)()
+
+-- or:
+local x = y(function() print('hello world') end)()
+```
+
+Lua uses semicolons to differentiate these statements. While this is valid in
+Erde, Erde will also infer the intention based on the presence of newlines. If
+there is a newline before the iife, it is parsed as a separate statement,
+otherwise it is parsed as a function call:
+
+```erde
+-- parsed as two separate statements
+local x = y
+(() -> print('hello world'))()
+
+-- parsed as one statement (back-to-back function calls)
+local x = y(() -> print('hello world'))()
+```
