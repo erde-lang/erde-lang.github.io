@@ -605,36 +605,6 @@ repeat {
 } until true
 ```
 
-### Try Catch
-
-Erde supports `try...catch` statements to catch errors thrown by Lua's `error`
-function:
-
-```erde
-try {
-  error('my error message')
-} catch err {
-  print(err) -- my error message
-}
-```
-
-The catch variable is optional and can be destructured if you are expecting a
-table to be thrown:
-
-```erde
-try {
-  error('my error message')
-} catch { -- ignore catch variable
-  print('my custom error message')
-}
-
-try {
-  error({ message = 'my error message' })
-} catch { message } {
-  print(message) -- my error message
-}
-```
-
 ### Continue Statements
 
 Erde adds support for `continue` statements, which will advance to the next

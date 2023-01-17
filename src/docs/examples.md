@@ -238,23 +238,3 @@ for key, value in mypairs({ 'a', 'b', 'c' }) {
   print(key, value)
 }
 ```
-
-### Try Catch
-
-[Documentation](/reference#try-catch)
-
-```erde
-try {
-  local myvar = 1 / "hello"
-} catch {
-  print('Failed to assign myvar')
-}
-```
-
-```erde
-try {
-  error('my error messsage')
-} catch message {
-  print(message) -- my error message
-}
-```
