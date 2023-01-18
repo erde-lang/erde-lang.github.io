@@ -28,9 +28,9 @@ print(~x) -- 2 (0b010)
 
 ## Local Functions by Default
 
-In Lua, everything is global by default. Since the function declaration syntax
-in Lua is simply syntactic sugar for assigning an anonymous function to a label,
-this means that the following creates a global function:
+In Lua, all variables are global by default. Since the function declaration
+syntax in Lua is simply syntactic sugar for assigning an anonymous function to
+a label, this means that the following creates a global function:
 
 ```lua title="Lua"
 function myFunction()
@@ -98,4 +98,23 @@ local x = y
 
 -- parsed as one statement (back-to-back function calls)
 local x = y(() -> print('hello world'))()
+```
+
+## Function Call Parentheses
+
+In Lua, function call parentheses are optional when there is only one argument
+and it is either a string literal or table constructor:
+
+```lua
+print "my message"
+print { message = "my table" }
+```
+
+Erde does ***not*** support this syntax, that is, function calls always require
+parentheses. This forces consistency not only across the Erde projects, but also
+with many other programming languages:
+
+```lua
+print("my message")
+print({ message = "my table" })
 ```

@@ -180,10 +180,15 @@ myModuleFunction() -- hello world
 Functions are generally the same as [Lua functions](https://www.lua.org/pil/5.html),
 but use braces instead of `end`.
 
+:::caution
+
+Unlike Lua, [function calls in Erde always require parentheses](/breaking-changes-lua#function-call-parentheses).
+
+:::
+
 :::warning
 
-Unlike Lua, ***functions declarations are local by default***. You can read
-more about this [here](/breaking-changes-lua#local-functions-by-default).
+Unlike Lua, [***functions declarations are local by default***](/breaking-changes-lua#local-functions-by-default).
 
 :::
 
