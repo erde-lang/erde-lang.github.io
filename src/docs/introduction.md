@@ -37,23 +37,23 @@ print(sumEvens(1, 2, 3, 4, 5, 6, 7, 8)) -- 20
 ```
 
 Erde files may be compiled, run on the command line (using the `erde` CLI), or
-even loaded directly from Lua scripts using the Erde package loader 
-(`require('erde').load()`). This makes it easy to maintain a codebase containing
-both Lua and Erde files and is particularly useful for incremental adoption 
-(in case you want to try out Erde on an existing codebase).
+loaded directly from Lua scripts using the Erde package loader. The latter is
+particularly useful if you don't want to keep recompiling code or if you want
+to try out Erde on an existing codebase (incremental adoption).
 
 Erde runs on all major Lua platforms (Lua 5.1 - 5.4 and LuaJIT) and can generate
-Lua code for multiple target platforms. For example, targeting `5.3` will
+Lua code for multiple target platforms. For example, targeting `5.1+` will
+generate code that runs on all major Lua platforms, while targeting `5.3` will
 generate code that is only guaranteed to work on Lua5.3 (may work on other
-platforms as well, but not guaranteed) while targeting `5.1+` will generate code
-that runs on all major Lua platforms. Erde will make minor adjustments,
-optimizations and additional error checks depending on the targeted version. By
-default Erde targets `5.1+`.
+platforms as well, but not guaranteed). The currently supported targets are:
 
-Erde also provides extensive support for source maps and error rewriting. When
-running via the CLI or `require('erde').load()`, any errors at runtime will have
-their file names and line numbers modified to point back to the original Erde
-files.
+<center>
+5.1 | 5.1+ | 5.2 |  5.2+ |  5.3 |  5.3+ |  5.4 |  5.4+ |  jit (LuaJIT)
+</center>
+<br />
+
+Erde will make minor adjustments, optimizations and additional error checks
+depending on the targeted version. By default Erde targets `5.1+`.
 
 ## Core Principles
 
