@@ -1,12 +1,12 @@
 # Breaking Changes w/ Lua
 
 While Erde attempts to keep most core behaviors consistent w/ Lua, there are a
-couple of necessary breaking changes.
+couple of breaking changes.
 
 ## NEQ Operator: `~=` vs `!=`
 
-In Erde, the NEQ operator uses `!=` instead of Lua's `~=`. This is mainly 
-because Erde keeps [Lua's bit operators](https://www.lua.org/manual/5.3/manual.html#3.4.2) 
+In Erde, the NEQ operator uses `!=` instead of Lua's `~=`. This is mainly
+because Erde keeps [Lua's bit operators](https://www.lua.org/manual/5.3/manual.html#3.4.2)
 and allows for operator assignments w/ these operators. This means that `~=` is
 already taken by the bitwise exclusive OR operator assignment:
 
@@ -24,6 +24,25 @@ unary NOT operator:
 ```lua
 local x = 5 -- 0b101
 print(~x) -- 2 (0b010)
+```
+
+## Function Call Parentheses
+
+In Lua, function call parentheses are optional when there is only one argument
+and it is either a string literal or table constructor:
+
+```lua
+print "my message"
+print { message = "my table" }
+```
+
+Erde does ***not*** support this syntax, that is, function calls always require
+parentheses. This forces consistency not only across the Erde projects, but also
+with many other programming languages:
+
+```lua
+print("my message")
+print({ message = "my table" })
 ```
 
 ## Local Functions by Default
@@ -72,7 +91,7 @@ global function myGlobalFunction() {
 ## Significant Whitespace for Ambiguous Syntax
 
 In Lua, there is a well-known ambiguous syntax involving
-[iife statements](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression):
+[immediately invoked function expressions (iife)](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression):
 
 ```lua
 local x = y
@@ -86,10 +105,10 @@ local x = y;
 local x = y(function() print('hello world') end)()
 ```
 
-Lua uses semicolons to differentiate these statements. While this is valid in
-Erde, Erde will also infer the intention based on the presence of newlines. If
-there is a newline before the iife, it is parsed as a separate statement,
-otherwise it is parsed as a function call:
+Lua uses semicolons to differentiate these statements. You can still use
+semicolons in Erde, but Erde will also infer the intention based on the presence
+of newlines. If there is a newline before the iife, it is parsed as a separate
+statement, otherwise it is parsed as a function call:
 
 ```erde
 -- parsed as two separate statements
@@ -98,23 +117,4 @@ local x = y
 
 -- parsed as one statement (back-to-back function calls)
 local x = y(() -> print('hello world'))()
-```
-
-## Function Call Parentheses
-
-In Lua, function call parentheses are optional when there is only one argument
-and it is either a string literal or table constructor:
-
-```lua
-print "my message"
-print { message = "my table" }
-```
-
-Erde does ***not*** support this syntax, that is, function calls always require
-parentheses. This forces consistency not only across the Erde projects, but also
-with many other programming languages:
-
-```lua
-print("my message")
-print({ message = "my table" })
 ```

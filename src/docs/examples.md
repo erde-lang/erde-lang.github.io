@@ -1,6 +1,6 @@
 # Examples
 
-## Problem Examples
+## Program Examples
 
 ### Fibonacci
 

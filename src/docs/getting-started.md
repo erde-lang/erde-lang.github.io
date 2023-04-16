@@ -107,8 +107,8 @@ that can be injected and configured from Lua:
 ```lua
 require('erde').load()
 
--- specify target
--- by default, this is inferred from the running Lua version (`_VERSION`)
+-- You can also specify the Lua target manually. By default, this is inferred
+-- from the current Lua version (`_VERSION`)
 require('erde').load('5.1+')
 ```
 
@@ -116,7 +116,7 @@ Now we can use `require` to load any Erde files in our `package.path`:
 
 ```erde title=my-erde-module.erde
 local name = 'world'
-return "hello {name}!"
+print("hello {name}!")
 ```
 
 ```lua title=my-lua-module.lua
@@ -134,7 +134,7 @@ This prevents (potentially outdated) compiled files from taking priority.
 
 :::caution
 
-When Erde injects its package loader, it also _replaces_ the native
+When Erde injects its package loader, it also replaces the native
 `debug.traceback` function with one that handles [error rewriting](/error-handling).
 The native `debug.traceback` is restored when calling `require('erde').unload()`.
 This behavior can be prevented using the [load options](/api#load).
