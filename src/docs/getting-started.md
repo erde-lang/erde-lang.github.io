@@ -137,6 +137,6 @@ This prevents (potentially outdated) compiled files from taking priority.
 When Erde injects its package loader, it also replaces the native
 `debug.traceback` function with one that handles [error rewriting](/error-handling).
 The native `debug.traceback` is restored when calling `require('erde').unload()`.
-This behavior can be prevented using the [load options](/api#load).
+This behavior can be prevented using the [load options](/api#erdeload).
 
 :::
