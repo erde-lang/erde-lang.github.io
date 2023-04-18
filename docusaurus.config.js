@@ -38,6 +38,7 @@ module.exports = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       navbar: {
+        title: 'Erde',
         hideOnScroll: true,
         logo: {
           alt: 'Erde Logo',

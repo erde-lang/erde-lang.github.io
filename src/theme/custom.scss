@@ -32,11 +32,8 @@ $green: #25c359;
   --ifm-heading-font-family: 'Open Sans', sans-serif;
   --ifm-font-family-base: 'Open Sans', sans-serif;
   --ifm-font-family-monospace: 'Source Code Pro', monospace;
-  --ifm-font-size-base: 120%; // make text bigger for better readability
-  --ifm-code-font-size: 95%;
 
   // Misc
-  --ifm-navbar-shadow: none;
   --ifm-heading-font-weight: 500;
   --ifm-toc-border-color: none;
 }
@@ -47,6 +44,7 @@ html[data-theme='light'] {
   --ifm-font-color-base: #{$void};
 
   // Navbar
+  --ifm-navbar-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   --ifm-navbar-background-color: #{$white};
   --ifm-navbar-link-color: #{$void};
 
@@ -60,6 +58,7 @@ html[data-theme='dark'] {
   --ifm-font-color-base: #{$white};
 
   // Navbar
+  --ifm-navbar-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.1);
   --ifm-navbar-background-color: #{$black};
   --ifm-navbar-link-color: #{$white};
 
