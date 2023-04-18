@@ -26,32 +26,25 @@ Both line comments and block comments are supported.
 
 ### Numbers
 
-Numbers are unchanged from Lua:
+Erde supports _all_ Lua numbers for _any_ Lua target
+(note that [Lua 5.4 numbers](https://www.lua.org/manual/5.4/manual.html#3.1) are
+a superset of all previous versions). This means that you can use the following,
+even when targeting Lua 5.1+:
 
-- [Lua 5.1 Numbers](https://www.lua.org/manual/5.1/manual.html#2.1) (see 'numerical constant')
-- [Lua 5.2 Numbers](https://www.lua.org/manual/5.2/manual.html#3.1) (see 'numerical constant')
-- [Lua 5.3 Numbers](https://www.lua.org/manual/5.3/manual.html#3.1) (see 'numeric constant')
-- [Lua 5.4 Numbers](https://www.lua.org/manual/5.4/manual.html#3.1) (see 'numeric constant')
-
-:::caution
-
-Since later versions of Lua support more advanced number syntax than previous
-versions, you should only use the syntax for your least supported Lua version.
-If Erde detects that you are using a syntax that is not supported by your
-compilation targets, it will throw an error:
-
-<br />
-
-```erde title=numbers.erde
+```erde
 print(0xA23p-4)
 ```
 
-```bash title=bash
-erde compile --target "5.1+" numbers.erde
-# error: hex exponent sign not compatible w/ lua target 5.1+
+Erde will transpile this at compile time into a decimal form that all major Lua
+versions can understand.
+
+Erde also supports binary literals, which are denoted with a `0b` prefix. These
+will also be transpiled at compile time into decimals:
+
+```erde
+print(0b110) -- 6
 ```
 
-:::
 
 ### Strings
 
@@ -75,6 +68,17 @@ print("hello \{message\}") -- hello {message}
 -- escaping the end brace is optional
 print("hello \{message}") -- hello {message}
 ```
+
+Strings may also be indexed directly without the need for extra parentheses:
+
+```lua title=lua
+local x = ('hello %s!'):format('world')
+```
+
+```erde title=erde
+local x = 'hello %s!':format('world')
+```
+
 
 ## Tables
 
