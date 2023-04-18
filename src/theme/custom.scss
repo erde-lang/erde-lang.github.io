@@ -116,6 +116,11 @@ button {
     display: block;
   }
 
+  // Prevent hiding the navbar items on mobile
+  .navbar__item {
+    display: flex;
+  }
+
   // Hide useless "Back to main menu" button
   .navbar-sidebar__back {
     display: none;

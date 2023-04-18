@@ -22,6 +22,10 @@ export default function NavbarMobileSidebarHeader() {
   return (
     <div className="navbar-sidebar__brand">
       <NavbarLogo />
+      <div
+        className="erde-version navbar__item margin-right--md"
+        children="0.5.0-1"
+      />
       <a
         href="https://github.com/erde-lang/erde"
         target="_blank"
