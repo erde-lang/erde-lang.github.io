@@ -118,3 +118,17 @@ local x = y
 -- parsed as one statement (back-to-back function calls)
 local x = y(() -> print('hello world'))()
 ```
+
+## Semicolons in Table Constructors
+
+Lua allows for semicolons in table constructors, which,
+[according to the docs](https://www.lua.org/pil/3.6.html),
+is usually used to delimit different sections in a constructor:
+
+```lua
+local x = { x = 10, y = 45; 'one', 'two', 'three' }
+```
+
+Erde does ***not*** support this syntax, as it not only causes inconsistencies
+in table constructor delimiters, but is also quite unreadable, since many are
+not even aware that such syntax is valid Lua.

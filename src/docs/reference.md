@@ -86,6 +86,13 @@ print(myTable.hello) -- world
 print(myTable[1]) -- hello world
 ```
 
+:::caution
+
+Unlike Lua, Erde does not allow using
+[semicolons in table constructors](/breaking-changes-lua#semicolons-in-table-constructors).
+
+:::
+
 ### Destructuring
 
 Erde supports a simple form of
@@ -112,7 +119,7 @@ local myTable = {
   'my second index',
 }
 
--- equivalent to: 
+-- equivalent to:
 -- `local first = myTable[1]`
 -- `local second = myTable[2]`
 local [first, second] = myTable
@@ -149,7 +156,7 @@ print(myAlias) -- James Bond
 
 :::note
 
-Nested destructuring is **_not_** supported. This is 
+Nested destructuring is **_not_** supported. This is
 intentional, as nested destructuring syntax often makes code much more cryptic
 and difficult to read.
 
@@ -260,7 +267,7 @@ local sum = (a, b) -> {
 ```
 
 Arrow functions can implicitly take `self` as the first parameter by using a
-fat arrow instead of a skinny one 
+fat arrow instead of a skinny one
 ([inspired by MoonScript](https://moonscript.org/reference/#the-language/function-literals/fat-arrows)):
 
 ```erde
@@ -286,7 +293,7 @@ local getRandomNumbers = () -> (
 )
 ```
 
-The parameter parentheses are optional if there is only one parameter, as long 
+The parameter parentheses are optional if there is only one parameter, as long
 as it does not have a default and is not variadic. This also works for
 [destructured](#destructuring) parameters.
 
@@ -528,7 +535,7 @@ so it is left to the developer to decide which library to use.
 
 ### Assignment Operators
 
-All binary operators (except of course [Relational Operators](#relational-operators)) 
+All binary operators (except of course [Relational Operators](#relational-operators))
 support assignment operator shorthands:
 
 ```erde

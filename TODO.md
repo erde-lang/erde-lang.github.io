@@ -1,6 +1,7 @@
-- add docs for "tables do not support ';'" (reference.tables + breaking-changes-lua)
-- improve lua version links
+- update reference docs
+  - transpiling numbers
+  - allowing strings as index chain bases
+  - etc
 - add error handling docs
 - add cli docs
-- update reference docs
 - add playground
