@@ -46,6 +46,12 @@ module.exports = {
         },
         items: [
           {
+            to: 'changelog',
+            label: '0.5.0-1',
+            position: 'left',
+            className: 'erde-version',
+          },
+          {
             href: 'https://github.com/erde-lang/erde',
             position: 'right',
             className: 'github-logo',

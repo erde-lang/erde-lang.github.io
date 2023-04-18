@@ -8,5 +8,6 @@ module.exports = {
     { type: 'doc', id: 'api' },
     { type: 'doc', id: 'breaking-changes-lua' },
     { type: 'doc', id: 'examples' },
+    { type: 'doc', id: 'changelog' },
   ],
 };

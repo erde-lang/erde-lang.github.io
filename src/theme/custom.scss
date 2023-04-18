@@ -70,16 +70,9 @@ html[data-theme='dark'] {
 // Defaults
 // -----------------------------------------------------------------------------
 
-body * {
+* {
   margin: 0;
   padding: 0;
-}
-
-ul,
-ol,
-menu {
-  margin: 0;
-  list-style: none;
 }
 
 button {
@@ -100,6 +93,16 @@ button {
     height: 24px;
     background: var(--github-logo);
     background-repeat: no-repeat;
+  }
+}
+
+.erde-version {
+  color: $black;
+  background: $green;
+  border-radius: 4px;
+
+  &:hover {
+    color: $white;
   }
 }
 

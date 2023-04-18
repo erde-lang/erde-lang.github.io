@@ -1,7 +1,6 @@
-- add error handling docs
-- add cli docs
-- add current erde version tag for docs
-- update reference docs
 - add docs for "tables do not support ';'" (reference.tables + breaking-changes-lua)
 - improve lua version links
+- add error handling docs
+- add cli docs
+- update reference docs
 - add playground
