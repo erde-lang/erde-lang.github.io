@@ -1,5 +1,8 @@
-// Ejected component to inject GitHub link
+// Ejected component to:
+// - inject Erde version
+// - inject GitHub link
 
+import Link from '@docusaurus/Link';
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
 import IconClose from '@theme/Icon/Close';
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
@@ -22,15 +25,17 @@ export default function NavbarMobileSidebarHeader() {
   return (
     <div className="navbar-sidebar__brand">
       <NavbarLogo />
-      <div
-        className="erde-version navbar__item margin-right--md"
-        children="0.5.0-1"
-      />
+      <Link href="/changelog">
+        <div
+          className="erde-version navbar__item margin-right--md"
+          children="0.5.0-1"
+        />
+      </Link>
       <a
         href="https://github.com/erde-lang/erde"
         target="_blank"
         rel="noopener noreferrer"
-        className="margin-right--md github-logo"
+        className="github-logo margin-right--md"
       />
       <NavbarColorModeToggle className="margin-right--md" />
       <CloseButton />

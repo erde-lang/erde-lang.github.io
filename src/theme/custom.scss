@@ -100,6 +100,7 @@ button {
   color: $black;
   background: $green;
   border-radius: 4px;
+  white-space: nowrap;
 
   &:hover {
     color: $white;
@@ -111,6 +112,17 @@ button {
 // -----------------------------------------------------------------------------
 
 @media (max-width: 996px) {
+  // Hide brand text on mobile
+  .navbar__brand {
+    .navbar__title {
+      display: none;
+    }
+
+    .navbar__logo {
+      margin: 0;
+    }
+  }
+
   // Prevent hiding the color mode toggle on mobile
   .navbar div[class*='colorModeToggle'] {
     display: block;
