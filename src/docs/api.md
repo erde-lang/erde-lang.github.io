@@ -19,8 +19,8 @@ Injects the Erde package loader into
 
 This function also replaces Lua's native
 [`debug.traceback`](https://www.lua.org/manual/5.4/manual.html#pdf-debug.traceback)
-function with [`erde.traceback`](#erdetraceback), a wrapper that handles error
-rewriting for Erde sources. The native `debug.traceback` is restored when
+function with [`erde.traceback`](#erdetraceback), a wrapper that handles
+[error rewriting](/error-rewriting). The native `debug.traceback` is restored when
 calling [`erde.unload`](#erdeunload).
 
 ```lua
@@ -99,8 +99,9 @@ end
 ## `erde.traceback`
 
 A drop-in replacement of Lua's [`debug.traceback`](https://www.lua.org/manual/5.4/manual.html#pdf-debug.traceback)
-that provides error rewriting and removes some noisy stacktraces from Erde
-internals. Often used in the same manner as [`erde.rewrite`](#erderewrite).
+that provides [error rewriting](/error-rewriting) and removes some noisy
+stacktraces from Erde internals. Often used in the same manner as
+[`erde.rewrite`](#erderewrite).
 
 ```lua
 erde.load()

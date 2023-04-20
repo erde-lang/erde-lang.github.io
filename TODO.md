@@ -1,3 +1,1 @@
-- add error handling docs
-- add cli docs
 - add playground
