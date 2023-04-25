@@ -1,0 +1,3 @@
+[submodule "erde"]
+	path = erde
+	url = https://github.com/erde-lang/erde
