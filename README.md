@@ -3,7 +3,7 @@
 This is the repository for [https://erde-lang.github.io/](https://erde-lang.github.io/),
 built using [Docusaurus 2](https://docusaurus.io/).
 
-If you see a problem with the documentation or feel like it could use some 
+If you see a problem with the documentation or feel like it could use some
 improvement, feel free to open an issue or pull request!
 
 ### Development
@@ -20,7 +20,7 @@ npm start
 
 ## License
 
-Copyright 2022 Brian Sutherland
+Copyright 2023 Brian Sutherland
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
