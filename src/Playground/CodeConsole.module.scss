@@ -1,0 +1,85 @@
+@use '../theme/onedark';
+
+.tabs {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+
+  user-select: none;
+  list-style: none;
+
+  .tab {
+    flex: 1 1 0;
+    margin: 0;
+    padding: 8px 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    &:not(.active) {
+      color: #727a8a;
+      background: onedark.$black;
+    }
+  }
+}
+
+.output {
+  position: relative;
+
+  .scroll {
+    position: absolute;
+
+    // Artificial parent padding
+    inset: var(--ifm-pre-padding) var(--ifm-pre-padding) var(--ifm-pre-padding)
+      var(--ifm-pre-padding);
+
+    overflow: scroll;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    pre {
+      flex-shrink: 0;
+      margin: 0;
+      padding: var(--ifm-pre-padding);
+      background: onedark.$black;
+
+      &.error {
+        color: onedark.$red;
+      }
+    }
+
+    // Override docusaurus `<CodeBlock>` styles
+    .codeBlock {
+      // Remove margin (spacing handled by parent flexbox)
+      margin: 0;
+
+      pre {
+        // Keep entries thin
+        padding: 0;
+      }
+
+      code {
+        // Apply background in case of horizontal overflow
+        background: onedark.$black;
+      }
+    }
+  }
+}
+
+.codeConsole {
+  display: flex;
+  flex-direction: column;
+
+  color: white;
+  background: #3d424d;
+
+  .output {
+    flex-grow: 1;
+  }
+}
