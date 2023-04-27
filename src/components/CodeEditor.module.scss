@@ -1,0 +1,39 @@
+@use '../theme/onedark';
+
+.codeEditor {
+  padding: var(--ifm-pre-padding);
+  color: onedark.$white;
+  background: onedark.$black;
+
+  // Make sure fonts between `<Editor>` and `<CodeBlock>` are consistent
+  font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
+    var(--ifm-font-family-monospace);
+
+  .scroll {
+    height: 100%;
+    overflow: scroll;
+
+    .editor {
+      min-height: 100%;
+
+      .codeBlock {
+        margin: 0;
+
+        pre,
+        code {
+          margin: 0;
+          padding: 0;
+          border-radius: 0;
+        }
+
+        code {
+          // Keep wrapping behavior consistent with `<Editor>`
+          max-width: 100%;
+          white-space: pre-wrap;
+          word-break: keep-all;
+          overflow-wrap: break-word;
+        }
+      }
+    }
+  }
+}

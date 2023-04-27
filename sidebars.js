@@ -8,7 +8,8 @@ module.exports = {
     { type: 'doc', id: 'breaking-changes-lua' },
     { type: 'doc', id: 'error-rewriting' },
     { type: 'doc', id: 'api' },
-    { type: 'doc', id: 'examples' },
+    { type: 'doc', id: 'playground' },
     { type: 'doc', id: 'changelog' },
+    { type: 'doc', id: 'examples' },
   ],
 };
