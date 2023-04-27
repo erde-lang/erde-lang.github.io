@@ -52,6 +52,9 @@ module.exports = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
+      prism: {
+        theme: require('./src/theme/prism-react-renderer-onedark.js'),
+      },
       navbar: {
         title: 'Erde',
         hideOnScroll: true,

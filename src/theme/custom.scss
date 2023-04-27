@@ -15,7 +15,6 @@ $green: #25c359;
 // -----------------------------------------------------------------------------
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
-@import './prism-one-dark.css'; // PrismJS theme
 
 // -----------------------------------------------------------------------------
 // IFM Vars
@@ -32,6 +31,10 @@ $green: #25c359;
   --ifm-heading-font-family: 'Open Sans', sans-serif;
   --ifm-font-family-base: 'Open Sans', sans-serif;
   --ifm-font-family-monospace: 'Source Code Pro', monospace;
+
+  // DO NOT USE EM HERE. Need to have consistent predictable sizing, since we
+  // need to sync font-sizes in `../components/CodeEditor.jsx`
+  --ifm-code-font-size: 0.9rem;
 
   // Misc
   --ifm-heading-font-weight: 500;
