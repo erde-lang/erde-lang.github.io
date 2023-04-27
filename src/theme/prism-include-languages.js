@@ -35,7 +35,7 @@ const PRISM_ERDE = {
     PRISM_COMMON.scope,
     { pattern: /\b(?:global|module)\b/, alias: 'class-name' },
   ],
-  keyword: [PRISM_COMMON.keyword, /\b(?:catch|continue|try)\b/],
+  keyword: [PRISM_COMMON.keyword, /\b(?:continue)\b/],
   operator: [PRISM_COMMON.operator, /[-+*%^&|#/<>=~!]/],
   punctuation: [PRISM_COMMON.punctuation, { pattern: /=>|->/ }],
   function: { pattern: /(?!\d)\w+(?=\s*(?:[(]))/, greedy: true },
