@@ -8,7 +8,8 @@ import { run_lua, stringify } from './fengari';
 const TABS_CONFIG = [
   {
     label: 'Run',
-    callback: code => run_lua(`return require('erde').run(${stringify(code)})`),
+    callback: code =>
+      run_lua(`return require('erde').run(${stringify(code)}, 'playground')`),
   },
   {
     label: 'Compile',

@@ -26,7 +26,7 @@ export function run_lua(code) {
       table.insert(stdout, table.concat(stringified, ' '))
     end
 
-    local ok, value = pcall(function() ${code} end)
+    local ok, value = xpcall(function() ${code} end, require('erde').rewrite)
 
     _G.print = native_print
 
@@ -37,6 +37,7 @@ export function run_lua(code) {
     }, 'object')
   `)();
 
+  console.log(code);
   result.stdout = result.stdout.split(STDOUT_SEPARATOR).filter(line => !!line);
   return result;
 }
