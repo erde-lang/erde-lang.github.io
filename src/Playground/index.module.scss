@@ -1,6 +1,7 @@
 .playground {
   height: 512px;
   display: flex;
+  gap: 8px;
 
   .codeEditor,
   .codeConsole {

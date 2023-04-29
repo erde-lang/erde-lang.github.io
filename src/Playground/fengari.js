@@ -1,6 +1,16 @@
 // Separator used for serialization to transfer between Lua and JS.
 const STDOUT_SEPARATOR = '__::__';
 
+export function stringify(code) {
+  let blockStringEq = '===';
+
+  while (code.includes(blockStringEq)) {
+    blockStringEq += '=';
+  }
+
+  return `[${blockStringEq}[${code}]${blockStringEq}]`;
+}
+
 export function run_lua(code) {
   const result = fengari.load(`
     local stdout = {}

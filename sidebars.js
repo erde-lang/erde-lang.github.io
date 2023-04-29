@@ -10,6 +10,5 @@ module.exports = {
     { type: 'doc', id: 'api' },
     { type: 'doc', id: 'playground' },
     { type: 'doc', id: 'changelog' },
-    { type: 'doc', id: 'examples' },
   ],
 };

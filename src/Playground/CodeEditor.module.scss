@@ -1,39 +1,107 @@
+@use '../theme/custom';
 @use '../theme/onedark';
 
-.codeEditor {
+.hidden {
+  display: none;
+}
+
+.option {
+  padding: 8px;
+
+  color: white;
+  background: #3d424d;
+
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    color: custom.$green;
+  }
+}
+
+.examples {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #3d424d;
+  user-select: none;
+  list-style: none;
+
+  .option:hover {
+    background: onedark.$black;
+  }
+}
+
+.editor {
+  display: flex;
   padding: var(--ifm-pre-padding);
-  color: onedark.$white;
   background: onedark.$black;
 
   // Make sure fonts between `<Editor>` and `<CodeBlock>` are consistent
   font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
     var(--ifm-font-family-monospace);
 
-  .scroll {
-    height: 100%;
-    overflow: scroll;
+  .reactSimpleCodeEditor {
+    flex-grow: 1;
 
-    .editor {
-      min-height: 100%;
+    .codeBlock {
+      margin: 0;
 
-      .codeBlock {
+      pre,
+      code {
         margin: 0;
-
-        pre,
-        code {
-          margin: 0;
-          padding: 0;
-          border-radius: 0;
-        }
-
-        code {
-          // Keep wrapping behavior consistent with `<Editor>`
-          max-width: 100%;
-          white-space: pre-wrap;
-          word-break: keep-all;
-          overflow-wrap: break-word;
-        }
+        padding: 0;
+        border-radius: 0;
       }
+
+      code {
+        // Keep wrapping behavior consistent with `<Editor>`
+        max-width: 100%;
+        white-space: pre-wrap;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
+
+.codeEditor {
+  display: flex;
+  flex-direction: column;
+  color: onedark.$white;
+
+  .loadExample {
+    @extend .option;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .arrow {
+      margin-left: auto;
+      transform: rotate(90deg);
+
+      &.open {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  .content {
+    height: 100%;
+    position: relative;
+
+    .scroll {
+      position: absolute;
+      inset: 0 0 0 0;
+      overflow: scroll;
+    }
+
+    .fill {
+      min-height: 100%;
     }
   }
 }

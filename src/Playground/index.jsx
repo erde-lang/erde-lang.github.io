@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import CodeConsole from './CodeConsole';
-import CodeEditor from './CodeEditor';
+import CodeEditor, { EXAMPLES_CONFIG } from './CodeEditor';
 import styles from './index.module.scss';
 
 export default () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(EXAMPLES_CONFIG[0].value);
 
   return (
     <div className={styles.playground}>
@@ -14,7 +14,7 @@ export default () => {
         value={value}
         onChange={setValue}
       />
-      <CodeConsole className={styles.codeConsole} value={value} />
+      <CodeConsole className={styles.codeConsole} code={value} />
     </div>
   );
 };

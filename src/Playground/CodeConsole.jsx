@@ -2,16 +2,17 @@ import CodeBlock from '@theme/CodeBlock';
 import classNames from 'classnames';
 import { useMemo, useState } from 'react';
 import styles from './CodeConsole.module.scss';
-import { run_lua } from './fengari';
+import { run_lua, stringify } from './fengari';
 
 const TABS_CONFIG = [
   {
     label: 'Run',
-    callback: code => run_lua(`return require('erde').run([[${code}]])`),
+    callback: code => run_lua(`return require('erde').run(${stringify(code)})`),
   },
   {
     label: 'Compile',
-    callback: code => run_lua(`return require('erde').compile([[${code}]])`),
+    callback: code =>
+      run_lua(`return require('erde').compile(${stringify(code)})`),
   },
 ];
 
@@ -30,8 +31,8 @@ const Tabs = props => (
 
 const Output = props => {
   const result = useMemo(
-    () => TABS_CONFIG[props.tab].callback(props.code),
-    [props.tab, props.code],
+    () => TABS_CONFIG[props.tabIndex].callback(props.code),
+    [props.tabIndex, props.code],
   );
 
   return (
@@ -44,7 +45,7 @@ const Output = props => {
         ))}
         {!result.value ? null : !result.ok ? (
           <pre className={styles.error} children={result.value} />
-        ) : props.tab === 0 ? (
+        ) : props.tabIndex === 0 ? (
           <pre children={result.value} />
         ) : (
           <CodeBlock
@@ -59,12 +60,12 @@ const Output = props => {
 };
 
 export default props => {
-  const [tab, setTab] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
 
   return (
     <div className={classNames(styles.codeConsole, props.className)}>
-      <Tabs value={tab} onChange={setTab} />
-      <Output tab={tab} value={props.value} />
+      <Tabs value={tabIndex} onChange={setTabIndex} />
+      <Output tabIndex={tabIndex} code={props.code} />
     </div>
   );
 };

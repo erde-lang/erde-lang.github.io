@@ -55,36 +55,9 @@ platforms as well, but not guaranteed). The currently supported targets are:
 Erde will make minor adjustments, optimizations and additional error checks
 depending on the targeted version. By default Erde targets `5.1+`.
 
-## Core Principles
-
-### Close Mapping to Lua
-
-Erde was designed with the belief that learning how to program in Erde should
-teach you how to program in Lua and vice-versa. For those already familiar w/
-Lua, this provides an extremely low barrier to entry while for those newer to
-Lua, it means low commitment, as it will be quite easy to switch to vanilla Lua
-later on if you realize Erde is not right for your project.
-
-### Minimalistic
-
-Although not as extreme as Lua, Erde is quite minimalistic. It only adds
-features that are either already present in most programming languages
-(ex. parameter defaults) or are relatively simple yet powerful (ex. destructuring).
-
-Features whose uses are too niche will not be considered for the language,
-regardless of how convenient they may make certain situations. This keeps the
-language simple (like Lua) and lowers the barrier to entry.
-
-### Stable
-
-After version 1.0-1, Erde will be relatively stable, with plans to only add
-**at most** one new language feature per year (perhaps even less on average).
-Instead, efforts on the language will be applied to bug fixes, developer
-experience (DX), and tooling.
-
 ## Examples
 
-See the [examples](/examples) page for a full list of examples.
+See the [playground](/playground) for a full list of interactable examples.
 
 ### Assignment Operators
 
@@ -125,6 +98,33 @@ local [ msg1, msg2 ] = myobject
 print(msg1) -- hello
 print(msg2) -- world
 ```
+
+## Core Principles
+
+### Close Mapping to Lua
+
+Erde was designed with the belief that learning how to program in Erde should
+teach you how to program in Lua and vice-versa. For those already familiar w/
+Lua, this provides an extremely low barrier to entry while for those newer to
+Lua, it means low commitment, as it will be quite easy to switch to vanilla Lua
+later on if you realize Erde is not right for your project.
+
+### Minimalistic
+
+Although not as extreme as Lua, Erde is quite minimalistic. It only adds
+features that are either already present in most programming languages
+(ex. parameter defaults) or are relatively simple yet powerful (ex. destructuring).
+
+Features whose uses are too niche will not be considered for the language,
+regardless of how convenient they may make certain situations. This keeps the
+language simple (like Lua) and lowers the barrier to entry.
+
+### Stable
+
+After version 1.0-1, Erde will be relatively stable, with plans to only add
+**at most** one new language feature per year (perhaps even less on average).
+Instead, efforts on the language will be applied to bug fixes, developer
+experience (DX), and tooling.
 
 ## FAQ
 
