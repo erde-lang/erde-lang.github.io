@@ -1,3 +1,4 @@
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import CodeBlock from '@theme/CodeBlock';
 import classNames from 'classnames';
 import { useMemo, useState } from 'react';
@@ -30,8 +31,13 @@ const Tabs = props => (
 );
 
 const Output = props => {
+  const isBrowser = useIsBrowser();
+
   const result = useMemo(
-    () => TABS_CONFIG[props.tabIndex].callback(props.code),
+    () =>
+      isBrowser
+        ? TABS_CONFIG[props.tabIndex].callback(props.code)
+        : { ok: true, stdout: [], value: '' },
     [props.tabIndex, props.code],
   );
 
