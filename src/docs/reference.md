@@ -85,9 +85,9 @@ local x = 'hello %s!':format('world')
 Tables are unchanged from [Lua tables](https://www.lua.org/pil/2.5.html).
 
 ```erde
-local myTable = { hello = 'world', 'hello world' }
-print(myTable.hello) -- world
-print(myTable[1]) -- hello world
+local my_table = { hello = 'world', 'hello world' }
+print(my_table.hello) -- world
+print(my_table[1]) -- hello world
 ```
 
 :::caution
@@ -106,10 +106,10 @@ which is a convenient way to extract values from a table.
 To extract keys from a table, you may specify a list of names in braces:
 
 ```erde
-local myTable = { hello = 'world' }
+local my_table = { hello = 'world' }
 
 -- equivalent to: `local hello = a.hello`
-local { hello } = myTable
+local { hello } = my_table
 
 print(hello) -- world
 ```
@@ -117,16 +117,16 @@ print(hello) -- world
 To extract from the array section of a table, you can use brackets:
 
 ```erde
-local myTable = {
+local my_table = {
   hello = 'world',
   'my first index',
   'my second index',
 }
 
 -- equivalent to:
--- `local first = myTable[1]`
--- `local second = myTable[2]`
-local [first, second] = myTable
+-- `local first = my_table[1]`
+-- `local second = my_table[2]`
+local [ first, second ] = my_table
 
 print(first) -- my first index
 print(second) -- my second index
@@ -136,26 +136,26 @@ Destructured values may be given default values, which will be applied when
 the destructured value is `nil`:
 
 ```erde
-local myTable = { hello = 'world' }
+local my_table = { hello = 'world' }
 
-local { someNonExistentKey = 'goodbye world' } = myTable
+local { my_fake_key = 'goodbye world' } = my_table
 
-print(myTable) -- goodbye world
+print(my_fake_key) -- goodbye world
 ```
 
 Destructured keys may also be given aliases. Aliases simply rename the
 destructured field and must come before defaults:
 
 ```erde
-local myTable = { hello = 'world' }
+local my_table = { hello = 'world' }
 
 -- Alias
-local { hello: myHello } = myTable
-print(myHello) -- world
+local { hello: my_hello } = my_table
+print(my_hello) -- world
 
 -- Alias + Default
-local { someNonExistentKey: myAlias = 'James Bond' } = myTable
-print(myAlias) -- James Bond
+local { my_fake_key: my_alias = 'James Bond' } = my_table
+print(my_fake_key) -- James Bond
 ```
 
 :::note
@@ -174,14 +174,14 @@ achieve the import / export paradigm:
 <br />
 
 ```erde title="foo.erde"
-module function myModuleFunction() {
+module function my_module_function() {
   print('hello world')
 }
 ```
 
 ```erde title="bar.erde"
-local { myModuleFunction } = require('foo')
-myModuleFunction() -- hello world
+local { my_module_function } = require('foo')
+my_module_function() -- hello world
 ```
 
 :::
@@ -220,11 +220,11 @@ a default value. In particular, defaulted parameters need not come after
 non-defaulted ones:
 
 ```erde
-function myfunc(a, b = 2, c) {
+function sum3(a, b = 2, c) {
   return a + b + c
 }
 
-myfunc(1, nil, 3) -- 6
+sum3(1, nil, 3) -- 6
 ```
 
 ### Varargs
@@ -275,9 +275,9 @@ fat arrow instead of a skinny one
 ([inspired by MoonScript](https://moonscript.org/reference/#the-language/function-literals/fat-arrows)):
 
 ```erde
-local Person = { name = 'world' }
+local person = { name = 'world' }
 
-Person.introduce = () => {
+person.introduce = () => {
   print(self.name)
 }
 ```
@@ -287,7 +287,7 @@ this case, the expression becomes the return value.
 
 ```erde
 -- Return single value
-local getRandomNumber = () -> math.random()
+local get_random = () -> math.random()
 ```
 
 :::info
@@ -297,14 +297,14 @@ are necessary:
 
 ```erde
 -- Return table (must use parentheses!)
-local getRandomTable= () -> ({
+local get_random_table = () -> ({
   a = math.random(),
   b = math.random(),
   c = math.random(),
 })
 
 -- Return multiple values (must use parentheses!)
-local getRandomNumbers = () -> (
+local get_random3 = () -> (
   math.random(),
   math.random(),
 )
@@ -353,7 +353,7 @@ Since [functions default to `local` scope](/breaking-changes-lua#local-functions
 global functions need to be explicitly declared as global:
 
 ```erde
-global function myGlobalFunction() {
+global function my_global_function() {
   ...
 }
 ```
@@ -396,14 +396,14 @@ to achieve the import / export paradigm:
 <br />
 
 ```erde title="foo.erde"
-module function myModuleFunction() {
+module function my_module_function() {
   print('hello world')
 }
 ```
 
 ```erde title="bar.erde"
-local { myModuleFunction } = require('foo')
-myModuleFunction() -- hello world
+local { my_module_function } = require('foo')
+my_module_function() -- hello world
 ```
 
 :::
@@ -657,11 +657,11 @@ Erde has support for [Lua's `goto`](http://lua-users.org/wiki/GotoStatement)
 (Lua 5.2+, LuaJIT):
 
 ```erde
-goto myJump
+goto my_jump
 
 print('this will not be printed')
 
-::myJump::
+::my_jump::
 print('hello world')
 ```
 
@@ -678,15 +678,15 @@ In Erde, any enclosed list (i.e. surrounded by paired tokens such as `{}`, `[]`,
 is allowed to have trailing commas. For example:
 
 ```erde
-function myFunction(
-  myFirstLongFunctionParameter,
-  mySecondLongFunctionParameter,
-  myThirdLongFunctionParameter, -- trailing comma allowed!
+function my_function(
+  my_first_long_function_parameter,
+  my_second_long_function_parameter,
+  my_third_long_function_parameter, -- trailing comma allowed!
 ) {
   print(
-    myFirstLongFunctionParameter,
-    mySecondLongFunctionParameter,
-    myThirdLongFunctionParameter, -- trailing comma allowed!
+    my_first_long_function_parameter,
+    my_second_long_function_parameter,
+    my_third_long_function_parameter, -- trailing comma allowed!
   )
 }
 ```
@@ -712,7 +712,7 @@ In Erde, [semicolons are usually not necessary](/breaking-changes-lua#significan
 Functions in Erde are allowed to wrap their returns in parentheses:
 
 ```erde
-function getBasicPairOperations(a, b) {
+function get_basic_pair_operations(a, b) {
   return (
     a + b,
     a - b,
@@ -722,7 +722,7 @@ function getBasicPairOperations(a, b) {
 }
 
 -- as an arrow function:
-local getBasicPairOperations = (a, b) -> (
+local get_basic_pair_operations = (a, b) -> (
   a + b,
   a - b,
   a * b,

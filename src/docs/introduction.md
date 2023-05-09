@@ -19,7 +19,7 @@ favored syntax (similar to languages such as Rust, Golang, JavaScript, etc) and
 has been designed to map very closely to Lua.
 
 ```erde
-local function sumEvens(...numbers) {
+local function sum_evens(...numbers) {
   local sum = 0
 
   for _, n in ipairs(numbers) {
@@ -31,9 +31,9 @@ local function sumEvens(...numbers) {
   return sum
 }
 
-print(sumEvens(1, 3, 5, 7))             -- 0
-print(sumEvens(2, 4, 6, 8))             -- 20
-print(sumEvens(1, 2, 3, 4, 5, 6, 7, 8)) -- 20
+print(sum_evens(1, 3, 5, 7))             -- 0
+print(sum_evens(2, 4, 6, 8))             -- 20
+print(sum_evens(1, 2, 3, 4, 5, 6, 7, 8)) -- 20
 ```
 
 Erde files may be compiled, run on the command line (using the `erde` CLI), or
@@ -93,8 +93,8 @@ print("hello {msg}") -- hello world
 local { map, filter, reduce  } = require('pl.tablex')
 
 -- Array destructuring
-local myobject = { 'hello', 'world' }
-local [ msg1, msg2 ] = myobject
+local my_table = { 'hello', 'world' }
+local [ msg1, msg2 ] = my_table
 print(msg1) -- hello
 print(msg2) -- world
 ```

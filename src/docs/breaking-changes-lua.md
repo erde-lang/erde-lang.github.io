@@ -52,12 +52,12 @@ syntax in Lua is simply syntactic sugar for assigning an anonymous function to
 a label, this means that the following creates a global function:
 
 ```lua title="Lua"
-function myFunction()
+function my_function()
   print('hello world')
 end
 
 -- equivalent to:
-myFunction = function()
+my_function = function()
   print('hello world')
 end
 ```
@@ -69,13 +69,13 @@ declarations in Erde create local functions by default. Thus the following are
 equivalent:
 
 ```lua title="Lua"
-local function myFunction()
+local function my_function()
   print('hello world')
 end
 ```
 
 ```erde title="Erde"
-function myFunction() {
+function my_function() {
   print('hello world')
 }
 ```
@@ -83,7 +83,7 @@ function myFunction() {
 Global functions can still be created in Erde using `global`:
 
 ```erde
-global function myGlobalFunction() {
+global function my_global_function() {
   print('hello world')
 }
 ```

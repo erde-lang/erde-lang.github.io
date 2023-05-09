@@ -77,7 +77,7 @@ print(sum(1, 2, 3, 4))`,
   },
   {
     label: 'Continue',
-    value: `function printOdds(limit) {
+    value: `function print_odds(limit) {
   for i = 1, limit {
     if i % 2 == 0 {
       continue
@@ -87,7 +87,7 @@ print(sum(1, 2, 3, 4))`,
   }
 }
 
-printOdds(10)`,
+print_odds(10)`,
   },
   {
     label: 'String Interpolation',
@@ -102,20 +102,20 @@ print("hello \\{msg}")`,
   },
   {
     label: 'Destructuring',
-    value: `local myTable = {
-  myValue = 5,
+    value: `local my_table = {
+  my_value = 5,
   'child1',
   'child2',
 }
 
 -- map destructure
-local { myValue } = myTable
-print(myValue)
+local { my_value } = my_table
+print(my_value)
 
 -- array destructure
-local [ firstChild, secondChild ] = myTable
-print(firstChild)
-print(secondChild)`,
+local [ first_child, second_child ] = my_table
+print(first_child)
+print(second_child)`,
   },
   {
     label: 'Arrow Functions',
