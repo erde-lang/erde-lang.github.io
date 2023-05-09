@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v2.4.0">
 <title data-rh="true">Playground | Erde</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://erde-lang.github.io/playground"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Playground | Erde"><link data-rh="true" rel="icon" href="/logo.svg"><link data-rh="true" rel="canonical" href="https://erde-lang.github.io/playground"><link data-rh="true" rel="alternate" href="https://erde-lang.github.io/playground" hreflang="en"><link data-rh="true" rel="alternate" href="https://erde-lang.github.io/playground" hreflang="x-default"><script src="fengari-web.js"></script>
 <script src="erde-preload.lua" type="application/lua" async="true"></script><link rel="stylesheet" href="/assets/css/styles.81648d26.css">
-<link rel="preload" href="/assets/js/runtime~main.703a2979.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.dd0d6516.js" as="script">
 <link rel="preload" href="/assets/js/main.005018d9.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
@@ -82,7 +82,7 @@ greet(&#x27;goodbye world&#x27;)">Parameter Defaults</li><li class="option_XVRk"
   return total
 }
 
-print(sum(1, 2, 3, 4))">Named Varargs</li><li class="option_XVRk" value="function printOdds(limit) {
+print(sum(1, 2, 3, 4))">Named Varargs</li><li class="option_XVRk" value="function print_odds(limit) {
   for i = 1, limit {
     if i % 2 == 0 {
       continue
@@ -92,32 +92,32 @@ print(sum(1, 2, 3, 4))">Named Varargs</li><li class="option_XVRk" value="functio
   }
 }
 
-printOdds(10)">Continue</li><li class="option_XVRk" value="local msg = &#x27;world&#x27;
+print_odds(10)">Continue</li><li class="option_XVRk" value="local msg = &#x27;world&#x27;
 
 print(&#x27;hello {msg}&#x27;)
 print(&quot;hello {msg}&quot;)
 print([[hello {msg}]])
 
 -- escaped brace
-print(&quot;hello \{msg}&quot;)">String Interpolation</li><li class="option_XVRk" value="local myTable = {
-  myValue = 5,
+print(&quot;hello \{msg}&quot;)">String Interpolation</li><li class="option_XVRk" value="local my_table = {
+  my_value = 5,
   &#x27;child1&#x27;,
   &#x27;child2&#x27;,
 }
 
 -- map destructure
-local { myValue } = myTable
-print(myValue)
+local { my_value } = my_table
+print(my_value)
 
 -- array destructure
-local [ firstChild, secondChild ] = myTable
-print(firstChild)
-print(secondChild)">Destructuring</li><li class="option_XVRk" value="local mypairs = t -&gt; (next, t, nil)
+local [ first_child, second_child ] = my_table
+print(first_child)
+print(second_child)">Destructuring</li><li class="option_XVRk" value="local mypairs = t -&gt; (next, t, nil)
 
 for key, value in mypairs({ &#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27; }) {
   print(key, value)
 }">Arrow Functions</li></ul></div></div></div><div class="codeConsole_iM9B codeConsole_Pl6N"><ul class="tabs_wo1h"><li class="tab__XZ2 active_KZ6_">Run</li><li class="tab__XZ2">Compile</li></ul><div class="output_pFMC"><div class="scroll_uaxB"></div></div></div></div></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"><a class="pagination-nav__link pagination-nav__link--prev" href="/api"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">API</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/changelog"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Changelog</div></a></nav></div></div></div></div></main></div></div></div>
-<script src="/assets/js/runtime~main.703a2979.js"></script>
+<script src="/assets/js/runtime~main.dd0d6516.js"></script>
 <script src="/assets/js/main.005018d9.js"></script>
 </body>
 </html>
