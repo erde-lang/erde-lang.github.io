@@ -282,13 +282,26 @@ Person.introduce = () => {
 }
 ```
 
-Arrow function may also specify an expression instead of a function body. In
-this case, the expression becomes the return value. If multiple values are being
-returned, the expression list needs to be wrapped in parentheses.
+Arrow functions may also specify an expression instead of a function body. In
+this case, the expression becomes the return value.
 
 ```erde
 -- Return single value
 local getRandomNumber = () -> math.random()
+```
+
+:::info
+
+When using implicit returns for a table or multiple values, wrapping parentheses
+are necessary:
+
+```erde
+-- Return table (must use parentheses!)
+local getRandomTable= () -> ({
+  a = math.random(),
+  b = math.random(),
+  c = math.random(),
+})
 
 -- Return multiple values (must use parentheses!)
 local getRandomNumbers = () -> (
@@ -296,6 +309,8 @@ local getRandomNumbers = () -> (
   math.random(),
 )
 ```
+
+:::
 
 The parameter parentheses are optional if there is only one parameter, as long
 as it does not have a default and is not variadic. This also works for
