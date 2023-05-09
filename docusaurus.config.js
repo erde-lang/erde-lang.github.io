@@ -17,12 +17,12 @@ module.exports = {
   headTags: [
     {
       tagName: 'script',
-      attributes: { src: 'fengari-web.js', type: 'text/javascript' },
+      attributes: { src: '/fengari-web.js', type: 'text/javascript' },
     },
     {
       tagName: 'script',
       attributes: {
-        src: 'erde-preload.lua',
+        src: '/erde-preload.lua',
         type: 'application/lua',
         async: 'true',
       },
