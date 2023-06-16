@@ -71,7 +71,7 @@ print(a) -- 10
 ### Parameter Defaults
 
 ```erde
-function greet(message = 'hello world') {
+local function greet(message = 'hello world') {
   print(message)
 }
 

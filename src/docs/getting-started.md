@@ -39,7 +39,7 @@ touch fibonacci.erde
 And add some code to it:
 
 ```erde
-function fibonacci(n) {
+local function fibonacci(n) {
   local a, b = 0, 1
 
   for i = 1, n {

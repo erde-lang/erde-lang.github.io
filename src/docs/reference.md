@@ -197,18 +197,12 @@ Unlike Lua, [function calls in Erde always require parentheses](/breaking-change
 
 :::
 
-:::warning
-
-Unlike Lua, [***functions declarations are local by default***](/breaking-changes-lua#local-functions-by-default).
-
-:::
-
 ### Parameters Defaults
 
 Erde has support for parameter defaults:
 
 ```erde
-function greet(name = 'world') {
+local function greet(name = 'world') {
   return 'hello ' .. name
 }
 
@@ -220,7 +214,7 @@ a default value. In particular, defaulted parameters need not come after
 non-defaulted ones:
 
 ```erde
-function sum3(a, b = 2, c) {
+local function sum3(a, b = 2, c) {
   return a + b + c
 }
 
@@ -232,7 +226,7 @@ sum3(1, nil, 3) -- 6
 Erde supports [Lua varargs](https://www.lua.org/pil/5.2.html):
 
 ```erde
-function sum(...) {
+local function sum(...) {
   local summands = { ... }
   local total = 0
 
@@ -248,7 +242,7 @@ Additionally, Erde allows for named varargs, which will automatically place them
 into a table:
 
 ```erde
-function sum(...summands) {
+local function sum(...summands) {
   local total = 0
 
   for _, summand in ipairs(summands) {
@@ -678,7 +672,7 @@ In Erde, any enclosed list (i.e. surrounded by paired tokens such as `{}`, `[]`,
 is allowed to have trailing commas. For example:
 
 ```erde
-function my_function(
+local function my_function(
   my_first_long_function_parameter,
   my_second_long_function_parameter,
   my_third_long_function_parameter, -- trailing comma allowed!
@@ -712,7 +706,7 @@ In Erde, [semicolons are usually not necessary](/breaking-changes-lua#significan
 Functions in Erde are allowed to wrap their returns in parentheses:
 
 ```erde
-function get_basic_pair_operations(a, b) {
+local function get_basic_pair_operations(a, b) {
   return (
     a + b,
     a - b,

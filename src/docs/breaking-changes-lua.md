@@ -45,49 +45,6 @@ print("my message")
 print({ message = "my table" })
 ```
 
-## Local Functions by Default
-
-In Lua, all variables are global by default. Since the function declaration
-syntax in Lua is simply syntactic sugar for assigning an anonymous function to
-a label, this means that the following creates a global function:
-
-```lua title="Lua"
-function my_function()
-  print('hello world')
-end
-
--- equivalent to:
-my_function = function()
-  print('hello world')
-end
-```
-
-An **extremely** common mistake in Lua is to accidentally create a global
-function instead of a local one, especially to those newer to the language
-(I _still_ forget this occasionally). To accomodate for this, function
-declarations in Erde create local functions by default. Thus the following are
-equivalent:
-
-```lua title="Lua"
-local function my_function()
-  print('hello world')
-end
-```
-
-```erde title="Erde"
-function my_function() {
-  print('hello world')
-}
-```
-
-Global functions can still be created in Erde using `global`:
-
-```erde
-global function my_global_function() {
-  print('hello world')
-}
-```
-
 ## Significant Whitespace for Ambiguous Syntax
 
 In Lua, there is a well-known ambiguous syntax involving

@@ -11,7 +11,7 @@ export const EXAMPLES_CONFIG = [
   },
   {
     label: 'Fibonacci',
-    value: `function fibonacci(n = 0) {
+    value: `local function fibonacci(n = 0) {
   if n == 0 {
     return 0
   } else {
@@ -54,7 +54,7 @@ print(a)`,
   },
   {
     label: 'Parameter Defaults',
-    value: `function greet(message = 'hello world') {
+    value: `local function greet(message = 'hello world') {
   print(message)
 }
 
@@ -63,7 +63,7 @@ greet('goodbye world')`,
   },
   {
     label: 'Named Varargs',
-    value: `function sum(...summands) {
+    value: `local function sum(...summands) {
   local total = 0
 
   for i, summand in ipairs(summands) {
@@ -77,7 +77,7 @@ print(sum(1, 2, 3, 4))`,
   },
   {
     label: 'Continue',
-    value: `function print_odds(limit) {
+    value: `local function print_odds(limit) {
   for i = 1, limit {
     if i % 2 == 0 {
       continue
