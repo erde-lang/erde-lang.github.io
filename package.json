@@ -24,9 +24,9 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
-    "@docusaurus/core": "^2.4.0",
-    "@docusaurus/module-type-aliases": "^2.4.0",
-    "@docusaurus/preset-classic": "^2.4.0",
+    "@docusaurus/core": "^2.4.1",
+    "@docusaurus/module-type-aliases": "^2.4.1",
+    "@docusaurus/preset-classic": "^2.4.1",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^6.2.1",
     "@tsconfig/docusaurus": "^1.0.4",

@@ -5,6 +5,41 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning based on [Semantic Versioning](https://semver.org/), with suffix
 based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspec-format).
 
+## [0.6.0-1] - June 16, 2023
+
+### Changed
+- BREAKING CHANGE: Functions no longer default to `local`
+  - Differs too much from vanilla Lua
+  - Unexpected behavior, especially for newer users
+  - More confusing than helpful
+- Allow excluding target from `load` (i.e. allow options table as only argument)
+- When using the `module` keyword, users can now access the module table via `_MODULE`.
+  - `_MODULE` is declared at the top of the module (accessible anywhere)
+  - `module` declarations are immediately added to the `_MODULE` table
+
+### Fixed
+- Fixed throwing object when failing to load compiled code
+- Fixed erde loaders not handling multiple returns (package loader && `erde.run`)
+- Fixed incorrect source map when code starts with newlines
+- Fixed incorrect source map for function call statements
+- `erde.traceback` now properly handles non-string messages
+  - message is returned immediately without further processing
+  - same behavior as Lua's native `debug.traceback`
+- The bitwise unary `~` operator now properly uses native Lua for 5.3+ (previously always used bitlib)
+- Erde now properly reports error lines as compiled error lines when there is no sourcemap
+- Erde now properly injects the compile footer for empty files
+- Fixed not throwing error when using both `return` and `module`
+- Fixed `erde` (REPL) and `erde run` not respecting `--target` (https://github.com/erde-lang/erde/issues/11)
+- Fixed global destructuring (https://github.com/erde-lang/erde/issues/14)
+- Global declarations now directly mutate `_G` (https://github.com/erde-lang/erde/issues/15)
+- Fixed compilation of Lua (but not Erde) keyword (https://github.com/erde-lang/erde/issues/8)
+- Fixed greedy tokenization of `\` in block strings (error when tokenizing `[[\]]`)
+
+### Added
+- Allow passing in options in `erde.compile`
+- Allow disabling caching source maps
+- Added `erde sourcemap` command to CLI help
+
 ## [0.5.0-1] - April 01, 2023
 
 ### Removed

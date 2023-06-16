@@ -28,7 +28,7 @@ export default function NavbarMobileSidebarHeader() {
       <Link href="/changelog">
         <div
           className="erde-version navbar__item margin-right--md"
-          children="0.5.0-1"
+          children="0.6.0-1"
         />
       </Link>
       <a

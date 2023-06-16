@@ -65,7 +65,7 @@ module.exports = {
         items: [
           {
             to: 'changelog',
-            label: '0.5.0-1',
+            label: '0.6.0-1',
             position: 'left',
             className: 'erde-version',
           },

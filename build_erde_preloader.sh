@@ -12,8 +12,7 @@ ERDE_MODULES=(
   erde.utils
   erde.constants
   erde.compile
-  erde.compile.tokenize
-  erde.compile.constants
+  erde.tokenize
 )
 
 amalg.lua -o $SCRIPT_DIR/static/erde-preload.lua ${ERDE_MODULES[@]}
