@@ -372,6 +372,22 @@ local foo = require('foo')
 foo.echo('hello world') -- hello world
 ```
 
+If you need to modify the returned table, you can access it via `_MODULE`, which
+is declared at the top of the compiled code and thus accessible anywhere.
+
+```erde
+setmetatable(_MODULE, { __index = _G })
+
+module x = 'hello world'
+```
+
+`module` declarations also modify `_MODULE` immediately:
+
+```erde
+module x = 'hello world'
+print(_MODULE.x) -- hello world
+```
+
 :::caution
 
 The `module` keyword conflicts with the built-in `module` function in Lua 5.1,
