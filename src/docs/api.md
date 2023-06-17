@@ -31,12 +31,22 @@ erde.load()
 erde.load('5.1+')
 
 -- Specify load options.
-erde.load(nil, {
+erde.load({
   -- string. If specified, will be used when compiling bit operations for pre
   -- Lua 5.3 targets.
   bitlib = '',
 
   -- boolean. If true, will prevent replacing Lua's native `debug.traceback`.
+  keep_traceback = false,
+
+  -- boolean. If true, source maps are not cached (less memory usage, but errors
+  -- will point to line numbers in compiled code).
+  disable_source_maps = false,
+})
+
+-- Specify Lua target and load options.
+erde.load('5.1+', {
+  bitlib = '',
   keep_traceback = false,
 })
 ```
@@ -60,9 +70,21 @@ print(erde.compile([[
   local name = 'world'
   print("hello {name}!")
 ]]))
-
 -- local name = 'world'
 -- print("hello " .. tostring(name) .. "!")
+
+-- Specify options
+erde.compile("print('hello world')", {
+  -- string. Specify the Lua target when compiling the given source string.
+  lua_target = '5.1+',
+
+  -- string. If specified, will be used when compiling bit operations for pre
+  -- Lua 5.3 targets.
+  bitlib = '',
+
+  -- string. If specified, will be used as the source name in error messages.
+  alias = false,
+}) -- hello world!
 ```
 
 ## `erde.run`
@@ -74,6 +96,23 @@ print(erde.run([[
   local name = 'world'
   return "hello {name}!"
 ]])) -- hello world!
+
+-- Specify options
+erde.run("print('hello world')", {
+  -- string. Specify the Lua target when compiling the given source string.
+  lua_target = '5.1+',
+
+  -- string. If specified, will be used when compiling bit operations for pre
+  -- Lua 5.3 targets.
+  bitlib = '',
+
+  -- boolean. If true, source maps are not cached (less memory usage, but errors
+  -- will point to line numbers in compiled code).
+  disable_source_maps = false,
+
+  -- string. If specified, will be used as the source name in error messages.
+  alias = false,
+}) -- hello world!
 ```
 
 ## `erde.rewrite`
