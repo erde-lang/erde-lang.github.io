@@ -38,7 +38,6 @@ $green: #25c359;
 
   // Misc
   --ifm-heading-font-weight: 500;
-  --ifm-toc-border-color: none;
 }
 
 html[data-theme='light'] {
@@ -139,5 +138,37 @@ button {
   // Hide useless "Back to main menu" button
   .navbar-sidebar__back {
     display: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Sidebar Overrides
+// -----------------------------------------------------------------------------
+
+// Remove sidebar padding (leave padding to .menu__link)
+.theme-doc-sidebar-container .menu {
+  padding: 0;
+}
+
+// Remove excessive sidebar item spacing
+.theme-doc-sidebar-menu .menu__list,
+.theme-doc-sidebar-menu .menu__list-item {
+  margin-top: 0;
+}
+
+// Link styles
+.theme-doc-sidebar-menu .menu__link,
+.navbar-sidebar__items .menu__link {
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+}
+
+// Mobile styles
+@media screen and (max-width: 996px) {
+  .navbar-sidebar__items {
+    .navbar-sidebar__item {
+      // Remove container padding
+      padding: 0;
+    }
   }
 }
