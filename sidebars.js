@@ -1,5 +1,3 @@
-// https://docusaurus.io/docs/sidebar
-
 module.exports = {
   sidebar: [
     { type: 'doc', id: 'introduction' },

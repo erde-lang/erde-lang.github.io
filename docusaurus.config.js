@@ -1,23 +1,20 @@
-// https://docusaurus.io/docs/configuration
-
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Erde',
   favicon: 'logo.svg',
-
+  organizationName: 'erde-lang',
+  projectName: 'erde',
   url: 'https://erde-lang.github.io/',
   baseUrl: '/',
-
-  projectName: 'erde',
-  organizationName: 'erde-lang',
-
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
   headTags: [
     {
       tagName: 'script',
-      attributes: { src: '/fengari-web.js', type: 'text/javascript' },
+      attributes: {
+        src: '/fengari-web.js',
+        type: 'text/javascript',
+      },
     },
     {
       tagName: 'script',
@@ -29,52 +26,46 @@ module.exports = {
     },
   ],
 
-  plugins: ['docusaurus-plugin-sass'],
-
-  presets: [
+  plugins: [
     [
-      '@docusaurus/preset-classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
+      '@docusaurus/theme-classic',
+      { customCss: require.resolve('./src/custom.scss') },
+    ],
+    [
+      'content-docs',
       {
-        docs: {
-          path: './src/docs',
-          routeBasePath: '/',
-          breadcrumbs: false,
-          sidebarPath: require.resolve('./sidebars.js'),
-        },
-        theme: {
-          customCss: require.resolve('./src/theme/custom.scss'),
-        },
+        path: './src/docs',
+        routeBasePath: '/',
+        breadcrumbs: false,
+        sidebarPath: require.resolve('./sidebars.js'),
       },
     ],
+    'content-pages',
+    'docusaurus-plugin-sass',
+    process.env.NODE_ENV === 'production' && 'sitemap',
   ],
 
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    {
-      prism: {
-        theme: require('./src/theme/prism-react-renderer-onedark.js'),
+  themeConfig: {
+    prism: { theme: require('./src/theme/prism-react-renderer-onedark.js') },
+    navbar: {
+      title: 'Erde',
+      logo: {
+        alt: 'Erde Logo',
+        src: 'logo.svg',
       },
-      navbar: {
-        title: 'Erde',
-        hideOnScroll: true,
-        logo: {
-          alt: 'Erde Logo',
-          src: 'logo.svg',
+      items: [
+        {
+          to: 'changelog',
+          label: '0.6.0-1',
+          position: 'left',
+          className: 'erde-version',
         },
-        items: [
-          {
-            to: 'changelog',
-            label: '0.6.0-1',
-            position: 'left',
-            className: 'erde-version',
-          },
-          {
-            href: 'https://github.com/erde-lang/erde',
-            position: 'right',
-            className: 'github-logo',
-          },
-        ],
-      },
+        {
+          href: 'https://github.com/erde-lang/erde',
+          position: 'right',
+          className: 'github-logo',
+        },
+      ],
     },
+  },
 };

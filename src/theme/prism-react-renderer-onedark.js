@@ -1,4 +1,4 @@
-const palette = require('./onedark');
+const palette = require('../onedark');
 
 /**
  * Types derived from the following CSS rules:

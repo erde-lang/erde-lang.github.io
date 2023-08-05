@@ -1,5 +1,5 @@
 import CodeBlock from '@theme/CodeBlock';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useState } from 'react';
 import ReactSimpleCodeEditor from 'react-simple-code-editor';
 import styles from './CodeEditor.module.scss';
@@ -129,7 +129,7 @@ for key, value in mypairs({ 'a', 'b', 'c' }) {
 
 const Examples = props => (
   <ul
-    className={classNames(styles.examples, props.className)}
+    className={clsx(styles.examples, props.className)}
     children={EXAMPLES_CONFIG.map(example => (
       <li
         key={example.label}
@@ -143,7 +143,7 @@ const Examples = props => (
 );
 
 const Editor = props => (
-  <div className={classNames(styles.editor, props.className)}>
+  <div className={clsx(styles.editor, props.className)}>
     <ReactSimpleCodeEditor
       className={styles.reactSimpleCodeEditor}
       value={props.value}
@@ -163,11 +163,11 @@ export default props => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={classNames(styles.codeEditor, props.className)}>
+    <div className={clsx(styles.codeEditor, props.className)}>
       <div className={styles.loadExample} onClick={() => void setOpen(!open)}>
         Load Example
         <span
-          className={classNames(styles.arrow, open && styles.open)}
+          className={clsx(styles.arrow, open && styles.open)}
           children="➜"
         />
       </div>
@@ -180,7 +180,7 @@ export default props => {
             onChange={props.onChange}
           />
         </div>
-        <div className={classNames(styles.scroll, !open && styles.hidden)}>
+        <div className={clsx(styles.scroll, !open && styles.hidden)}>
           <Examples
             className={styles.fill}
             value={props.value}

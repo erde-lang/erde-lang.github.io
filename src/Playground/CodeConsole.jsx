@@ -1,6 +1,6 @@
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import CodeBlock from '@theme/CodeBlock';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 import styles from './CodeConsole.module.scss';
 import { run_lua, stringify } from './fengari';
@@ -23,7 +23,7 @@ const Tabs = props => (
     {TABS_CONFIG.map((config, i) => (
       <li
         key={i}
-        className={classNames(styles.tab, i === props.value && styles.active)}
+        className={clsx(styles.tab, i === props.value && styles.active)}
         children={config.label}
         onClick={() => void props.onChange(i)}
       />
@@ -70,7 +70,7 @@ export default props => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <div className={classNames(styles.codeConsole, props.className)}>
+    <div className={clsx(styles.codeConsole, props.className)}>
       <Tabs value={tabIndex} onChange={setTabIndex} />
       <Output tabIndex={tabIndex} code={props.code} />
     </div>
