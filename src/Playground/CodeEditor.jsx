@@ -42,7 +42,7 @@ print(fibonacci(9))`,
 }`,
   },
   {
-    label: 'Assignment Operators',
+    label: 'Operator Assignments',
     value: `local a = 1
 print(a)
 

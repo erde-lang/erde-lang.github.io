@@ -53,13 +53,14 @@ platforms as well, but not guaranteed). The currently supported targets are:
 <br />
 
 Erde will make minor adjustments, optimizations and additional error checks
-depending on the targeted version. By default Erde targets `5.1+`.
+depending on the targeted version. By default, Erde targets `5.1+` when
+compiling and the current Lua `_VERSION` when using the package loader.
 
 ## Examples
 
-See the [playground](/playground) for a full list of interactable examples.
+See the [playground](/playground) for a full list of interactive examples.
 
-### Assignment Operators
+### Operator Assignments
 
 ```erde
 local a = 1
@@ -113,16 +114,14 @@ later on if you realize Erde is not right for your project.
 
 Although not as extreme as Lua, Erde is quite minimalistic. It only adds
 features that are either already present in most programming languages
-(ex. parameter defaults) or are relatively simple yet powerful (ex. destructuring).
-
-Features whose uses are too niche will not be considered for the language,
-regardless of how convenient they may make certain situations. This keeps the
-language simple (like Lua) and lowers the barrier to entry.
+(ex. parameter defaults) or are relatively simple yet powerful
+(ex. destructuring). It is meant to feel like a more convenient Lua, but most
+importantly it has to actually still feel like Lua.
 
 ### Stable
 
-After version 1.0-1, Erde will be relatively stable, with plans to only add
-**at most** one new language feature per year (perhaps even less on average).
+With the release of v1.0.0, Erde should be relatively stable, with plans to only
+add **at most** one new language feature per year (perhaps even less on average).
 Instead, efforts on the language will be applied to bug fixes, developer
 experience (DX), and tooling.
 
@@ -138,7 +137,7 @@ diverge greatly from Lua.
 
 Ultimately, I wanted a language that I would _almost already know_ as a Lua
 developer that addressed some of Lua's shortcomings (such as the lack of
-parameter defaults and assignment operators). No such language existed at the
+parameter defaults and operator assignments). No such language existed at the
 time, so I decided to create one.
 
 ### Why symbols over keywords?

@@ -1,7 +1,7 @@
 # Breaking Changes w/ Lua
 
 While Erde attempts to keep most core behaviors consistent w/ Lua, there are a
-couple of breaking changes.
+couple of minor breaking changes.
 
 ## NEQ Operator: `~=` vs `!=`
 
@@ -26,6 +26,19 @@ local x = 5 -- 0b101
 print(~x) -- 2 (0b010)
 ```
 
+If Erde finds a `~=` token being used as a binary operator, it will throw an
+error, suggesting the `!=` operator instead:
+
+```erde
+if x ~= nil {
+  ...
+}
+```
+
+```
+unexpected token '~=', did you mean '!='?
+```
+
 ## Function Call Parentheses
 
 In Lua, function call parentheses are optional when there is only one argument
@@ -47,8 +60,8 @@ print({ message = "my table" })
 
 ## Significant Whitespace for Ambiguous Syntax
 
-In Lua, there is a well-known ambiguous syntax involving
-[immediately invoked function expressions (iife)](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression):
+In Lua, there is an infamous ambiguous syntax involving
+[immediately invoked function expressions (IIFE)](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression):
 
 ```lua
 local x = y
@@ -62,17 +75,17 @@ local x = y;
 local x = y(function() print('hello world') end)()
 ```
 
-Lua uses semicolons to differentiate these statements. You can still use
-semicolons in Erde, but Erde will also infer the intention based on the presence
-of newlines. If there is a newline before the iife, it is parsed as a separate
-statement, otherwise it is parsed as a function call:
+Lua requires semicolons to differentiate these statements. You can still use
+semicolons in Erde, but Erde will also infer the user's intention based on the
+presence of newlines. If there is a newline before the IIFE, it is parsed as a
+separate statement. Otherwise, it is parsed as a chained function call.
 
 ```erde
 -- parsed as two separate statements
 local x = y
 (() -> print('hello world'))()
 
--- parsed as one statement (back-to-back function calls)
+-- parsed as one statement (chained function calls)
 local x = y(() -> print('hello world'))()
 ```
 

@@ -118,7 +118,6 @@ To extract from the array section of a table, you can use brackets:
 
 ```erde
 local my_table = {
-  hello = 'world',
   'my first index',
   'my second index',
 }
@@ -136,11 +135,11 @@ Destructured values may be given default values, which will be applied when
 the destructured value is `nil`:
 
 ```erde
-local my_table = { hello = 'world' }
+local my_table = {}
 
-local { my_fake_key = 'goodbye world' } = my_table
+local { my_nonexistent_key = 'goodbye world' } = my_table
 
-print(my_fake_key) -- goodbye world
+print(my_nonexistent_key) -- goodbye world
 ```
 
 Destructured keys may also be given aliases. Aliases simply rename the
@@ -154,8 +153,9 @@ local { hello: my_hello } = my_table
 print(my_hello) -- world
 
 -- Alias + Default
-local { my_fake_key: my_alias = 'James Bond' } = my_table
-print(my_fake_key) -- James Bond
+local { my_nonexistent_key: my_alias = 'James Bond' } = my_table
+print(my_nonexistent_key) -- nil
+print(my_alias) -- James Bond
 ```
 
 :::note
@@ -170,8 +170,6 @@ and difficult to read.
 
 Destructuring can be used in combination with the [`module` keyword](#module) to
 achieve the import / export paradigm:
-
-<br />
 
 ```erde title="foo.erde"
 module function my_module_function() {
@@ -280,8 +278,9 @@ Arrow functions may also specify an expression instead of a function body. In
 this case, the expression becomes the return value.
 
 ```erde
--- Return single value
 local get_random = () -> math.random()
+print(get_random()) -- 0.91273898151521
+print(get_random()) -- 0.33174662440979
 ```
 
 :::info
@@ -319,11 +318,11 @@ local greet = { name } -> print("hello {name}!")
 greet({ name = 'world' })
 ```
 
-
 ## Scopes
 
 Scopes apply to both normal declarations and function declarations. Their syntax
-is equivalent to Lua, although additional keywords have been added.
+is the same as Lua, but Erde adds the additional `global` and `module` scope
+keywords.
 
 ### local
 
@@ -334,32 +333,33 @@ Local variables are unchanged from
 
 Global variables are unchanged from
 [Lua global variables](https://www.lua.org/pil/1.2.html).
-However, the `global` keyword has been added for convenience. Its use is highly
-recommended, as it is much easier to find where the variable is declared.
+However, variables declared w/ `global` will always index the global table (`_G`).
 
 ```erde
-global MY_GLOBAL = 1
-```
+local my_var = 111
 
-:::warning
+do {
+  global my_var = 222
 
-Since [functions default to `local` scope](/breaking-changes-lua#local-functions-by-default),
-global functions need to be explicitly declared as global:
-
-```erde
-global function my_global_function() {
-  ...
+  -- Erde will automatically detect the most recent scope of the variable
+  -- `my_var`. Since `my_var` is global here, the following is equivalent to
+  -- `print(_G.my_var)`
+  print(my_var) -- 222
 }
-```
 
-:::
+-- Now that the global `my_var` is "out of scope", Erde goes back to using the
+-- local `my_var`.
+print(my_var) -- 111
+
+-- The global variable is still there and accessible via `_G`.
+print(_G.my_var) -- 222
+```
 
 ### module
 
 The `module` keyword acts as an export statement. Any variable declared with
 `module` will automatically be placed into a table, which is then returned at
-the end of the script. It may only occur at the top level of a module and may
-not be used in conjunction with `return`.
+the end of the script.
 
 ```erde title="foo.erde"
 module function echo(message) {
@@ -372,8 +372,7 @@ local foo = require('foo')
 foo.echo('hello world') -- hello world
 ```
 
-If you need to modify the returned table, you can access it via `_MODULE`, which
-is declared at the top of the compiled code and thus accessible anywhere.
+If you need to modify the returned table, you can access it via `_MODULE`:
 
 ```erde
 setmetatable(_MODULE, { __index = _G })
@@ -381,11 +380,15 @@ setmetatable(_MODULE, { __index = _G })
 module x = 'hello world'
 ```
 
-`module` declarations also modify `_MODULE` immediately:
+The `module` keyword may not be used in conjunction with a top-level `return`,
+as the return value will be ambiguous. In this case, Erde will throw a
+compile error.
 
 ```erde
-module x = 'hello world'
-print(_MODULE.x) -- hello world
+module my_var = 0
+
+-- Error! Should Erde return `_MODULE` or `my_other_var`?
+return my_other_var
 ```
 
 :::caution
@@ -402,8 +405,6 @@ anyways).
 
 The `module` keyword can be used in combination with [destructuring](#destructuring)
 to achieve the import / export paradigm:
-
-<br />
 
 ```erde title="foo.erde"
 module function my_module_function() {
@@ -562,10 +563,10 @@ so it is left to the developer to decide which library to use.
 
 :::
 
-### Assignment Operators
+### Operator Assignments
 
-All binary operators (except of course [Relational Operators](#relational-operators))
-support assignment operator shorthands:
+All binary operators (except [Relational Operators](#relational-operators))
+support operator assignments:
 
 ```erde
 local x = 4
@@ -574,7 +575,7 @@ x /= 2
 print(x) -- 5
 ```
 
-Similar to regular assignments, assignment operators can also perform multiple
+Similar to regular assignments, operator assignments can also perform multiple
 assignments in a single statement:
 
 ```erde
@@ -587,7 +588,7 @@ print(x, y, z) -- 1 2 3
 
 ### Do Block
 
-Same as [Lua do blocks](https://www.lua.org/pil/4.2.html) but with braces:
+Same as [Lua do blocks](https://www.lua.org/pil/4.2.html), but with braces:
 
 ```erde
 do {
@@ -597,7 +598,7 @@ do {
 
 ### If Else
 
-Same as [Lua if-else](https://www.lua.org/pil/4.3.1.html) but with braces:
+Same as [Lua if-else](https://www.lua.org/pil/4.3.1.html), but with braces:
 
 ```erde
 if n > 0 {
@@ -611,7 +612,7 @@ if n > 0 {
 
 ### For Loop
 
-Same as Lua but with braces. Both [numeric for loops](https://www.lua.org/pil/4.3.4.html)
+Same as Lua, but with braces. Both [numeric for loops](https://www.lua.org/pil/4.3.4.html)
 and [generic for loops](https://www.lua.org/pil/4.3.5.html) are supported.
 
 ```erde
@@ -628,7 +629,7 @@ for i, v in ipairs({ 1, 2, 3 }) {
 
 ### While Loop
 
-Same as [Lua while loop](https://www.lua.org/pil/4.3.2.html) but with braces:
+Same as [Lua while loop](https://www.lua.org/pil/4.3.2.html), but with braces:
 
 ```erde
 while true {
@@ -638,7 +639,7 @@ while true {
 
 ### Repeat Until
 
-Same as [Lua repeat-until](https://www.lua.org/pil/4.3.3.html) but with braces:
+Same as [Lua repeat-until](https://www.lua.org/pil/4.3.3.html), but with braces:
 
 ```erde
 repeat {
@@ -675,7 +676,7 @@ print('this will not be printed')
 print('hello world')
 ```
 
-:::warning
+:::caution
 
 Since there is no way to polyfill `goto` in Lua 5.1, trying to use `goto` when
 targeting 5.1 or 5.1+ will result in a compilation error.
@@ -717,9 +718,9 @@ In Erde, [semicolons are usually not necessary](/breaking-changes-lua#significan
 
 :::
 
-## Return Parentheses
+## Multiple Return Parentheses
 
-Functions in Erde are allowed to wrap their returns in parentheses:
+Functions in Erde are allowed to wrap multiple returns with parentheses:
 
 ```erde
 local function get_basic_pair_operations(a, b) {
@@ -730,12 +731,4 @@ local function get_basic_pair_operations(a, b) {
     a / b,
   )
 }
-
--- as an arrow function:
-local get_basic_pair_operations = (a, b) -> (
-  a + b,
-  a - b,
-  a * b,
-  a / b,
-)
 ```

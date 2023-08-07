@@ -5,6 +5,60 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning based on [Semantic Versioning](https://semver.org/), with suffix
 based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspec-format).
 
+## [1.0.0-1] - UNRELEASED
+
+### Removed
+
+### Changed
+- No longer allow keywords as index fields (generated invalid Lua code)
+- Loaded compiled Lua chunks now have their source names embedded in their chunkname
+    - https://github.com/erde-lang/erde/issues/27
+- Added specific error checks for common mistakes
+    - `~=` vs `!=`
+    - `elseif` vs `else if`
+- Operator assignments no longer cause unnecessary duplicate indexing
+    - https://github.com/erde-lang/erde/issues/29
+    - ex) `my_expensive_function().x += 1` will now only call `my_expensive_function` once.
+    - ex) `a.b.c += 1` will only cause `a` to be indexed once.
+- Erde now transforms variable names based on the scope they were declared with.
+    - The most recently declared scope will always take precedence
+    - ex) `local x = 0; global x = 1; assert(x == 1)`
+- Erde now throws a parsing error when declaring a destructured variable with no value (ex. `local { a };`)
+- Erde now throws a parsing error when using `goto` with an undefined label (same behavior as Lua)
+
+### Fixed
+- Fixed allowing keywords as variable names
+- Fixed compilation error for interpolation strings with only an escaped brace
+    - https://github.com/erde-lang/erde/issues/24
+- Fixed return list failing to parse surround chars in strings
+    - https://github.com/erde-lang/erde/issues/21
+- Fixed not being able to assign to the index of a function call result
+    - https://github.com/erde-lang/erde/issues/26
+- Fixed parsing table string entry with only `=`
+    - https://github.com/erde-lang/erde/issues/28
+- Fixed compilation of function declarations with Lua keywords
+    - https://github.com/erde-lang/erde/issues/25
+- Fixed operator precedence fighting in operator assignments
+    - https://github.com/erde-lang/erde/issues/20
+- Fixed `erde compile` failing when parent directories are not present
+    - parent directories are now created recursively as needed
+- Fixed mismatched names for Lua keywords when accessing `_G` or `_MODULE`
+    - https://github.com/erde-lang/erde/issues/18
+- Fixed `module` declarations not updating `_MODULE`
+    - https://github.com/erde-lang/erde/issues/22
+- Fixed `continue` generating invalid code when targeting 5.1(+)
+    - https://github.com/erde-lang/erde/issues/34
+- Fixed return lists incorrectly interpreting expression commas as list commas
+    - For example, returning an iife with a comma in the function body
+- Fixed mangled stacktrace for `bit` library tail calls
+    - https://www.freelists.org/post/luajit/Bad-stack-trace-from-lua-getstack-and-lua-getinfo,1
+
+### Added
+- Erde will now throw a compiler error when targeting `5.1`, `5.1+`, or `jit`, and there are additional statements following a `break`.
+    - Lua 5.1 / LuaJIT do not support statements following `break` (parsing error, similar to `return`)
+    - https://github.com/erde-lang/erde/issues/34
+- Compiled files now include the Lua target at the bottom of the compiled file.
+
 ## [0.6.0-1] - June 16, 2023
 
 ### Changed

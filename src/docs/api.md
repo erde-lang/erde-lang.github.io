@@ -122,8 +122,6 @@ Particularly useful in combination with `xpcall` to have errors point back to
 the original `*.erde` source files.
 
 ```lua
-local erde = erde
-
 erde.load()
 
 local ok, result = xpcall(function()
