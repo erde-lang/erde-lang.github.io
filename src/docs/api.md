@@ -9,6 +9,14 @@ local erde = require('erde')
 Users should **_not_** use nested Erde modules (ex. `erde.lib`), as these
 are considered private and may introduce breaking changes across any version.
 
+## `erde.version`
+
+String of the current Erde version.
+
+```lua
+print(erde.version) -- 1.0.0-1
+```
+
 ## `erde.load`
 
 Injects the Erde package loader into
