@@ -12,7 +12,14 @@ slug: /
 
 </center>
 
-<br />
+:::tip VERSION 1.0.0
+
+As of August 11, 2023, version 1.0.0 has been released! Thank you to everyone
+who tried out Erde and especially to those who gave feedback. These little
+gestures were surprisingly encouraging, and I hope the result is something
+that at least a few can find useful. Enjoy!
+
+:::
 
 Erde is a programming language that compiles to Lua. It uses a more symbol
 favored syntax (similar to languages such as Rust, Golang, JavaScript, etc) and
