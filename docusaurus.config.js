@@ -42,7 +42,7 @@ module.exports = {
     ],
     'content-pages',
     'docusaurus-plugin-sass',
-    process.env.NODE_ENV === 'production' && 'sitemap',
+    process.env.NODE_ENV === 'production' && '@docusaurus/plugin-sitemap',
   ],
 
   themeConfig: {
