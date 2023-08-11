@@ -1,7 +1,6 @@
 // Ejected component to:
 // - inject Erde version
 // - inject GitHub link
-
 import Link from '@docusaurus/Link';
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
 import IconClose from '@theme/Icon/Close';
