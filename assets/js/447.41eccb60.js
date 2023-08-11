@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkerde_lang_github_io=self.webpackChunkerde_lang_github_io||[]).push([[447],{4447:(e,a,s)=>{s.r(a),s.d(a,{default:()=>l});var t=s(6537);const n="notFound_v1pe";var r=s(5893);const l=()=>(0,r.jsx)(t.Z,{wrapperClassName:n,title:"404",children:"404"})}}]);
