@@ -1,5 +1,5 @@
 [submodule "erde"]
-	path = erde
+	path = internal/erde
 	url = https://github.com/erde-lang/erde
 [submodule "internal/lua-amalg"]
 	path = internal/lua-amalg
