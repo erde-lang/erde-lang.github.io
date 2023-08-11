@@ -20,15 +20,15 @@ In order to report references back to the original Erde file, we need to rewrite
 the error. Erde originally tried to handle error rewriting automatically,
 but this has many shortcomings:
 
-  1. It's not clear whether to use `erde.rewrite` or `erde.traceback`, as
-     the former is more suitable for errors meant to be caught, but the latter
-     is more suitable if the error is allowed to propogate.
-  1. Errors may be rewritten multiple times, causing misleading stacktraces.
-  1. Throwing rewritten errors affects users wanting to use `xpcall` themselves,
-     since the stack will only "unwind" from the point that the error was
-     rethrown, rather than from the point of the original error.
-  1. It's very difficult to handle the case where an error-prone function is
-     declared in Erde, but called in Lua.
+1. It's not clear whether to use `erde.rewrite` or `erde.traceback`, as
+   the former is more suitable for errors meant to be caught, but the latter
+   is more suitable if the error is allowed to propogate.
+1. Errors may be rewritten multiple times, causing misleading stacktraces.
+1. Throwing rewritten errors affects users wanting to use `xpcall` themselves,
+   since the stack will only "unwind" from the point that the error was
+   rethrown, rather than from the point of the original error.
+1. It's very difficult to handle the case where an error-prone function is
+   declared in Erde, but called in Lua.
 
 There were multiple attempts to overcome these, but every solution had major
 flaws. Thus, to keep things simple and transparent, error rewriting is delegated

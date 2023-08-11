@@ -49,7 +49,7 @@ print "my message"
 print { message = "my table" }
 ```
 
-Erde does ***not*** support this syntax, that is, function calls always require
+Erde does **_not_** support this syntax, that is, function calls always require
 parentheses. This forces consistency not only across the Erde projects, but also
 with many other programming languages:
 
@@ -99,6 +99,6 @@ is usually used to delimit different sections in a constructor:
 local x = { x = 10, y = 45; 'one', 'two', 'three' }
 ```
 
-Erde does ***not*** support this syntax, as it not only causes inconsistencies
+Erde does **_not_** support this syntax, as it not only causes inconsistencies
 in table constructor delimiters, but is also quite unreadable, since many are
 not even aware that such syntax is valid Lua.

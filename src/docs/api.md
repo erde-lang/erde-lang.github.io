@@ -6,7 +6,7 @@ The `erde` package exports various functions for programmatic usage:
 local erde = require('erde')
 ```
 
-Users should ***not*** use nested Erde modules (ex. `erde.lib`), as these
+Users should **_not_** use nested Erde modules (ex. `erde.lib`), as these
 are considered private and may introduce breaking changes across any version.
 
 ## `erde.load`

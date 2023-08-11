@@ -1,3 +1,6 @@
 [submodule "erde"]
 	path = erde
 	url = https://github.com/erde-lang/erde
+[submodule "internal/lua-amalg"]
+	path = internal/lua-amalg
+	url = git@github.com:siffiejoe/lua-amalg.git

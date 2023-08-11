@@ -45,7 +45,6 @@ will also be transpiled at compile time into decimals:
 print(0b110) -- 6
 ```
 
-
 ### Strings
 
 Strings are _mostly_ unchanged from [Lua strings](https://www.lua.org/pil/2.4.html).
@@ -78,7 +77,6 @@ local x = ('hello %s!'):format('world')
 ```erde title=erde
 local x = 'hello %s!':format('world')
 ```
-
 
 ## Tables
 
@@ -454,17 +452,17 @@ by the compiler when necessary.
 
 Relational operators are the same as
 [Lua relational operators](https://www.lua.org/manual/5.4/manual.html#3.4.4)
-***except for the NEQ operator***, which uses `!=`. You can read more
+**_except for the NEQ operator_**, which uses `!=`. You can read more
 about this decision [here](/breaking-changes-lua#neq-operator--vs-).
 
 <center>
 
-| Syntax | Operator         | Example           |
-| :----- | :--------------- | :---------------- |
-| ==     | equality         | 1 + 1 == 2        |
-| !=     | inequality       | 1 + 1 != 3        |
-| <      | less than        | 3 < 5             |
-| >      | greater than     | 9 > 7             |
+| Syntax | Operator              | Example           |
+| :----- | :-------------------- | :---------------- |
+| ==     | equality              | 1 + 1 == 2        |
+| !=     | inequality            | 1 + 1 != 3        |
+| <      | less than             | 3 < 5             |
+| >      | greater than          | 9 > 7             |
 | <=     | less than or equal    | 9 >= 8, 9 >= 9    |
 | >=     | greater than or equal | 9 <= 11, 11 <= 11 |
 
@@ -503,14 +501,14 @@ Erde supports [Lua's bitwise operators](https://www.lua.org/manual/5.4/manual.ht
 
 <center>
 
-| Syntax | Operator    | Example      |
-|-:------|-:-----------|-:------------|
-| \|     | or          | 4 \| 2 == 6  |
-| &      | and         | 6 & 5 == 4   |
-| ~      | xor         | 6 ~ 5 == 3   |
-| ~      | unary NOT   | ~4 == 3      |
-| >>     | right shift | 2 >> 1 == 1  |
-| <<     | left shift  | 2 << 1 == 4  |
+| Syntax |    Operator |     Example |
+| -----: | ----------: | ----------: |
+|     \| |          or | 4 \| 2 == 6 |
+|      & |         and |  6 & 5 == 4 |
+|      ~ |         xor |  6 ~ 5 == 3 |
+|      ~ |   unary NOT |     ~4 == 3 |
+|     >> | right shift | 2 >> 1 == 1 |
+|     << |  left shift | 2 << 1 == 4 |
 
 </center>
 <br />
@@ -520,17 +518,17 @@ following table to determine how bit operations should be compiled:
 
 <center>
 
-| Target | Compilation                                                         | Erde          | Lua                            |
-|--:-----|--:------------------------------------------------------------------|--:------------|--------------------------------|
-| jit    | [LuaBitOp](http://bitop.luajit.org/)                                | 6 & 5         | require('bit').band(6, 5)      |
-| 5.1    | [LuaBitOp](http://bitop.luajit.org/)                                | 6 & 5         | require('bit').band(6, 5)      |
-| 5.1+   | Requires `--bitlib` flag                                            | 6 & 5         | require('myBitLib').band(6, 5) |
-| 5.2    | [bit32](https://www.lua.org/manual/5.2/manual.html#6.7)             | 6 & 5         | require('bit32').band(6, 5)    |
-| 5.2+   | Requires `--bitlib` flag                                            | 6 & 5         | require('myBitLib').band(6, 5) |
-| 5.3    | [Native Syntax](https://www.lua.org/manual/5.3/manual.html#3.4.2)   | 6 & 5         | 6 & 5                          |
-| 5.3+   | [Native Syntax](https://www.lua.org/manual/5.3/manual.html#3.4.2)   | 6 & 5         | 6 & 5                          |
-| 5.4    | [Native Syntax](https://www.lua.org/manual/5.4/manual.html#3.4.2)   | 6 & 5         | 6 & 5                          |
-| 5.4+   | [Native Syntax](https://www.lua.org/manual/5.4/manual.html#3.4.2)   | 6 & 5         | 6 & 5                          |
+| Target |                                                       Compilation |  Erde | Lua                            |
+| -----: | ----------------------------------------------------------------: | ----: | ------------------------------ |
+|    jit |                              [LuaBitOp](http://bitop.luajit.org/) | 6 & 5 | require('bit').band(6, 5)      |
+|    5.1 |                              [LuaBitOp](http://bitop.luajit.org/) | 6 & 5 | require('bit').band(6, 5)      |
+|   5.1+ |                                          Requires `--bitlib` flag | 6 & 5 | require('myBitLib').band(6, 5) |
+|    5.2 |           [bit32](https://www.lua.org/manual/5.2/manual.html#6.7) | 6 & 5 | require('bit32').band(6, 5)    |
+|   5.2+ |                                          Requires `--bitlib` flag | 6 & 5 | require('myBitLib').band(6, 5) |
+|    5.3 | [Native Syntax](https://www.lua.org/manual/5.3/manual.html#3.4.2) | 6 & 5 | 6 & 5                          |
+|   5.3+ | [Native Syntax](https://www.lua.org/manual/5.3/manual.html#3.4.2) | 6 & 5 | 6 & 5                          |
+|    5.4 | [Native Syntax](https://www.lua.org/manual/5.4/manual.html#3.4.2) | 6 & 5 | 6 & 5                          |
+|   5.4+ | [Native Syntax](https://www.lua.org/manual/5.4/manual.html#3.4.2) | 6 & 5 | 6 & 5                          |
 
 </center>
 <br />
@@ -540,14 +538,14 @@ The library methods are assumed to be:
 
 <center>
 
-| Syntax | Operator    | Method                       |
-|-:------|-:-----------|-:----------------------------|
-| \|     | or          | require('myBitLib').bor    |
-| &      | and         | require('myBitLib').band   |
-| ~      | xor         | require('myBitLib').bxor   |
-| ~      | unary NOT   | require('myBitLib').bnot   |
-| >>     | right shift | require('myBitLib').rshift |
-| <<     | left shift  | require('myBitLib').lshift |
+| Syntax |    Operator |                     Method |
+| -----: | ----------: | -------------------------: |
+|     \| |          or |    require('myBitLib').bor |
+|      & |         and |   require('myBitLib').band |
+|      ~ |         xor |   require('myBitLib').bxor |
+|      ~ |   unary NOT |   require('myBitLib').bnot |
+|     >> | right shift | require('myBitLib').rshift |
+|     << |  left shift | require('myBitLib').lshift |
 
 </center>
 <br />

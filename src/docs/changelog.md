@@ -5,63 +5,65 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning based on [Semantic Versioning](https://semver.org/), with suffix
 based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspec-format).
 
-## [1.0.0-1] - UNRELEASED
-
-### Removed
+## [1.0.0-1] - August 11, 2023
 
 ### Changed
+
 - No longer allow keywords as index fields (generated invalid Lua code)
 - Loaded compiled Lua chunks now have their source names embedded in their chunkname
-    - https://github.com/erde-lang/erde/issues/27
-- Added specific error checks for common mistakes
-    - `~=` vs `!=`
-    - `elseif` vs `else if`
+  - https://github.com/erde-lang/erde/issues/27
 - Operator assignments no longer cause unnecessary duplicate indexing
-    - https://github.com/erde-lang/erde/issues/29
-    - ex) `my_expensive_function().x += 1` will now only call `my_expensive_function` once.
-    - ex) `a.b.c += 1` will only cause `a` to be indexed once.
+  - https://github.com/erde-lang/erde/issues/29
+  - ex) `my_expensive_function().x += 1` will now only call `my_expensive_function` once.
+  - ex) `a.b.c += 1` will only cause `a` to be indexed once.
 - Erde now transforms variable names based on the scope they were declared with.
-    - The most recently declared scope will always take precedence
-    - ex) `local x = 0; global x = 1; assert(x == 1)`
+  - The most recently declared scope will always take precedence
+  - ex) `local x = 0; global x = 1; assert(x == 1)`
 - Erde now throws a parsing error when declaring a destructured variable with no value (ex. `local { a };`)
 - Erde now throws a parsing error when using `goto` with an undefined label (same behavior as Lua)
 
 ### Fixed
+
 - Fixed allowing keywords as variable names
 - Fixed compilation error for interpolation strings with only an escaped brace
-    - https://github.com/erde-lang/erde/issues/24
+  - https://github.com/erde-lang/erde/issues/24
 - Fixed return list failing to parse surround chars in strings
-    - https://github.com/erde-lang/erde/issues/21
+  - https://github.com/erde-lang/erde/issues/21
 - Fixed not being able to assign to the index of a function call result
-    - https://github.com/erde-lang/erde/issues/26
+  - https://github.com/erde-lang/erde/issues/26
 - Fixed parsing table string entry with only `=`
-    - https://github.com/erde-lang/erde/issues/28
+  - https://github.com/erde-lang/erde/issues/28
 - Fixed compilation of function declarations with Lua keywords
-    - https://github.com/erde-lang/erde/issues/25
+  - https://github.com/erde-lang/erde/issues/25
 - Fixed operator precedence fighting in operator assignments
-    - https://github.com/erde-lang/erde/issues/20
+  - https://github.com/erde-lang/erde/issues/20
 - Fixed `erde compile` failing when parent directories are not present
-    - parent directories are now created recursively as needed
+  - parent directories are now created recursively as needed
 - Fixed mismatched names for Lua keywords when accessing `_G` or `_MODULE`
-    - https://github.com/erde-lang/erde/issues/18
+  - https://github.com/erde-lang/erde/issues/18
 - Fixed `module` declarations not updating `_MODULE`
-    - https://github.com/erde-lang/erde/issues/22
+  - https://github.com/erde-lang/erde/issues/22
 - Fixed `continue` generating invalid code when targeting 5.1(+)
-    - https://github.com/erde-lang/erde/issues/34
+  - https://github.com/erde-lang/erde/issues/34
 - Fixed return lists incorrectly interpreting expression commas as list commas
-    - For example, returning an iife with a comma in the function body
+  - For example, returning an iife with a comma in the function body
 - Fixed mangled stacktrace for `bit` library tail calls
-    - https://www.freelists.org/post/luajit/Bad-stack-trace-from-lua-getstack-and-lua-getinfo,1
+  - https://www.freelists.org/post/luajit/Bad-stack-trace-from-lua-getstack-and-lua-getinfo,1
 
 ### Added
+
 - Erde will now throw a compiler error when targeting `5.1`, `5.1+`, or `jit`, and there are additional statements following a `break`.
-    - Lua 5.1 / LuaJIT do not support statements following `break` (parsing error, similar to `return`)
-    - https://github.com/erde-lang/erde/issues/34
+  - Lua 5.1 / LuaJIT do not support statements following `break` (parsing error, similar to `return`)
+  - https://github.com/erde-lang/erde/issues/34
 - Compiled files now include the Lua target at the bottom of the compiled file.
+- Added specific error checks for common mistakes
+  - `~=` vs `!=`
+  - `elseif` vs `else if`
 
 ## [0.6.0-1] - June 16, 2023
 
 ### Changed
+
 - BREAKING CHANGE: Functions no longer default to `local`
   - Differs too much from vanilla Lua
   - Unexpected behavior, especially for newer users
@@ -72,6 +74,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
   - `module` declarations are immediately added to the `_MODULE` table
 
 ### Fixed
+
 - Fixed throwing object when failing to load compiled code
 - Fixed erde loaders not handling multiple returns (package loader && `erde.run`)
 - Fixed incorrect source map when code starts with newlines
@@ -90,6 +93,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 - Fixed greedy tokenization of `\` in block strings (error when tokenizing `[[\]]`)
 
 ### Added
+
 - Allow passing in options in `erde.compile`
 - Allow disabling caching source maps
 - Added `erde sourcemap` command to CLI help
@@ -97,6 +101,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 ## [0.5.0-1] - April 01, 2023
 
 ### Removed
+
 - BREAKING CHANGE: Removed `try...catch` statements
   - `pcall` paradigm suffices, `try...catch` statement in practice was not _that_ useful
   - Do not want to split code styles on `pcall` vs `try...catch`
@@ -107,6 +112,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 - Removed `-d`, `--debug` cli option
 
 ### Changed
+
 - Erde now allows all number forms for all Lua targets and will transpile numbers to decimal format (including newly added binary literals).
 - `erde` cli no longer requires the subcommand to appear directly after `erde` (flags in between are accepted)
 - `erde` cli defaults `compile` and `clean` args to the current directory.
@@ -124,6 +130,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
   - `erde` cli will still rewrite errors (repl and `erde run`)
 
 ### Fixed
+
 - Fixed compiling of chained function calls (ex. `myfunc()()`)
 - Erde now properly ignores escape sequences (except interpolation) in block strings (`[[ ... ]]`)
 - Fixed `erde` compile / clean checks for empty Lua files (`is_compiled_file`)
@@ -132,6 +139,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 - Erde now properly injects the erde package loader when using the repl.
 
 ### Added
+
 - Allow binary literals (ex. `print(0b100)`) for all Lua targets.
 - Allow strings to act as index chain bases without parentheses.
   - ex) `'mystring':find('my')`
@@ -142,6 +150,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 ## [0.4.0-1] - January 7, 2023
 
 ### Changed
+
 - CLI options now use all lowercase (more standard)
   - `--outDir` is now `--outdir`
   - `--bitLib` is now `--bitlib`
@@ -149,6 +158,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 - Parser now properly checks varargs scope (cannot be used outside vararg function)
 
 ### Fixed
+
 - Fixed `module` declarations with destructuring
 - Long strings no longer throw errors for unrecognized escape chars (same behavior as Lua)
 - Fixed determining ReturnList variants
@@ -158,6 +168,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 - CLI now checks one extra character when looking for the compiled footer comment (handle trailing newlines injected by editor)
 
 ### Added
+
 - Added versioned executables to allow specifying the underlying lua executable version. Each additionally sets `--target` appropriately.
   - `erde5.1` - sets `--target 5.1` and uses `lua5.1` executable
   - `erde5.2` - sets `--target 5.2` and uses `lua5.2` executable
@@ -172,14 +183,17 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 ## [0.3.0-2] - November 7, 2022
 
 ### Removed
+
 - Erde no longer depends on [argparse](https://luarocks.org/modules/argparse/argparse)
 
 ### Changed
+
 - `erde run` no longer uses a subcommand
 - `erde compile` and `erde clean` no longer default to cwd
 - Improved error messages and error handling
 
 ### Fixed
+
 - Fix assignment operator compiled operation
 - Fixed compilation error rewriting for asserts
 - Fixed compilation of exponentiation operator for pre Lua5.3
@@ -192,7 +206,8 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 - Erde now correctly rewrites top level errors (previously always used main file source map)
 
 ### Added
-- Added __tostring metamethod for thrown table errors (especially useful for sandboxed, embedded lua such as neovim)
+
+- Added \_\_tostring metamethod for thrown table errors (especially useful for sandboxed, embedded lua such as neovim)
 - Added line numbers for errors when using `erde compile`
 - Added REPL support
 - Throw error when `return` statement is not the last statement in a block
@@ -200,17 +215,20 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 ## [0.3.0-1] - August 26, 2022
 
 ### Removed
+
 - Removed `do` expressions.
 - Removed spread operator.
 - Removed optional chaining.
 - Removed `erde.loader` (replaced by `require('erde').load` api)
 
 ### Changed
+
 - Reverted split of `erde` and `erdec` in favor of more `pacman` like "main flags".
 - Improved `erde --help` output.
 - `erde` now runs with the regular lua shebang (`#!/usr/bin/env lua` instead of `#!/usr/bin/env luajit`)
 
 ### Added
+
 - Erde now supports running on Lua 5.1+
 - `erde` now accepts Lua targets to compile to, with specific Lua version compatabilities
 - `erde` now accepts specifying a bit library to compile bit operations to
@@ -227,6 +245,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
 ## [0.2.0-1] - June 03, 2022
 
 ### Removed
+
 - Removed `self` shorthand `$`. Completely unnecessary and confusing.
 - Removed `main` keyword. Completely unnecessary and confusing.
 - Removed ternary / null coalescing operator
@@ -234,6 +253,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
   - Both difficult to optimize (requires iife)
 
 ### Changed
+
 - Refactored internal structure (now cleaner / faster)
 - Erde now uses a newline to differentiate syntax ambiguity
 - Erde no longer parses number destruct aliases as valid syntax
@@ -251,6 +271,7 @@ based on [rockspec versioning](https://github.com/luarocks/luarocks/wiki/Rockspe
   - Use a similar structure as moonscript for familiarity.
 
 ### Fixed
+
 - Tokenizer now correctly consumes whitespace in string interpolation.
 - String interpolation w/ names now compiles correctly.
 - Parenthesized Return now parses correctly.
