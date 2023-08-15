@@ -40,7 +40,6 @@ module.exports = {
         sidebarPath: require.resolve('./sidebars.js'),
       },
     ],
-    'content-pages',
     'docusaurus-plugin-sass',
     process.env.NODE_ENV === 'production' && '@docusaurus/plugin-sitemap',
   ],
