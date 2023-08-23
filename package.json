@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@docusaurus/core": "^2.4.1",
-    "@docusaurus/module-type-aliases": "^2.4.1",
     "@docusaurus/plugin-content-docs": "^2.4.1",
     "@docusaurus/plugin-sitemap": "^2.4.1",
     "@docusaurus/theme-classic": "^2.4.1",
